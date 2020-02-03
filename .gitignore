@@ -1,0 +1,6 @@
+*.o
+*.a
+*.out
+.Ds_Store
+.idea
+**/target/
