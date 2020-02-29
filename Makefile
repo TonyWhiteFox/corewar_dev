@@ -6,7 +6,7 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/02/29 17:17:18 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/02/29 19:19:50 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC1		= mainvm.c
 
 SRC2		= mainasm.c\
 
-HEADERS 	= $(INCDIR)$(PROGECTMAIN).h
+HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
+HEADERSUB	= $(INCDIR)$(PROGECTSUB).h
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -55,7 +56,7 @@ OBJDIR	= ./obj/
 
 all: $(FT_LIB) $(MLX_LIB) $(NAME1) $(NAME2)
 
-$(OBJDIR)%.o:$(SRCDIR)%.c $(HEADERS)
+$(OBJDIR)%.o:$(SRCDIR)%.c $(HEADERMAIN) $(HEADERSUB)
 	@find . -type f -name "obj" -delete
 	@mkdir -p obj/
 	@echo "$(CHANGE)∰$(RESET)\c"

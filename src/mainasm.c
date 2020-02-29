@@ -6,11 +6,11 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:03:50 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/02/29 17:13:08 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:20:16 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "asm.h"
 
 int main()
 {
