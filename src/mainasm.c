@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
+/*   mainasm.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/15 09:36:51 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/02/29 17:03:07 by ldonnor-         ###   ########.fr       */
+/*   Created: 2020/02/29 17:03:50 by ldonnor-          #+#    #+#             */
+/*   Updated: 2020/02/29 17:13:08 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COREWAR_H
-# define COREWAR_H
-# include "libft.h"
-# include "mlx.h"
-# include "math.h"
-# include <pthread.h>
-# ifdef __APPLE__
-#  include <OpenCL/opencl.h>
-# else
-#  include <CL/cl.h>
-# endif
+#include "corewar.h"
 
-//Основная структура корвара
-typedef struct			s_cwm
+int main()
 {
-
-}						t_cwm;
-
-#endif
+	return (0);
+}

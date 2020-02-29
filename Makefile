@@ -6,22 +6,20 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2019/08/08 16:19:05 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/02/29 17:17:18 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROGECT = corewar
-NAME1	= $(PROGECT)
-#NAME2	= checker
+PROGECTMAIN = corewar
+PROGECTSUB = asm
+NAME1	= $(PROGECTMAIN)
+NAME2	= $(PROGECTSUB)
 
-SRC1		= #main.c\
-			
+SRC1		= mainvm.c
 
+SRC2		= mainasm.c\
 
-
-# SRC2		= mainch.c\
-
-HEADERS 	= $(INCDIR)lem_in.h
+HEADERS 	= $(INCDIR)$(PROGECTMAIN).h
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -70,12 +68,12 @@ $(MLX_LIB):
 	@make -C $(MLX)
 
 $(NAME1): $(OBJ1)
-	@echo "\n$(NAME1):$(FTAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
+	@echo "\n$(NAME1):$(TAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
 	@$(CC) -framework OpenCL $(OBJ1) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME1)
-	@echo "$(NAME1):$(FTAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
+	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
 
 $(NAME2): $(OBJ2)
-	@echo "\n$(NAME2):$(TAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
+	@echo "\n$(NAME2):$(FTAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
 	@$(CC) -framework OpenCL $(OBJ2) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME2)
 	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(GREEN)was  created.$(RESET)"
 
@@ -90,9 +88,9 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME1)
-	@echo "\n$(NAME1):$(FTAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
+	@echo "\n$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
 	@rm -rf $(NAME2)
-	@echo "$(NAME1):$(FTAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
+	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
 	@make -C $(FT) fclean
 
 re: fclean all
