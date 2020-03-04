@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/02/29 19:19:50 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/03/04 13:09:02 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,23 @@ PROGECTSUB = asm
 NAME1	= $(PROGECTMAIN)
 NAME2	= $(PROGECTSUB)
 
-SRC1		= mainvm.c
+SRC1		= check_cursors.c\
+				get_args.c\
+				ops1.c\
+				read_files.c\
+				cursor.c\
+				live_forks_zjmp.c\
+				ops2.c\
+				start_game.c\
+				do_op.c\
+				parse.c\
+				type_byte.c\
+				error.c\
+				players.c\
+				vm_main.c\
+				fight.c\
+				manage_type.c\
+				print_dump.c\
 
 SRC2		= mainasm.c\
 
@@ -96,4 +112,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(NAME1) $(NAME2)

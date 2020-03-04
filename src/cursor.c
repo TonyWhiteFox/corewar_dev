@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mainvm.c                                           :+:      :+:    :+:   */
+/*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/29 17:03:46 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/03/04 10:13:13 by ldonnor-         ###   ########.fr       */
+/*   Created: 2019/10/14 15:19:31 by lshellie          #+#    #+#             */
+/*   Updated: 2020/03/04 10:45:48 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "corewar.h"
 
-//Точка входа - спасибо кеп
-int main(int argc, char **argv)
+void		set_cursor(t_cursor **first, t_cursor *cursor)
 {
-	ft_printf("%i %s %s %s\n", argc, argv[0], argv[1]);
-	return (0);
+	t_cursor *tmp;
+
+	if (!*first)
+		*first = cursor;
+	else
+	{
+		tmp = *first;
+		*first = cursor;
+		cursor->next = tmp;
+	}
+}
+
+t_cursor	*new_cursor(void)
+{
+	t_cursor *new;
+
+	if (!(new = (t_cursor *)ft_memalloc(sizeof(t_cursor))))
+		return (0);
+	if (!(new->reg = (int *)ft_memalloc(sizeof(int) * REG_NUMBER)))
+		return (0);
+	return (new);
 }

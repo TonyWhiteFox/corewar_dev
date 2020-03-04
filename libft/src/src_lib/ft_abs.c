@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mainvm.c                                           :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: lshellie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/29 17:03:46 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/03/04 10:13:13 by ldonnor-         ###   ########.fr       */
+/*   Created: 2019/08/25 15:59:43 by lshellie          #+#    #+#             */
+/*   Updated: 2019/08/25 15:59:44 by lshellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "corewar.h"
-
-//Точка входа - спасибо кеп
-int main(int argc, char **argv)
+int			ft_abs(int a)
 {
-	ft_printf("%i %s %s %s\n", argc, argv[0], argv[1]);
-	return (0);
+	return (a >= 0 ? a : -a);
 }

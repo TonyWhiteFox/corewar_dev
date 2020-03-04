@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 13:16:23 by ldonnor-          #+#    #+#             */
-/*   Updated: 2019/07/21 14:08:07 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:16:00 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_PRINTF_H
 
 # include "libft.h"
-# include <stdarg.h>
 
 typedef struct				s_tab
 {

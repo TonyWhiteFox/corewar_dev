@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
+#    By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/14 23:29:50 by ldonnor-          #+#    #+#              #
-#    Updated: 2019/07/21 14:01:00 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/03/04 12:37:12 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ OBJSRC		= $(OBJLIR)\
 			$(OBJPIR)
 
 SRCS		= $(S_DIR)ft_atoi.c\
+			$(S_DIR)ft_abs.c\
 			$(S_DIR)ft_memccpy.c\
 			$(S_DIR)ft_putstr.c\
 			$(S_DIR)ft_strmap.c\
@@ -51,6 +52,7 @@ SRCS		= $(S_DIR)ft_atoi.c\
 			$(S_DIR)ft_isdigit.c\
 			$(S_DIR)ft_memset.c\
 			$(S_DIR)ft_strcmp.c\
+			$(S_DIR)ft_strndup.c\
 			$(S_DIR)ft_strnew.c\
 			$(S_DIR)ft_isprint.c\
 			$(S_DIR)ft_negative_l.c\
@@ -59,6 +61,7 @@ SRCS		= $(S_DIR)ft_atoi.c\
 			$(S_DIR)ft_itoa.c\
 			$(S_DIR)ft_strdel.c\
 			$(S_DIR)ft_strrchr.c\
+			$(S_DIR)ft_strnjoin.c\
 			$(S_DIR)ft_lstadd.c\
 			$(S_DIR)ft_strdup.c\
 			$(S_DIR)ft_strsplit.c\
