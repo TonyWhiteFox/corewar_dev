@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 19:01:10 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/07 22:41:42 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ typedef struct			s_mlx //new
 	void				*win_ptr;
 	void				*img_ptr;
 	void				*img_adr;
+	int					bpp;
+	int					stride;
+	int					endian;
 }						t_mlx;
 
 typedef struct			s_player
@@ -132,7 +135,7 @@ typedef struct			s_main
 	int					dump;
 	int					n_flag;
 	char				*field;
-	size_t				*changes; //new
+	int					*changes; //new
 	int					num_of_players;
 	int					last_player_live;
 	int					live_num;
@@ -203,5 +206,12 @@ int						is_player_num(int i, t_player *p);
 bool					find_dump_vis_flags(t_main *m, int ac, char **av,
 											int *i);
 void					init_visualisation(t_main *m);
+
+
+void					start_fight_mlx_hooks(t_main *m);
+int						mouse_move_hook(int x, int y, t_main *m);
+int						key_press(int key, t_main *m);
+int						say_good_buy(t_main *m);
+int						mouse_click_hook(int k, int x, int y, t_main *m);
 
 #endif

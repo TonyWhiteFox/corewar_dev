@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fight.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 17:53:05 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:46:12 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/07 22:43:21 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,44 @@ int			start_fight(t_main *m)
 		do_cycle(m);
 		if (m->cycle == m->cycles_to_die || m->cycles_to_die <= 0)
 			check(m);
-		if (m->cursor && m->dump == m->total_cycle)
+		if (m->cursor && (m->dump == m->total_cycle || m->dump == 0))
 		{
 			dump_memory(m->field);
 			return (0);
 		}
 	}
+	ft_printf("%i ", m->total_cycle);
 	return (1);
+}
+
+int			start_fight_vis(t_main *m)
+{
+	if (m->cursor)
+	{
+		++m->cycle;
+		++m->total_cycle;
+		do_cycle(m);
+		if (m->cycle == m->cycles_to_die || m->cycles_to_die <= 0)
+			check(m);
+	}
+	else
+	{
+		choose_winner(m);
+		mlx_hook(m->mlx->win_ptr, 2, 2, key_press, m);
+		mlx_hook(m->mlx->win_ptr, 17, 17, say_good_buy, m);
+		mlx_hook(m->mlx->win_ptr, 4, 4, mouse_click_hook, m);
+		mlx_hook(m->mlx->win_ptr, 6, 6, mouse_move_hook, m);
+		mlx_loop(m->mlx->mlx_ptr);
+	}
+	return(0);
+}
+
+void		start_fight_mlx_hooks(t_main *m)
+{
+	mlx_loop_hook(m->mlx->mlx_ptr, start_fight_vis, m);
+	mlx_hook(m->mlx->win_ptr, 2, 2, key_press, m);
+	mlx_hook(m->mlx->win_ptr, 17, 17, say_good_buy, m);
+	mlx_hook(m->mlx->win_ptr, 4, 4, mouse_click_hook, m);
+	mlx_hook(m->mlx->win_ptr, 6, 6, mouse_move_hook, m);
+	mlx_loop(m->mlx->mlx_ptr);
 }
