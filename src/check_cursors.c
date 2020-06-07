@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 13:07:16 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 22:52:11 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/07 23:05:12 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,4 @@ int		check(t_main *main)
 	main->cycle = 0;
 	return (1);
 }
+//lest start commit!!!!!
