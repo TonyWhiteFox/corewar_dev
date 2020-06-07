@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:56:08 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:47:20 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/03/17 12:07:11 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int			init_game(t_main **main)
 	(*main)->check_num = 0;
 	(*main)->dump = -1;
 	(*main)->n_flag = -1;
+	(*main)->v_flag = false;
 	return (1);
 }
 
@@ -101,7 +102,7 @@ int			main(int ac, char **av)
 	}
 	if (!(init_game(&m)))
 		return (ft_error(INVALID_MALLOC));
-	if (!manage_n(m, ac, av) || !(read_files(m, ac, av)))
+	if (!manage_n(m, ac, av) || !(read_files(m, ac, av, 0)))
 	{
 		free_main(m);
 		return (-1);
