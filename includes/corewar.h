@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 13:17:26 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/07 19:01:10 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,101 +69,139 @@
 # define T_DIR_SIZE 5
 # define PRICE 6
 
-typedef struct		s_cursor
+typedef struct			s_cursor
 {
-	int				id;
-	int				pos;
-	int				carry;
-	int				op;
-	int				last_live_cycle;
-	int				action;
-	int				*reg;
-	struct s_cursor	*next;
+	int					id;
+	short int			creater_no; //new
+	int					pos;
+	int					carry;
+	int					op;
+	int					last_live_cycle;
+	int					action;
+	int					*reg;
+	struct s_cursor		*next;
+}						t_cursor;
 
-}					t_cursor;
-
-typedef struct		s_player
+typedef struct			s_opencl //new
 {
-	int				num;
-	char			*name;
-	char			*comment;
-	int				size;
-	char			*code;
-	struct s_player	*next;
-}					t_player;
+	cl_program			program;
+	cl_kernel			kernel;
+	cl_platform_id		platform_id;
+	cl_uint				ret_num_platforms;
+	cl_device_id		device_id;
+	cl_uint				ret_num_devices;
+	cl_context			context;
+	cl_mem				mem_picture;
+	cl_mem				mem_field;
+	cl_mem				mem_changers;
+	cl_command_queue	command_queue;
+	int					ret;
+	cl_int				*ret_pic;
+	char				*file;
+	size_t				win_size;
+	size_t				kernel_size;
+}						t_opencl;
 
-typedef struct		s_main
+typedef struct			s_mlx //new
 {
-	t_player		*player;
-	t_cursor		*cursor;
-	int				cursor_ids;
-	int				dump;
-	int				n_flag;
-	char			*field;
-	int				num_of_players;
-	int				last_player_live;
-	int				live_num;
-	int				check_num;
-	int				cycle;
-	int				total_cycle;
-	int				cycles_to_die;
-	int				v_flag;
-}					t_main;
+	void				*mlx_ptr;
+	void				*win_ptr;
+	void				*img_ptr;
+	void				*img_adr;
+}						t_mlx;
 
-typedef struct		s_o
+typedef struct			s_player
 {
-	int				*t;
-	int				step;
-	int				*s;
-	int				*x;
-}					t_o;
+	int					num;
+	char				*name;
+	char				*comment;
+	int					size;
+	char				*code;
+	struct s_player		*next;
+}						t_player;
 
-int					set_player_fl(t_main *m, t_player *new);
-int					set_player(t_main *m, t_player *new);
-void				swap_players(t_player *a, t_player *b);
-int					ft_error(char *str);
-void				free_main(t_main *main);
-int					is_number(char *str);
-void				free_cursor(t_main *main);
-int					read_files(t_main *m, int ac, char **av);
-int					manage_n(t_main *m, int ac, char **av);
-int					get_header(int fd);
-int					get_null(int fd);
-int					get_name_or_comment(t_player *player, int fd, int fl);
-int					get_size(t_player *player, int fd);
-int					get_code(t_player *player, int fd);
-int					start_game(t_main *main);
-void				set_cursor(t_cursor **first, t_cursor *cursor);
-t_cursor			*new_cursor();
-int					dump_memory(char *field);
-void				*free_o(t_o *o);
+typedef struct			s_main
+{
+	t_player			*player;
+	t_cursor			*cursor;
+	t_mlx				*mlx;//new
+	t_opencl			*opencl;//new
+	short				w_x;//new
+	short				w_y;//new
+	int					cursor_ids;
+	int					dump;
+	int					n_flag;
+	char				*field;
+	size_t				*changes; //new
+	int					num_of_players;
+	int					last_player_live;
+	int					live_num;
+	int					check_num;
+	int					cycle;
+	int					total_cycle;
+	int					cycles_to_die;
+	bool				v_flag;
+}						t_main;
 
-int					check(t_main *main);
-int					check_cursors(t_main *m);
-void				check_cursors_while(t_main *m, t_cursor *c, t_cursor *prev);
+typedef struct			s_o
+{
+	int					*t;
+	int					step;
+	int					*s;
+	int					*x;
+}						t_o;
 
-int					start_fight(t_main *main);
-void				do_op(t_main *m, t_cursor *c);
-int					c_p(int pos);
-int					s(int t, int op);
-t_o					*manage_type(t_main *m, t_cursor *c);
-void				get_args(t_main *m, t_cursor *c, t_o *o);
-void				do_live(t_main *m, t_cursor *c);
-void				do_zjmp(t_main *m, t_cursor *c);
-void				do_fork(t_main *m, t_cursor *c);
-void				set_mem(char *f, int reg, int pos);
-int					read_mem(char *f, int pos, int size);
-void				modify_carry(t_cursor *c, int reg);
-void				get_reg(t_cursor *c, t_o *o);
-t_player			*choose_player(t_main *m);
-void				do_ld(t_main *m, t_cursor *c, t_o *o);
-void				do_add_sub(t_main *m, t_cursor *c, t_o *o);
-void				do_sti(t_main *m, t_cursor *c, t_o *o);
-void				do_st(t_main *m, t_cursor *c, t_o *o);
-void				do_ldi(t_main *m, t_cursor *c, t_o *o);
-void				do_aff(t_main *m, t_cursor *c, t_o *o);
-void				do_and_or_xor(t_main *m, t_cursor *c, t_o *o);
-int					choose_type(char tmp);
-int					is_player_num(int i, t_player *p);
+int						set_player_fl(t_main *m, t_player *new);
+int						set_player(t_main *m, t_player *new);
+void					swap_players(t_player *a, t_player *b);
+int						ft_error(char *str);
+void					free_main(t_main *main);
+int						is_number(char *str);
+void					free_cursor(t_main *main);
+int						read_files(t_main *m, int ac, char **av, int i);
+int						manage_n(t_main *m, int ac, char **av);
+int						get_header(int fd);
+int						get_null(int fd);
+int						get_name_or_comment(t_player *player, int fd, int fl);
+int						get_size(t_player *player, int fd);
+int						get_code(t_player *player, int fd);
+int						start_game(t_main *main);
+void					set_cursor(t_cursor **first, t_cursor *cursor);
+t_cursor				*new_cursor();
+int						dump_memory(char *field);
+void					*free_o(t_o *o);
+
+int						check(t_main *main);
+int						check_cursors(t_main *m);
+void					check_cursors_while(t_main *m, t_cursor *c,
+											t_cursor *prev);
+
+int						start_fight(t_main *main);
+void					do_op(t_main *m, t_cursor *c);
+int						c_p(int pos);
+int						s(int t, int op);
+t_o						*manage_type(t_main *m, t_cursor *c);
+void					get_args(t_main *m, t_cursor *c, t_o *o);
+void					do_live(t_main *m, t_cursor *c);
+void					do_zjmp(t_main *m, t_cursor *c);
+void					do_fork(t_main *m, t_cursor *c);
+void					set_mem(char *f, int reg, int pos);
+int						read_mem(char *f, int pos, int size);
+void					modify_carry(t_cursor *c, int reg);
+void					get_reg(t_cursor *c, t_o *o);
+t_player				*choose_player(t_main *m);
+void					do_ld(t_main *m, t_cursor *c, t_o *o);
+void					do_add_sub(t_main *m, t_cursor *c, t_o *o);
+void					do_sti(t_main *m, t_cursor *c, t_o *o);
+void					do_st(t_main *m, t_cursor *c, t_o *o);
+void					do_ldi(t_main *m, t_cursor *c, t_o *o);
+void					do_aff(t_main *m, t_cursor *c, t_o *o);
+void					do_and_or_xor(t_main *m, t_cursor *c, t_o *o);
+int						choose_type(char tmp);
+int						is_player_num(int i, t_player *p);
+
+bool					find_dump_vis_flags(t_main *m, int ac, char **av,
+											int *i);
+void					init_visualisation(t_main *m);
 
 #endif

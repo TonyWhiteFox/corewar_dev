@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 15:53:01 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:47:03 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/03/19 18:09:47 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,12 @@ int			read_player(t_main *m, char *str)
 	return (1);
 }
 
-int			read_files(t_main *m, int ac, char **av)
+int			read_files(t_main *m, int ac, char **av, int i)
 {
-	int		i;
-
-	i = 0;
 	while (++i < ac)
 	{
-		if (!ft_strcmp(av[i], "-dump") && i + 2 < ac && is_number(av[i + 1]))
-		{
-			m->dump = ft_atoi(av[++i]);
+		if (find_dump_vis_flags(m, ac, av, &i))
 			continue ;
-		}
 		if (!ft_strcmp(av[i], "-n") && i + 2 < ac)
 		{
 			i += 2;
@@ -89,6 +83,8 @@ int			read_files(t_main *m, int ac, char **av)
 		else
 			return (ft_error(BAD_FILE_FORMAT));
 	}
+	if (m->v_flag)
+		m->dump = -1;
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+         #
+#    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/03/04 13:09:02 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/06/07 16:36:11 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRC1		= check_cursors.c\
 				fight.c\
 				manage_type.c\
 				print_dump.c\
+				add_new_flags.c\
+				visualisation.c\
 
 SRC2		= mainasm.c\
 
