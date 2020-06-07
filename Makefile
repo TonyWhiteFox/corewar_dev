@@ -6,7 +6,7 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/06/07 16:36:11 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/06/07 21:36:11 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC1		= check_cursors.c\
 				print_dump.c\
 				add_new_flags.c\
 				visualisation.c\
+				mlx_controls.c\
 
 SRC2		= mainasm.c\
 
@@ -56,7 +57,7 @@ OBJ1	= $(addprefix $(OBJDIR),$(SRC1:.c=.o))
 OBJ2	= $(addprefix $(OBJDIR),$(SRC2:.c=.o))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror -g -O3
+CFLAGS	= -Wall -Wextra -g -O3 #-Werror
 
 MLX		= ./miniLibX/
 MLX_LIB	= $(addprefix $(MLX),mlx.a)

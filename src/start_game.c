@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:37:15 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 15:56:52 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/07 22:40:50 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,14 @@ int			introduce(t_player *player)
 
 int			start_game(t_main *main)
 {
+	if (main->v_flag)
+		init_visualisation(main);
 	sort_players(main);
 	introduce(main->player);
 	set_players(main);
+	if (!main->v_flag && !(start_fight(main)))
+			return (0);
 	if (main->v_flag)
-		init_visualisation(main);
-	if (!(start_fight(main)))
-		return (0);
+		start_fight_mlx_hooks(main);
 	return (1);
 }
