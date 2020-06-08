@@ -3,24 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   do_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:54:05 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:45:54 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 22:01:39 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		set_mem(char *f, int reg, int pos)
+void		set_mem(t_main *m, int reg, int copy_in_pos, int copy_of_pos)
 {
 	int		i;
 	char	*store;
+	int		changer;
 
 	store = (char *)(&reg);
 	i = -1;
+	changer = m->changes[copy_of_pos] % 10;
 	while (++i < 4)
-		f[c_p(pos + i)] = store[3 - i];
+	{
+		m->field[c_p(copy_in_pos + i)] = store[3 - i];
+		m->changes[c_p(copy_in_pos + i)] = changer + m->total_cycle * 10;
+	}
 }
 
 int			c_p(int pos)

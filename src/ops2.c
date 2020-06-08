@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ops2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 13:34:38 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:46:45 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 21:56:34 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		do_st(t_main *m, t_cursor *c, t_o *o)
 	else if (o->t[0] == REG && o->t[1] == IND)
 	{
 		a = c->pos + o->x[1] % IDX_MOD;
-		set_mem(m->field, c->reg[o->x[0]], a);
+		set_mem(m, c->reg[o->x[0]], a, c->pos);
 	}
 	c->op = 0;
 	c->pos = c_p(c->pos + o->step);
@@ -76,7 +76,7 @@ void		do_sti(t_main *m, t_cursor *c, t_o *o)
 	if (check_sti(o))
 	{
 		a = c->pos + (o->x[1] + o->x[2]) % IDX_MOD;
-		set_mem(m->field, c->reg[store], a);
+		set_mem(m, c->reg[store], a, c->pos);
 	}
 	c->op = 0;
 	c->pos = c_p(c->pos + o->step);

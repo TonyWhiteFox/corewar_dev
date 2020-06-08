@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 22:41:42 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 21:48:03 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@
 typedef struct			s_cursor
 {
 	int					id;
-	short int			creater_no; //new
+	// short int			creater_no; //new
 	int					pos;
 	int					carry;
 	int					op;
@@ -96,7 +96,7 @@ typedef struct			s_opencl //new
 	cl_mem				mem_changers;
 	cl_command_queue	command_queue;
 	int					ret;
-	cl_int				*ret_pic;
+	// cl_int				*ret_pic;
 	char				*file;
 	size_t				win_size;
 	size_t				kernel_size;
@@ -188,7 +188,8 @@ void					get_args(t_main *m, t_cursor *c, t_o *o);
 void					do_live(t_main *m, t_cursor *c);
 void					do_zjmp(t_main *m, t_cursor *c);
 void					do_fork(t_main *m, t_cursor *c);
-void					set_mem(char *f, int reg, int pos);
+void					set_mem(t_main *m, int reg,
+								int copy_in_pos, int copy_of_pos);
 int						read_mem(char *f, int pos, int size);
 void					modify_carry(t_cursor *c, int reg);
 void					get_reg(t_cursor *c, t_o *o);

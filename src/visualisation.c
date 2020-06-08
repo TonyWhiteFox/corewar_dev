@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/07 22:07:30 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 20:21:04 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_cl_bufers(t_opencl *o)
 {
-	o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
+	// o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
 	o->mem_picture = clCreateBuffer(o->context, CL_MEM_WRITE_ONLY, o->win_size *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("10_%i\n", o->ret);
@@ -82,7 +82,6 @@ void	init_mlx(t_mlx *mlx, t_main *m)
 
 void	init_visualisation(t_main *m)
 {
-	m->changes = (int *)malloc(MEM_SIZE / sizeof(char) * sizeof(int));
 	m->mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	m->opencl = (t_opencl *)malloc(sizeof(t_opencl));
 	m->w_x = 1792; //64*28
