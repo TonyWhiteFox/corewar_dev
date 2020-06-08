@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:37:15 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 22:40:50 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 20:32:02 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int			paste_code(t_main *main, t_player *player, int pos)
 
 	i = -1;
 	while (++i < player->size)
+	{
 		main->field[(pos + i) % MEM_SIZE] = player->code[i];
+		main->changes[(pos + i) % MEM_SIZE] = player->num + 10;
+		ft_printf("%i", main->changes[(pos + i) % MEM_SIZE]);
+	}
 	return (1);
 }
 
@@ -56,6 +60,8 @@ int			set_players(t_main *main)
 		main->cursor->id = main->cursor_ids++;
 		paste_code(main, cur, pos);
 		main->cursor->pos = pos;
+		// main->cursor->creater_no = cur->num;
+		// ft_printf("\n__%i__\n",cur->num);
 		pos += pos0;
 		cur = cur->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:56:08 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/07 19:45:33 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/08 20:22:01 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int			init_game(t_main **main)
 	(*main)->dump = -1;
 	(*main)->n_flag = -1;
 	(*main)->v_flag = false;
+	(*main)->changes = (int *)malloc(MEM_SIZE / sizeof(char) * sizeof(int));
+	ft_bzero((*main)->changes, MEM_SIZE / sizeof(char) * sizeof(int));
 	return (1);
 }
 
