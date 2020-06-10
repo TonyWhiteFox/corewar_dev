@@ -1,4 +1,4 @@
-__kernel void kercorewar(__global int* arr, const int wx, const int wy,
+__kernel void kerjulia(__global int* arr, const int wx, const int wy,
 						const int iter, const double cl_sx, const double cl_sy,
 						const long z)
 {
