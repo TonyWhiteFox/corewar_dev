@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/08 20:21:04 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/10 23:39:38 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	init_cl_bufers(t_opencl *o)
 {
-	// o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
-	o->mem_picture = clCreateBuffer(o->context, CL_MEM_WRITE_ONLY, o->win_size *
+	o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
+	o->mem_picture = clCreateBuffer(o->context, CL_MEM_READ_WRITE, o->win_size *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("10_%i\n", o->ret);
 	o->mem_field = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
 				sizeof(cl_char), NULL, &o->ret);
-	ft_printf("11_%i\n", o->ret);			
+	ft_printf("11_%i\n", o->ret);
 	o->mem_changers = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
 				sizeof(cl_int), NULL, &o->ret);
-	ft_printf("12_%i\n", o->ret);			
+	ft_printf("12_%i\n", o->ret);
 }
 
 void		init_cl_kernel(t_opencl *o)
@@ -33,7 +33,8 @@ void		init_cl_kernel(t_opencl *o)
 	char	*temp2;
 	int		j;
 	
-	fd = open("src/opencl/mandelbrot.cl", O_RDONLY);
+	fd = open("src/opencl/paint_map.cl", O_RDONLY);
+	// fd = open("src/opencl/mandelbrot.cl", O_RDONLY);
 	o->file = ft_strnew(1);
 	while ((j = get_next_line(fd, &temp1)))
 	{
@@ -65,6 +66,7 @@ void	init_opencl(t_opencl *o, t_main *m)
 	o->ret = clBuildProgram(o->program, 1, &o->device_id, NULL, NULL, NULL);
 	ft_printf("6_%i\n", o->ret);
 	o->kernel = clCreateKernel(o->program, "kercorewar", &o->ret);
+	// o->kernel = clCreateKernel(o->program, "kerjulia", &o->ret);
 	ft_printf("7_%i\n", o->ret);
 	o->win_size = m->w_x * m->w_y;
 	init_cl_bufers(o);
@@ -86,6 +88,7 @@ void	init_visualisation(t_main *m)
 	m->opencl = (t_opencl *)malloc(sizeof(t_opencl));
 	m->w_x = 1792; //64*28
 	m->w_y = 1024; //64*16
+	m->opencl->flows = MEM_SIZE * 2;
 	init_opencl(m->opencl, m);
 	init_mlx(m->mlx, m);
 }

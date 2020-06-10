@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 13:37:15 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/08 20:32:02 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/10 19:25:29 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int			paste_code(t_main *main, t_player *player, int pos)
 	{
 		main->field[(pos + i) % MEM_SIZE] = player->code[i];
 		main->changes[(pos + i) % MEM_SIZE] = player->num + 10;
-		ft_printf("%i", main->changes[(pos + i) % MEM_SIZE]);
 	}
 	return (1);
 }
