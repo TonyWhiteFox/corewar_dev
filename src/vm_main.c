@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:56:08 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/08 20:22:01 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 16:04:50 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int			init_game(t_main **main)
 {
 	if (!(*main = (t_main *)ft_memalloc(sizeof(t_main))))
 		return (0);
-	if (!((*main)->field = (char *)ft_memalloc(MEM_SIZE)))
+	if (!((*main)->field = (cl_uchar *)ft_memalloc(MEM_SIZE)))
 		return (0);
 	(*main)->cycles_to_die = CYCLE_TO_DIE;
 	(*main)->last_player_live = 1;
@@ -87,8 +87,11 @@ int			init_game(t_main **main)
 	(*main)->dump = -1;
 	(*main)->n_flag = -1;
 	(*main)->v_flag = false;
-	(*main)->changes = (int *)malloc(MEM_SIZE / sizeof(char) * sizeof(int));
-	ft_bzero((*main)->changes, MEM_SIZE / sizeof(char) * sizeof(int));
+	(*main)->changes = (cl_int *)malloc(MEM_SIZE * sizeof(cl_int));
+	(*main)->have_cursor = (bool *)malloc(MEM_SIZE * sizeof(bool));
+	ft_bzero((*main)->changes, MEM_SIZE * sizeof(cl_int));
+	(*main)->live = (cl_int *)malloc(MEM_SIZE * sizeof(cl_int));
+	ft_bzero((*main)->live, MEM_SIZE * sizeof(cl_int));
 	return (1);
 }
 

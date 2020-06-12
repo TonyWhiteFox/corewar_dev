@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/12 12:47:28 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 15:30:42 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ typedef struct			s_opencl //new
 	cl_mem				mem_picture;
 	cl_mem				mem_field;
 	cl_mem				mem_changers;
+	cl_mem				mem_cursor;
+	cl_mem				mem_live;
 	cl_command_queue	command_queue;
 	int					ret;
 	cl_int				*ret_pic;
@@ -136,8 +138,10 @@ typedef struct			s_main
 	int					cursor_ids;
 	int					dump;
 	int					n_flag;
-	u_char				*field; //send to cl 1
-	int					*changes; //new //send to cl 2
+	cl_uchar			*field; //send to cl 1
+	cl_int				*changes; //new //send to cl 2
+	bool				*have_cursor; //new //send to cl 3
+	cl_int				*live; //new //send to cl 4
 	int					num_of_players;
 	int					last_player_live;
 	int					live_num;
