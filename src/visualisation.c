@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/12 12:47:22 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 15:27:05 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_cl_bufers(t_opencl *o)
 {
 	o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
-	o->send_field = (cl_char *)malloc(sizeof(cl_char) * MEM_SIZE);
+	// o->send_field = (cl_char *)malloc(sizeof(cl_char) * MEM_SIZE);
 	o->mem_picture = clCreateBuffer(o->context, CL_MEM_READ_WRITE, o->win_size *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("10_%i\n", o->ret);
@@ -25,6 +25,12 @@ void	init_cl_bufers(t_opencl *o)
 	o->mem_changers = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("12_%i\n", o->ret);
+	o->mem_cursor = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+				sizeof(bool), NULL, &o->ret);
+	ft_printf("13_%i\n", o->ret);
+	o->mem_live = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+				sizeof(cl_int), NULL, &o->ret);
+	ft_printf("14_%i\n", o->ret);
 }
 
 void		init_cl_kernel(t_opencl *o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   live_forks_zjmp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 12:48:37 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:46:26 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 16:05:05 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void			do_live(t_main *m, t_cursor *c)
 	++m->live_num;
 	c->last_live_cycle = m->total_cycle;
 	if (t_dir < 0 && is_player_num(t_dir, m->player))
+	{
 		m->last_player_live = ft_abs(t_dir);
+		m->live[c->pos] = m->total_cycle * 10 + m->last_player_live - 1;
+	}
 	c->op = 0;
 	c->pos = c_p(c->pos + g_live[T_DIR_SIZE] + 1);
 }
