@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/10 23:39:38 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 12:47:22 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_cl_bufers(t_opencl *o)
 {
 	o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
+	o->send_field = (cl_char *)malloc(sizeof(cl_char) * MEM_SIZE);
 	o->mem_picture = clCreateBuffer(o->context, CL_MEM_READ_WRITE, o->win_size *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("10_%i\n", o->ret);
@@ -59,6 +60,7 @@ void	init_opencl(t_opencl *o, t_main *m)
 				o->device_id, 0, &o->ret);
 	ft_printf("4_%i\n", o->ret);			
 	init_cl_kernel(o);
+	ft_printf("4_2_%i\n", o->ret);
 	o->kernel_size = ft_strlen(o->file);
 	o->program = clCreateProgramWithSource(o->context, 1,
 			(const char **)&o->file, (const size_t *)&o->kernel_size, &o->ret);
