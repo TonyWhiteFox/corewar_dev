@@ -1,66 +1,68 @@
-__kernel void kercorewar(__global int* picture, __global uchar* field,
-						__global int* changes, const int w_x, const int w_y,
-						const int flows, const int total_cycle)
-{
-	int gid = get_global_id(0);
-
-	int	back_color = 0x000000;
-	int	front_color = 0x888888;
-	int half_gid = gid / 2;
-	int change = changes[half_gid];
-	if (change > 0)
+	if (changes[gid] / 10 > 0) 
 	{
-		switch (change % 10)
+		switch (changes[gid] % 10)
 		{
 			case 0:
-				if (change / 10 + 50 < total_cycle)
-					front_color = 0x990000;
+				if (total_cycles > (changes[gid] / 10 + 50))
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x880000;
+				}
 				else
-					front_color = 0xFF0000;
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0xDD0000;
+				}
 				break;
 			case 1:
-				if (change / 10 + 50 < total_cycle)
-					front_color = 0x9900;
+				if (total_cycles > (changes[gid] / 10 + 50))
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x008800;
+				}
 				else
-					front_color = 0xFF00;
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x00DD00;
+				}
 				break;
 			case 2:
-				if (change / 10 + 50 < total_cycle)
-					front_color = 0x9999;
+				if (total_cycles > (changes[gid] / 10 + 50))
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x000088;
+				}
 				else
-					front_color = 0xFFFF;
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x0000DD;
+				}
 				break;
 			case 3:
-				if (change / 10 + 50 < total_cycle)
-					front_color = 0x990099;
+				if (total_cycles > (changes[gid] / 10 + 50))
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0x880088;
+				}
 				else
-					front_color = 0xFF00FF;
+				{
+					int	back_color = 0x000000;
+					int	front_color = 0xDD00DD;
+				}
 				break;
 		}
 	}
-
-	int value = field[half_gid];
-	if (gid % 2 > 0)
-		value = value % 16;
 	else
-		value = value / 16;
-	int	num_x = gid % 128;
-	int	num_y = gid / 128;
-	int start_x = 30 + num_x * 9 + num_x / 2 * 3;
-	int start_y = 30 + num_y * 15;
-	int start_pos = start_y * w_x + start_x;
-	int w_x2 = w_x * 2;
-	int w_x3 = w_x * 3;
-	int w_x4 = w_x * 4;
-	int w_x5 = w_x * 5;
-	int w_x6 = w_x * 6;
-	int w_x7 = w_x * 7;
-	int w_x8 = w_x * 8;
-	int w_x9 = w_x * 9;
-	int w_x10 = w_x * 10;
-	int w_x11 = w_x * 11;
-	int w_x12 = w_x * 12;
-	switch (value)
+	{
+		int	back_color = 0x000000;
+		int	front_color = 0x888888;
+	}
+
+
+
+
+
+switch (value)
 	{
 		case 0:
 			picture[start_pos + w_x + 1] = back_color;
@@ -1385,4 +1387,18 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 	picture[start_pos + w_x12 + 6] = back_color;
 	picture[start_pos + w_x12 + 7] = back_color;
 	picture[start_pos + w_x12 + 8] = back_color;
-}
+
+
+	int w_x2 = w_x * 2;
+	int w_x3 = w_x * 3;
+	int w_x4 = w_x * 4;
+	int w_x5 = w_x * 5;
+	int w_x6 = w_x * 6;
+	int w_x7 = w_x * 7;
+	int w_x8 = w_x * 8;
+	int w_x9 = w_x * 9;
+	int w_x10 = w_x * 10;
+	int w_x11 = w_x * 11;
+	int w_x12 = w_x * 12;
+
+	

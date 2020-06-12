@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/10 23:40:02 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/12 12:47:28 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct			s_opencl //new
 	cl_command_queue	command_queue;
 	int					ret;
 	cl_int				*ret_pic;
+	cl_uchar			*send_field;
 	cl_int				flows;
 	char				*file;
 	size_t				win_size;
@@ -135,7 +136,7 @@ typedef struct			s_main
 	int					cursor_ids;
 	int					dump;
 	int					n_flag;
-	char				*field; //send to cl 1
+	u_char				*field; //send to cl 1
 	int					*changes; //new //send to cl 2
 	int					num_of_players;
 	int					last_player_live;
