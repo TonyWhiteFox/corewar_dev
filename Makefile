@@ -6,7 +6,7 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/06/07 21:36:11 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/06/14 19:06:05 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC1		= check_cursors.c\
 				add_new_flags.c\
 				visualisation.c\
 				mlx_controls.c\
+				run_visual_fight.c\
 
 SRC2		= mainasm.c\
 

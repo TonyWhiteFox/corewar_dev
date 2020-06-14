@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/12 15:27:05 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 19:53:31 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	init_cl_bufers(t_opencl *o)
 	o->mem_live = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
 				sizeof(cl_int), NULL, &o->ret);
 	ft_printf("14_%i\n", o->ret);
+	o->mem_decor = clCreateBuffer(o->context, CL_MEM_READ_ONLY, 285 *
+				sizeof(bool) , NULL, &o->ret);
+	ft_printf("15_%i\n", o->ret);
 }
 
 void		init_cl_kernel(t_opencl *o)
@@ -96,6 +99,9 @@ void	init_visualisation(t_main *m)
 	m->opencl = (t_opencl *)malloc(sizeof(t_opencl));
 	m->w_x = 1792; //64*28
 	m->w_y = 1024; //64*16
+	m->opencl->decor = (bool *)malloc(sizeof(bool) * 285);
+	ft_bzero(m->opencl->decor, sizeof(bool) * 285);
+	fill_decor_bool_array(m->opencl);
 	m->opencl->flows = MEM_SIZE * 2;
 	init_opencl(m->opencl, m);
 	init_mlx(m->mlx, m);

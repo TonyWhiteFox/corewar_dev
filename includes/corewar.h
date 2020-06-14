@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/12 15:30:42 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 19:53:19 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,13 @@ typedef struct			s_opencl //new
 	cl_mem				mem_changers;
 	cl_mem				mem_cursor;
 	cl_mem				mem_live;
+	cl_mem				mem_decor;
 	cl_command_queue	command_queue;
 	int					ret;
 	cl_int				*ret_pic;
 	cl_uchar			*send_field;
 	cl_int				flows;
+	bool				*decor;
 	char				*file;
 	size_t				win_size;
 	size_t				kernel_size;
@@ -220,5 +222,6 @@ int						mouse_move_hook(int x, int y, t_main *m);
 int						key_press(int key, t_main *m);
 int						say_good_buy(t_main *m);
 int						mouse_click_hook(int k, int x, int y, t_main *m);
+void					fill_decor_bool_array(t_opencl *o);
 
 #endif
