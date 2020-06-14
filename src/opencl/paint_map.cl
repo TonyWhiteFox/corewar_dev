@@ -742,6 +742,159 @@ __kernel void print_F(__global int* picture, int start_pos, int back_color,
 					0, 1, 1, 1, 1, 0, 0);
 }
 
+__kernel void print_T(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 1, 1, 1, 1, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 0, 1, 1, 0, 0);
+}
+
+__kernel void print_o(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 1, 1, 1, 1, 0, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					0, 1, 1, 1, 1, 0, 0,
+					0, 0, 1, 1, 0, 0, 0);
+}
+
+__kernel void print_l(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 1, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 1, 1, 1, 0, 0,
+					0, 0, 1, 1, 0, 0, 0);
+}
+
+__kernel void print_Y(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					1, 1, 1, 0, 1, 1, 0,
+					0, 1, 1, 1, 1, 1, 0,
+					0, 0, 1, 1, 1, 1, 0,
+					1, 0, 0, 0, 1, 1, 0,
+					1, 1, 0, 0, 1, 1, 0,
+					0, 1, 1, 1, 1, 0, 0);
+}
+
+__kernel void print_S(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 1, 1, 1, 0, 0,
+					0, 1, 1, 1, 1, 1, 0,
+					0, 1, 1, 0, 0, 1, 0,
+					0, 0, 1, 1, 0, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 1, 0, 0, 1, 1, 0,
+					0, 1, 1, 1, 1, 1, 0,
+					0, 0, 1, 1, 1, 0, 0);
+}
+
+__kernel void print_I(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 1, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 0, 1, 1, 0, 0,
+					0, 0, 1, 1, 1, 1, 0);
+}
+
+__kernel void print_P(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 1, 0, 1, 1, 1, 0,
+					1, 1, 1, 0, 0, 1, 1,
+					0, 1, 1, 0, 0, 1, 1,
+					0, 1, 1, 0, 0, 1, 1,
+					0, 1, 1, 0, 0, 1, 1,
+					0, 1, 1, 0, 1, 1, 0,
+					1, 1, 1, 1, 1, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 0, 1, 0, 0, 0, 0);
+}
+
+__kernel void print_R(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 1, 0, 1, 1, 0, 0,
+					1, 1, 1, 1, 1, 1, 0,
+					0, 1, 1, 0, 1, 1, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0,
+					0, 1, 1, 0, 0, 0, 0);
+}
+
+__kernel void print_M(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x)
+{
+	alfavit(picture, start_pos, back_color, front_color, w_x,
+					0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0,
+					1, 0, 0, 0, 0, 0, 1,
+					1, 1, 0, 0, 0, 1, 1,
+					1, 1, 1, 0, 1, 1, 1,
+					1, 1, 1, 1, 1, 1, 1,
+					1, 1, 1, 1, 1, 1, 1,
+					1, 1, 0, 1, 0, 1, 1,
+					1, 1, 0, 0, 0, 1, 1,
+					1, 1, 0, 0, 0, 1, 1,
+					1, 1, 0, 0, 0, 1, 1);
+}
+
 __kernel void print_empty(__global int* picture, int start_pos, int back_color,
 					int front_color, int w_x)
 {
@@ -898,7 +1051,8 @@ __kernel void print_map(__global int* picture, __global uchar* field,
 __kernel void kercorewar(__global int* picture, __global uchar* field,
 						__global int* changes, __global bool* cursor,
 						__global int* live, __global bool* decor, const int w_x,
-						const int total_cycle, const int flows, const int cycles_to_die)
+						const int total_cycle, const int flows, const int cycles_to_die,
+						const int cycles_per_frame, const int sleep_after_frame)
 {
 	int gid = get_global_id(0);
 	int	back_color = 0x000000;
@@ -929,31 +1083,46 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 				back_color = 0xFF0000;
 			else
 				back_color = 0x333333;
-			temp = 1000000384 - total_cycle;
-			if ((num_y*2.5 == total_cycle % 128) || (num_x*3 == total_cycle % 128)
-				|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
-				back_color += 0x009900;
+			temp = 1000000384 - (total_cycle / cycles_per_frame);
+			if (sleep_after_frame == 0)
+				if ((num_y*2.5 == (total_cycle / cycles_per_frame) % 128)
+					|| (num_x*3 == (total_cycle / cycles_per_frame) % 128)
+					|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
+					back_color += 0x009900;
 			print_empty(picture, start_pos, back_color, front_color, w_x);
 			print_empty(picture, start_pos + 12, back_color, front_color, w_x);
 		}
 		else
 		{
 			gid = gid - 285;
-			if (gid < 20)
+			if (gid < 40)
 			{
 				back_color = 0x222222;
-				if (gid < 10)
+				switch (gid / 10)
 				{
-					start_y = 30 + 20 * 15;
-					temp = total_cycle;
-					front_color = 0xFF00;
-				}
-				else
-				{
-					start_y = 30 + 21 * 15;
-					temp = cycles_to_die;
-					gid = gid - 10;
-					front_color = 0xFF00FF;
+					case 0:
+						start_y = 30 + 20 * 15;
+						temp = total_cycle;
+						front_color = 0xFF00;
+						break;
+					case 1:
+						start_y = 30 + 21 * 15;
+						temp = cycles_to_die;
+						gid = gid - 10;
+						front_color = 0xFF00FF;
+						break;
+					case 2:
+						start_y = 30 + 22 * 15;
+						temp = cycles_per_frame;
+						gid = gid - 20;
+						front_color = 0xFFFF00;
+						break;
+					case 3:
+						start_y = 30 + 23 * 15;
+						temp = sleep_after_frame;
+						gid = gid - 30;
+						front_color = 0xFFFF;
+						break;
 				}
 				start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid * 2) * 3;
 				start_pos = start_y * w_x + start_x;

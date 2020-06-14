@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 19:05:18 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/14 22:02:53 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 22:58:17 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		execute_cl(t_main *m, t_opencl *o, t_mlx *ml)
 {
 	size_t	i;
 
-	i = o->flows + 320;
+	i = o->flows + 384;
 	o->ret = clEnqueueNDRangeKernel(o->command_queue, o->kernel, 1, NULL,
 									&i, NULL, 0, NULL, NULL);
 	// ft_printf("51_%i\n", o->ret);
@@ -101,6 +101,10 @@ void		send_argument_to_cl(t_main *m, t_opencl *o)
 	o->ret = clSetKernelArg(o->kernel, 8, sizeof(cl_int), &tmp_int);
 	tmp_int = (cl_int)m->cycles_to_die;
 	o->ret = clSetKernelArg(o->kernel, 9, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)m->mlx->cycle_per_frame;
+	o->ret = clSetKernelArg(o->kernel, 10, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)m->mlx->sleep_after_frame;
+	o->ret = clSetKernelArg(o->kernel, 11, sizeof(cl_int), &tmp_int);
 	execute_cl(m, o, m->mlx);
 	
 	// usleep(60000);
@@ -117,7 +121,9 @@ int			start_fight_vis(t_main *m)
 		do_cycle(m);
 		if (m->cycle == m->cycles_to_die || m->cycles_to_die <= 0)
 			check(m);
-		send_argument_to_cl(m, m->opencl);
+		if (m->total_cycle % m->mlx->cycle_per_frame == 0)
+			send_argument_to_cl(m, m->opencl);
+		usleep(m->mlx->sleep_after_frame);
 	}
 	else
 	{

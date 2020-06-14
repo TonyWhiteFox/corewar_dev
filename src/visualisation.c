@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 15:55:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/14 19:53:31 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 22:15:36 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ void	init_mlx(t_mlx *mlx, t_main *m)
 	mlx->img_adr = mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
 					&mlx->stride, &mlx->endian);
 	mlx->bpp /= 8;
+	mlx->cycle_per_frame = 1;
+	mlx->sleep_after_frame = 0;
+	mlx->stop = false;
 }
 
 void	init_visualisation(t_main *m)

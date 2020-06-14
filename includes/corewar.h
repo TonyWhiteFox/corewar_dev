@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/14 19:53:19 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 22:14:42 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ typedef struct			s_mlx //new
 	int					bpp;
 	int					stride;
 	int					endian;
+	int					cycle_per_frame;
+	int					sleep_after_frame;
+	bool				stop;
 }						t_mlx;
 
 typedef struct			s_player
