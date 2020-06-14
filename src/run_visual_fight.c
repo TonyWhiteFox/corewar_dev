@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 19:05:18 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/14 21:34:48 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/14 22:02:53 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void		send_argument_to_cl(t_main *m, t_opencl *o)
 	tmp_int = (cl_int)m->cycles_to_die;
 	o->ret = clSetKernelArg(o->kernel, 9, sizeof(cl_int), &tmp_int);
 	execute_cl(m, o, m->mlx);
+	
 	// usleep(60000);
 	// exit(0);
 }
