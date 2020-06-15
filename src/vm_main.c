@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:56:08 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/12 16:04:50 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/15 21:18:41 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			init_game(t_main **main)
 	ft_bzero((*main)->live, MEM_SIZE * sizeof(cl_int));
 	return (1);
 }
-
+ /*
 int			main(int ac, char **av)
 {
 	t_main		*m;
@@ -122,3 +122,4 @@ int			main(int ac, char **av)
 	free_main(m);
 	return (0);
 }
+*/

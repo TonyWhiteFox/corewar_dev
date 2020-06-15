@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/14 22:14:42 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/16 00:21:22 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,15 @@ typedef struct			s_main
 	int					cycles_to_die;
 	bool				v_flag;
 }						t_main;
+
+typedef struct			s_virt
+{
+	int					d;
+	int					dump;
+	int					number;
+	bool				vis;
+	cl_int				temp;
+}						t_virt;
 
 typedef struct			s_o
 {
