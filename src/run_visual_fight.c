@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 19:05:18 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/14 22:58:17 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/15 18:12:44 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		execute_cl(t_main *m, t_opencl *o, t_mlx *ml)
 {
 	size_t	i;
 
-	i = o->flows + 384;
+	i = o->flows + 512;
 	o->ret = clEnqueueNDRangeKernel(o->command_queue, o->kernel, 1, NULL,
 									&i, NULL, 0, NULL, NULL);
 	// ft_printf("51_%i\n", o->ret);

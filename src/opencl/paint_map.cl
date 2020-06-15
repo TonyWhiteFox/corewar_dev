@@ -776,7 +776,7 @@ __kernel void print_o(__global int* picture, int start_pos, int back_color,
 					0, 0, 1, 1, 0, 0, 0);
 }
 
-__kernel void print_l(__global int* picture, int start_pos, int back_color,
+__kernel void print_L(__global int* picture, int start_pos, int back_color,
 					int front_color, int w_x)
 {
 	alfavit(picture, start_pos, back_color, front_color, w_x,
@@ -1097,7 +1097,7 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 			gid = gid - 285;
 			if (gid < 40)
 			{
-				back_color = 0x222222;
+				back_color = 0x303030;
 				switch (gid / 10)
 				{
 					case 0:
@@ -1124,7 +1124,7 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 						front_color = 0xFFFF;
 						break;
 				}
-				start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid * 2) * 3;
+				start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid) * 3;
 				start_pos = start_y * w_x + start_x;
 				while (gid > 0)
 				{
@@ -1164,6 +1164,128 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 					case 9:
 						print_9(picture, start_pos, back_color, front_color, w_x);
 						break;
+				}
+			}
+			else if (gid < 98)
+			{
+				gid = gid - 40;
+				back_color = 0x303030;
+				if (gid < 12)
+				{
+					start_y = 30 + 20 * 15;
+					front_color = 0xFF00;
+					start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
+				}
+				else if (gid < 25)
+				{
+					start_y = 30 + 21 * 15;
+					front_color = 0xFF00FF;
+					start_x = 30 + (131 + gid - 12) * 9 + (130 / 2 + gid - 12) * 3;
+
+				}
+				else if (gid < 41)
+				{
+					start_y = 30 + 22 * 15;
+					front_color = 0xFFFF00;
+					start_x = 30 + (131 + gid - 25) * 9 + (130 / 2 + gid - 25) * 3;
+				}
+				else
+				{
+					start_y = 30 + 23 * 15;
+					front_color = 0xFFFF;
+					start_x = 30 + (131 + gid - 41) * 9 + (130 / 2 + gid - 41) * 3;
+				}
+				start_pos = start_y * w_x + start_x;
+				switch (gid)
+				{
+					case 0:
+					case 2:
+					case 19:
+					case 49:
+						print_T(picture, start_pos, back_color, front_color, w_x);
+						break;
+					case 1:
+					case 20:
+						print_o(picture, start_pos, back_color, front_color, w_x);
+						break;
+					case 3:
+					case 38:
+					case 47:
+						print_A(picture, start_pos, back_color, front_color, w_x);
+						break;
+					case 4:
+					case 9:
+					case 15:
+					case 28:
+					case 42:
+					case 56:
+						print_L(picture, start_pos, back_color, front_color, w_x);
+						break;
+					case 5:
+					case 18:
+					case 21:
+					case 31:
+					case 35:
+					case 46:
+					case 52:
+						print_empty(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 6:
+					case 8:
+					case 12:
+					case 14:
+					case 25:
+					case 27:
+					case 53:
+					case 55:
+						print_C(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 7:
+					case 13:
+					case 26:
+					case 54:
+						print_Y(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 10:
+					case 16:
+					case 24:
+					case 29:
+					case 33:
+					case 40:
+					case 43:
+					case 44:
+					case 50:
+					case 57:
+						print_E(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 11:
+					case 17:
+					case 30:
+					case 41:
+						print_S(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 22:
+						print_D(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 23:
+						print_I(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 32:
+					case 45:
+						print_P(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 34:
+					case 37:
+					case 51:
+						print_R(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 36:
+					case 48:
+						print_F(picture, start_pos, back_color, front_color, w_x);
+							break;
+					case 39:
+						print_M(picture, start_pos, back_color, front_color, w_x);
+							break;
 				}
 			}
 		}
