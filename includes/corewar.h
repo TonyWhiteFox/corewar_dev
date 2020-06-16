@@ -15,6 +15,7 @@
 # include "libft.h"
 # include <mlx.h>
 # include "op.h"
+# include "asm.h"
 # ifdef __APPLE__
 #  include <OpenCL/opencl.h>
 # else

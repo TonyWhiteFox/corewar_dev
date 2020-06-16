@@ -22,4 +22,8 @@
 #  include <CL/cl.h>
 # endif
 
+# define CHAMP_EXP ".s"
+# define CHAMP_COUNT_ERROR "Please indicate the name of one champion\n"
+# define EXTENSION_ERROR "Champion file must be with the extension \".s\"\n"
+
 #endif

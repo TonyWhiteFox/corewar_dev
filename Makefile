@@ -36,7 +36,9 @@ SRC1		= check_cursors.c\
 				visualisation.c\
 				mlx_controls.c\
 
-SRC2		= mainasm.c\
+SRC2		= asm.c\
+            valid_name.c\
+            champ_parser.c\
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
 HEADERSUB	= $(INCDIR)$(PROGECTSUB).h
