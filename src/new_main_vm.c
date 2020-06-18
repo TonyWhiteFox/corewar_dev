@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/18 21:54:44 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/18 22:55:16 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		read_comment(t_virt *v, t_gamer *new_gamer)
 {
 	new_gamer->comment = (char *)malloc(2049);
 	ft_bzero(new_gamer->comment, 2049);
-	if ((read(v->fd, new_gamer->comment, 128)) < 0)
+	if ((read(v->fd, new_gamer->comment, 2048)) < 0)
 		close_fd_send_error_close(v, "Error reading file!");
 }
 
@@ -93,27 +93,9 @@ void		read_body(t_virt *v, t_gamer *new_gamer, int readed_byte)
 	ft_bzero(new_gamer->code, new_gamer->size + 1);
 	if ((readed_byte = read(v->fd, new_gamer->code, new_gamer->size)) < 0)
 		close_fd_send_error_close(v, "Error reading file!");
-	/*if ((readed_byte != new_gamer->size) ||
-			((read(v->fd, &test_for_read, 1)) > 0))*/
-		ft_printf("%i %i %i\n", readed_byte, new_gamer->size, read(v->fd, &test_for_read, 10000));
+	if ((readed_byte != new_gamer->size) ||
+			((read(v->fd, &test_for_read, 1)) > 0))
 		close_fd_send_error_close(v, "Champion's size in file is false");
-}
-
-int		get_code2(t_gamer *new_gamer, int fd)
-{
-	char	buf[new_gamer->size + 1];
-	int		ret;
-
-	if ((ret = read(fd, buf, new_gamer->size)) < 0)
-		return (ft_error(READ_ERROR));
-	buf[ret] = 0;
-	if (ret != new_gamer->size)
-		return (ft_error(INV_CHAP_SIZE));
-	if (!(new_gamer->code = ft_strndup(buf, ret)))
-		return (ft_error(INVALID_MALLOC));
-	if (read(fd, buf, 1) > 0)
-		return (ft_error(INV_CHAP_SIZE));
-	return (1);
 }
 
 int			get_int_in_fd(t_virt *v, int i, int tmp_int, unsigned char tmp_ch)
@@ -126,15 +108,6 @@ int			get_int_in_fd(t_virt *v, int i, int tmp_int, unsigned char tmp_ch)
 		i++;
 	}
 	return (tmp_int);
-
-	// char	buf[4];
-	// char	str[4];
-
-	// i = -1;
-	// read(v->fd, buf, 4);
-	// while (++i < 4)
-	// 	str[i] = buf[3 - i];
-	// return(*((int *)str));
 }
 
 void		read_size(t_virt *v, t_gamer *new_gamer)
@@ -167,7 +140,6 @@ void		create_gamer_and_fill_him(t_virt *v, t_gamer *new_gamer,
 	read_comment(v, new_gamer);
 	skip_empty(v, 4, 0);
 	read_body(v, new_gamer, 0);
-	// get_code2(new_gamer, v->fd);
 }
 
 void		read_gamers(char *av, t_virt *v)
@@ -226,6 +198,8 @@ void		check_program_args(int ac, char **av, t_virt *v, int i)
 		}
 	}
 }
+
+
 /**/
 int			main(int ac, char **av)
 {
@@ -237,4 +211,5 @@ int			main(int ac, char **av)
 		exit(0);
 	}
 	check_program_args(ac, av, v, 1);
+	send_gamers(v);
 }/**/
