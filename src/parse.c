@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 16:41:52 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:50:29 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/18 21:48:48 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		get_size(t_player *player, int fd)
 	player->size = *((int *)size);
 	if (player->size <= 0 || player->size > CHAMP_MAX_SIZE)
 		return (ft_error(INV_CHAP_SIZE));
+	ft_printf("%i\n", player->size);
 	return (1);
 }
 

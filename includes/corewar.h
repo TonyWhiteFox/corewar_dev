@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/16 00:21:22 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/18 19:25:06 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,26 @@ typedef struct			s_main
 	bool				v_flag;
 }						t_main;
 
+typedef struct			s_gamer
+{
+	int					num;
+	char				*name;
+	char				*comment;
+	int					size;
+	char				*code;
+	struct s_gamer		*next;
+}						t_gamer;
+
 typedef struct			s_virt
 {
+	int					total_gamers;
 	int					d;
 	int					dump;
 	int					number;
 	bool				vis;
 	cl_int				temp;
+	int					fd;
+	t_gamer				*gamer;
 }						t_virt;
 
 typedef struct			s_o
