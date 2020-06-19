@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/19 19:46:37 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/19 20:01:00 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int			get_int_in_fd(t_virt *v, int i, int tmp_int, unsigned char tmp_ch)
 void		read_size(t_virt *v, t_gamer *new_gamer)
 {
 	new_gamer->size = get_int_in_fd(v, 0, 0, 0);
-	if (new_gamer->size <= 0 || new_gamer->size > CHAMP_MAX_SIZE)
+	if (new_gamer->size < 0 || new_gamer->size > CHAMP_MAX_SIZE)
 		close_fd_send_error_close(v, "Invalid champion's size!");
 }
 
@@ -217,6 +217,9 @@ void		gamer_buble_sorting(t_virt *v, t_gamer *first_cycle,
 		second_cycle = v->gamer;
 		while (second_cycle->next)
 		{
+			if (second_cycle->next->num > v->total_gamers ||
+					second_cycle->num > v->total_gamers)
+				exit(ft_printf("Maximal player num = sum players!\n"));
 			if (second_cycle->num == second_cycle->next->num)
 				exit(ft_printf("Duplicate player num!\n"));
 			if (second_cycle->num > second_cycle->next->num)
@@ -243,7 +246,7 @@ void		get_all_number_for_gamers(t_gamer *gamer)
 
 int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
 {
-	while (numb < v->total_gamers)
+	while (numb <= v->total_gamers)
 	{
 		while (gamer)
 		{
@@ -296,6 +299,8 @@ void		send_gamers(t_virt *v)
 {
 	if (v->total_gamers == 0)
 		exit(ft_printf("No gamers!\nRun ./corewar for help\n"));
+	if (v->gamer->num > v->total_gamers)
+				exit(ft_printf("Maximal player num = sum players!\n"));
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
