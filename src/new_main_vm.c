@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/19 19:36:17 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/19 19:46:37 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,8 @@ void		gamer_on_show(t_gamer *gamer)
 
 void		send_gamers(t_virt *v)
 {
+	if (v->total_gamers == 0)
+		exit(ft_printf("No gamers!\nRun ./corewar for help\n"));
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
