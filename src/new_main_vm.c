@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/18 22:55:16 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/19 19:36:17 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ void		read_comment(t_virt *v, t_gamer *new_gamer)
 		close_fd_send_error_close(v, "Error reading file!");
 }
 
-void		read_body(t_virt *v, t_gamer *new_gamer, int readed_byte)
+void		read_body(t_virt *v, t_gamer *new_gamer, int readed_byte, char test_for_read)
 {
-	char	test_for_read;
-
 	new_gamer->code = (char *)malloc(new_gamer->size + 1);
 	ft_bzero(new_gamer->code, new_gamer->size + 1);
 	if ((readed_byte = read(v->fd, new_gamer->code, new_gamer->size)) < 0)
@@ -139,7 +137,7 @@ void		create_gamer_and_fill_him(t_virt *v, t_gamer *new_gamer,
 	read_size(v, new_gamer);
 	read_comment(v, new_gamer);
 	skip_empty(v, 4, 0);
-	read_body(v, new_gamer, 0);
+	read_body(v, new_gamer, 0, 0);
 }
 
 void		read_gamers(char *av, t_virt *v)
@@ -199,6 +197,111 @@ void		check_program_args(int ac, char **av, t_virt *v, int i)
 	}
 }
 
+t_gamer		*gamer_swap(t_gamer *swap_now, t_gamer *swap_next, t_gamer *swap_prew,
+						t_virt *v)
+{
+	if (swap_now == v->gamer)
+		v->gamer = swap_next;
+	else
+		swap_prew->next = swap_next;
+	swap_now->next = swap_next->next;
+	swap_next->next = swap_now;
+	return(swap_next);
+}
+
+void		gamer_buble_sorting(t_virt *v, t_gamer *first_cycle,
+							t_gamer *second_cycle, t_gamer *temp)
+{
+	while (first_cycle->next)
+	{
+		second_cycle = v->gamer;
+		while (second_cycle->next)
+		{
+			if (second_cycle->num == second_cycle->next->num)
+				exit(ft_printf("Duplicate player num!\n"));
+			if (second_cycle->num > second_cycle->next->num)
+			{
+				second_cycle = gamer_swap(second_cycle,
+							second_cycle->next, temp, v);
+				first_cycle = v->gamer;
+			}
+			temp = second_cycle;
+			second_cycle = second_cycle->next;
+		}
+		first_cycle = first_cycle->next;
+	}
+}
+
+void		get_all_number_for_gamers(t_gamer *gamer)
+{
+	while (gamer->next)
+	{
+		gamer->num *= -1;
+		gamer = gamer->next;
+	}
+}
+
+int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
+{
+	while (numb < v->total_gamers)
+	{
+		while (gamer)
+		{
+			if (numb < gamer->num)
+				return(numb);
+			if (numb == gamer->num)
+			{
+				numb++;
+				temp = gamer->num;
+				gamer = gamer->next;
+			}
+		}
+		if (numb < temp)
+			return (numb);
+		else
+			numb++;
+	}
+	return (0);
+}
+
+void		find_last_negative_player(t_virt *v, t_gamer *gamer,
+								t_gamer *temp, bool isFind)
+{
+	while (gamer->next && !isFind)
+		if (gamer->next->num > 0)
+			isFind = TRUE;
+		else
+			gamer = gamer->next;
+	if (!isFind)
+		get_all_number_for_gamers(v->gamer);
+	else
+	{
+		temp = gamer->next;
+		gamer->num = find_empty_num(v, temp, 1, 0);
+	}
+}
+
+void		gamer_on_show(t_gamer *gamer)
+{
+	ft_printf("Introducing contestants...\n");
+	while (gamer)
+	{
+		ft_printf("* Player %i, weighing %i bytes, \"%s\" (\"%s\") !\n",
+				gamer->num, gamer->size, gamer->name, gamer->comment);
+		gamer = gamer->next;
+	}
+}
+
+void		send_gamers(t_virt *v)
+{
+	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
+	while (v->gamer->num < 0)
+	{
+		find_last_negative_player(v, v->gamer, NULL, FALSE);
+		gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
+	}
+	gamer_on_show(v->gamer);
+}
 
 /**/
 int			main(int ac, char **av)
