@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   manage_type.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/27 15:48:49 by lshellie          #+#    #+#             */
-/*   Updated: 2020/03/04 10:46:37 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/20 20:08:24 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			g_dir[17] = {T_DIR_SIZE,
-	4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 4, 2, 2, 4};
+// int			g_dir[17] = {T_DIR_SIZE,
+// 	4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 4, 2, 2, 4};
 
 int			s(int t, int op)
 {
@@ -21,8 +21,8 @@ int			s(int t, int op)
 		return (1);
 	else if (t == IND)
 		return (2);
-	else if (t == DIR)
-		return (g_dir[op]);
+	// else if (t == DIR)
+	// 	return (g_dir[op]);
 	return (0);
 }
 

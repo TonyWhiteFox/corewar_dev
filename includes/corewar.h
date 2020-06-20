@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/18 19:25:06 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/20 20:22:59 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,18 @@ typedef struct			s_opencl //new
 	cl_uint				ret_num_devices;
 	cl_context			context;
 	cl_mem				mem_picture;
-	cl_mem				mem_field;
-	cl_mem				mem_changers;
-	cl_mem				mem_cursor;
+	cl_mem				mem_map;
+	cl_mem				mem_log;
+	cl_mem				mem_serf;
+	cl_mem				mem_field; //delete
+	cl_mem				mem_changers; //delete
+	cl_mem				mem_cursor; //delete
 	cl_mem				mem_live;
 	cl_mem				mem_decor;
 	cl_command_queue	command_queue;
 	int					ret;
 	cl_int				*ret_pic;
-	cl_uchar			*send_field;
+	cl_uchar			*send_field; //delete
 	cl_int				flows;
 	bool				*decor;
 	char				*file;
@@ -157,6 +160,19 @@ typedef struct			s_main
 	bool				v_flag;
 }						t_main;
 
+typedef struct			s_serf
+{
+	int					*reg;
+	long unsigned int	id;
+	int					pos;
+	bool				jump;
+	int					spell;
+	int					left_to_cust;
+	int					last_live_cycle;
+	short int			creater_no;
+	struct s_serf		*next;
+}						t_serf;
+
 typedef struct			s_gamer
 {
 	int					num;
@@ -167,16 +183,45 @@ typedef struct			s_gamer
 	struct s_gamer		*next;
 }						t_gamer;
 
+typedef struct			s_option
+{
+	int					total_len;
+	int					*var_type;
+	int					*var_len;
+	int					*variable;
+}						t_option;
+
 typedef struct			s_virt
 {
+//lists
+	t_gamer				*gamer;
+	t_serf				*serf;
+//struct
+	t_mlx				*mlx;
+	t_opencl			*opencl;
+	t_option			*option;
+//arrays
+	cl_uchar			*map;
+	cl_uint				*log;
+	bool				*have_serf;
+	cl_int				*live_log;
+//used in general cycle
+	long unsigned int	last_serf_id;
 	int					total_gamers;
+	short				w_x;
+	short				w_y;
+	int					total_cycles;
+	int					cycles;
+	int					life_in_die_cycle;
+	int					player_num_last_say_life;
+//free after read players
+	cl_int				temp;
+	int					fd;
+//flags
 	int					d;
 	int					dump;
 	int					number;
 	bool				vis;
-	cl_int				temp;
-	int					fd;
-	t_gamer				*gamer;
 }						t_virt;
 
 typedef struct			s_o

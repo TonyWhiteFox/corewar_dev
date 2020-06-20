@@ -6,14 +6,14 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 17:53:05 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/14 19:05:47 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/20 14:56:23 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			g_price[17] = {PRICE, 10, 5, 5, 10, 10, 6,
-	6, 6, 20, 25, 25, 800, 10, 50, 1000, 2};
+// int			g_price[17] = {PRICE, 10, 5, 5, 10, 10, 6,
+// 	6, 6, 20, 25, 25, 800, 10, 50, 1000, 2};
 
 void		do_or_wait(t_main *main, t_cursor *c)
 {
@@ -34,10 +34,10 @@ void		do_or_wait(t_main *main, t_cursor *c)
 void		read_byte(t_main *main, t_cursor *c)
 {
 	c->op = main->field[c->pos];
-	if (c->op > 0 && c->op <= MAX_OPS)
-		c->action = g_price[c->op];
-	else
-		c->action = -1;
+	// if (c->op > 0 && c->op <= MAX_OPS)
+	// 	// c->action = g_price[c->op];
+	// else
+	// 	c->action = -1;
 }
 
 void		do_cursor(t_main *main, t_cursor *c)
@@ -75,6 +75,5 @@ int			start_fight(t_main *m)
 			return (0);
 		}
 	}
-	ft_printf("%i ", m->total_cycle);
 	return (1);
 }
