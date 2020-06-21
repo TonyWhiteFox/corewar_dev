@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/20 20:22:59 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/21 11:39:27 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,8 @@ typedef struct			s_virt
 	int					total_cycles;
 	int					cycles;
 	int					life_in_die_cycle;
+	int					cycles_before_die;
+	short				without_abbreviations;
 	int					player_num_last_say_life;
 //free after read players
 	cl_int				temp;
@@ -222,6 +224,7 @@ typedef struct			s_virt
 	int					dump;
 	int					number;
 	bool				vis;
+	bool				hardcore;
 }						t_virt;
 
 typedef struct			s_o

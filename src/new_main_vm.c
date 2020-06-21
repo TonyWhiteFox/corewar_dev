@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/20 21:41:53 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/21 12:10:53 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void		check_format(char *av, int i)
 void		init_start_params2(t_virt *v)
 {
 	v->life_in_die_cycle = 0;
+	v->cycles_before_die = CYCLE_TO_DIE;
+	v->without_abbreviations = 0;
+	v->hardcore = false;
+	v->have_serf = (bool *)malloc(sizeof(bool) * MEM_SIZE);
+	ft_bzero(v->have_serf, sizeof(bool) * MEM_SIZE);
+	v->live_log  = (cl_int *)malloc(sizeof(cl_int) * MEM_SIZE);
+	ft_bzero(v->live_log, sizeof(cl_int) * MEM_SIZE);
 }
 void		init_start_params(t_virt *v)
 {
@@ -563,6 +570,14 @@ int			calс_new_pos(int pos)
 	return(pos); 
 }
 
+void		set_jump(t_serf *serf, int reg)
+{
+	if (reg != 0)
+		serf->jump = 0;
+	else
+		serf->jump = 1;
+}
+
 int				g_live[6] = {1, 0, T_DIR, 0, 0, 4};
 int				g_fork[6] = {1, 0, T_DIR, 0, 0, 2};
 
@@ -739,34 +754,148 @@ bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
 	return (true);
 }
 
-// void		do_ld(t_serf *serf, t_option *option)
-// {
-// 	if ((option->var_type[0] == DIR || option->var_type[0] == IND)
-// 		&& option->var_type[1] == REG)
-// 	{
-// 		c->reg[o->x[1]] = o->x[0];
-// 		modify_carry(c, c->reg[o->x[1]]);
-// 	}
-// 	c->op = 0;
-// 	c->pos = c_p(c->pos + o->step);
-// }
+void		make_ld(t_serf *serf, t_option *option)
+{
+	if ((option->var_type[0] == DIR || option->var_type[0] == IND)
+		&& option->var_type[1] == REG)
+	{
+		serf->reg[option->variable[1]] = option->variable[0];
+		set_jump(serf, serf->reg[option->variable[1]]);
+	}
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		write_reg(t_serf *serf, t_option *option, int i)
+{
+	while (i < 3)
+	{
+		if (option->var_type[i] == REG)
+			option->variable[i] = serf->reg[option->variable[i]];
+		i++;
+	}
+}
+
+void		make_add_sub(t_serf *serf, t_option *option)
+{
+	if (option->var_type[0] == REG && option->var_type[1] == REG &&
+		option->var_type[2] == REG)
+	{
+		if (serf->spell == ADD)
+			serf->reg[option->variable[2]] = serf->reg[option->variable[1]]
+				+ serf->reg[option->variable[0]];
+		else if (serf->spell == SUB)
+			serf->reg[option->variable[2]] = serf->reg[option->variable[0]]
+				- serf->reg[option->variable[1]];
+		set_jump(serf, serf->reg[option->variable[2]]);
+	}
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		make_and_or_xor(t_serf *serf, t_option *option)
+{
+	write_reg(serf, option, 0);
+	if (option->var_type[2] == REG)
+	{
+		if (serf->spell == AND)
+			serf->reg[option->variable[2]] = option->variable[0] & option->variable[1];
+		else if (serf->spell == OR)
+			serf->reg[option->variable[2]] = option->variable[0] | option->variable[1];
+		else if (serf->spell == XOR)
+			serf->reg[option->variable[2]] = option->variable[0] ^ option->variable[1];
+		set_jump(serf, serf->reg[option->variable[2]]);
+	}
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		change_map(t_virt *v, t_serf *serf, int reg, int copy_in_pos)
+{
+	int		i;
+	char	*temp_ch;
+
+	temp_ch = (char *)(&reg);
+	i = 0;
+	while (i < 4)
+	{
+		v->map[calс_new_pos(copy_in_pos + i)] = temp_ch[3 - i];
+		v->log[calс_new_pos(copy_in_pos + i)] = serf->creater_no + v->total_cycles * 10;
+		i++;
+	}
+}
+
+void		make_sti(t_virt *v, t_serf *serf, t_option *option)
+{
+	write_reg(serf, option, 0);
+	if ((option->var_type[2] == REG || option->var_type[2] == DIR)
+			&& option->var_type[0] == REG)
+		change_map(v, serf, serf->reg[option->variable[0]], serf->pos
+				+ (option->variable[1] + option->variable[2]) % IDX_MOD);
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		make_st(t_virt *v, t_serf *serf, t_option *option)
+{
+	if (option->var_type[0] == REG && option->var_type[1] == REG)
+		serf->reg[option->variable[1]] = serf->reg[option->variable[0]];
+	if (option->var_type[0] == REG && option->var_type[1] == IND)
+		change_map(v, serf, serf->reg[option->variable[0]],
+				serf->pos + option->variable[1] % IDX_MOD);
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		make_aff(t_serf *serf, t_option *option)
+{
+	if (option->var_type[0] == REG)
+	{
+		write_reg(serf, option, 0);
+		if (AFF_OP)
+			ft_putchar((char)option->variable[0]);
+	}
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
+
+void		make_ldi(t_virt *v, t_serf *serf, t_option *option)
+{
+	write_reg(serf, option, 0);
+	if ((option->var_type[1] == REG || option->var_type[1] == DIR)
+		&& option->var_type[2] == REG)
+	{
+		if (serf->spell == LDI)
+			serf->reg[option->variable[2]] = find_num(v, serf,
+				(option->variable[0] + option->variable[1]) % IDX_MOD, 4);
+		else if (serf->spell == LLDI)
+		{
+
+			serf->reg[option->variable[2]] = find_num(v, serf,
+				option->variable[0] + option->variable[1], 4);
+			set_jump(serf, serf->reg[option->variable[2]]);
+		}
+	}
+	serf->spell = 0;
+	serf->pos = calс_new_pos(serf->pos + option->total_len);
+}
 
 void		spell_book_with_vars(t_virt *v, t_serf *serf, t_option *option)
 {
-	// if (serf->spell == LD || serf->spell == LLD)
-	// 	make_ld(serf, option);
-	// else if (serf->spell == ADD || serf->spell == SUB)
-	// 	make_add_sub(v, serf, option);
-	// else if (serf->spell == AND || serf->spell == OR || serf->spell == XOR)
-	// 	make_and_or_xor(v, serf, option);
-	// else if (serf->spell == ST)
-	// 	make_st(v, serf, option);
-	// else if (serf->spell == STI)
-	// 	make_sti(v, serf, option);
-	// else if (serf->spell == AFF)
-	// 	make_aff(v, serf, option);
-	// else if (serf->spell == LDI || serf->spell == LLDI)
-	// 	make_ldi(v, serf, option);
+	if (serf->spell == LD || serf->spell == LLD)
+		make_ld(serf, option);
+	else if (serf->spell == ADD || serf->spell == SUB)
+		make_add_sub(serf, option);
+	else if (serf->spell == AND || serf->spell == OR || serf->spell == XOR)
+		make_and_or_xor(serf, option);
+	else if (serf->spell == ST)
+		make_st(v, serf, option);
+	else if (serf->spell == STI)
+		make_sti(v, serf, option);
+	else if (serf->spell == AFF)
+		make_aff(serf, option);
+	else if (serf->spell == LDI || serf->spell == LLDI)
+		make_ldi(v, serf, option);
 }
 
 void		spell_book(t_virt *v, t_serf *serf)
@@ -786,7 +915,6 @@ int			g_price[17] = {PRICE, 10, 5, 5, 10, 10, 6,
 
 void		multi_cust(t_virt *v, t_serf *serf)
 {
-		
 	serf->left_to_cust--;
 	if (serf->left_to_cust == 0)
 		spell_book(v, serf);
@@ -813,7 +941,62 @@ void		make_a_move(t_virt *v, t_serf *serf)
 		multi_cust(v, serf);
 		v->have_serf[serf->pos] = TRUE;
 		serf = serf->next;
+		
 	}
+}
+
+t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
+{
+	if (v->serf == temp1)
+	{
+		v->serf = temp1->next;
+		free(temp1->reg);
+		free(temp1);
+		return(v->serf);
+	}
+	else
+	{
+		temp2->next = temp1->next;
+		free(temp1->reg);
+		free(temp1);
+		return(temp2->next);
+	}
+	return(NULL);
+}
+
+void		kill_serf(t_virt *v, t_serf *temp1, t_serf *temp2)
+{
+	while (temp1)
+	{
+		if (v->total_cycles - temp1->last_live_cycle >= v->cycles_before_die)
+			temp1 = find_heir(v, temp1, temp2);
+		else
+		{
+			temp2 = temp1;
+			temp1 = temp1->next;
+		}
+	}
+}
+
+void			extermination_serfs(t_virt *v)
+{
+	v->without_abbreviations++;
+	kill_serf(v, v->serf, v->serf);
+	if (v->life_in_die_cycle >= NBR_LIVE)
+	{
+		v->cycles_before_die -= CYCLE_DELTA;
+		v->without_abbreviations = 0;
+	}
+	if (v->without_abbreviations >= MAX_CHECKS)
+	{
+		if (v->hardcore)
+			v->cycles_before_die += CYCLE_DELTA;
+		else
+			v->cycles_before_die -= CYCLE_DELTA;
+		v->without_abbreviations = 0;
+	}
+	v->life_in_die_cycle = 0;
+	v->cycles = 0;
 }
 
 void		hide_show_run(t_virt *v)
@@ -823,6 +1006,14 @@ void		hide_show_run(t_virt *v)
 		v->total_cycles++;
 		v->cycles++;
 		make_a_move(v, v->serf);
+		if (v->cycles == v->cycles_before_die || v->cycles_before_die <= 0)
+			extermination_serfs(v);
+		// if (v->serf && (v->dump == v->total_cycles || v->dump == 0 ||
+		// 	v->d == v->total_cycles || v->d == 0))
+		// {
+		// 	dump_memory(v->map);
+		// 	return (0);
+		// }
 	}
 }
 
@@ -854,4 +1045,5 @@ int			main(int ac, char **av)
 	if (v->vis)
 		heat_visual(v);
 	only_one_will_be_left_alive(v);
+	ft_printf("LOL\n");
 }/**/
