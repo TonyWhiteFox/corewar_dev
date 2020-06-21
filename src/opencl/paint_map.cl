@@ -931,22 +931,22 @@ __kernel void print_map(__global int* picture, __global uchar* field,
 	{
 		switch (change % 10)
 		{
-			case 0:
+			case 1:
 				front_color = 0x990000;
 				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
 					front_color = 0xFF0000;
 				break;
-			case 1:
+			case 2:
 				front_color = 0x9900;
 				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
 					front_color = 0xFF00;
 				break;
-			case 2:
+			case 3:
 				front_color = 0x9999;
 				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
 					front_color = 0xFFFF;
 				break;
-			case 3:
+			case 4:
 				front_color = 0x990099;
 				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
 					front_color = 0xFF00FF;
@@ -969,16 +969,16 @@ __kernel void print_map(__global int* picture, __global uchar* field,
 			front_color = 0xFFFFFF;
 			switch (live[half_gid] % 10)
 			{
-				case 0:
+				case 1:
 					back_color = 0xCC0000;
 					break;
-				case 1:
+				case 2:
 					back_color = 0xCC00;
 					break;
-				case 2:
+				case 3:
 					back_color = 0xCCCC;
 					break;
-				case 3:
+				case 4:
 					back_color = 0xCC00CC;
 					break;
 			}

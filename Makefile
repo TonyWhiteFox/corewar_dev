@@ -6,7 +6,7 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/06/15 21:18:19 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/06/21 17:05:19 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,28 +15,7 @@ PROGECTSUB = asm
 NAME1	= $(PROGECTMAIN)
 NAME2	= $(PROGECTSUB)
 
-SRC1		= check_cursors.c\
-				get_args.c\
-				ops1.c\
-				read_files.c\
-				cursor.c\
-				live_forks_zjmp.c\
-				ops2.c\
-				start_game.c\
-				do_op.c\
-				parse.c\
-				type_byte.c\
-				error.c\
-				players.c\
-				vm_main.c\
-				fight.c\
-				manage_type.c\
-				print_dump.c\
-				add_new_flags.c\
-				visualisation.c\
-				mlx_controls.c\
-				run_visual_fight.c\
-				new_main_vm.c\
+SRC1		= new_main_vm.c\
 
 SRC2		= mainasm.c\
 

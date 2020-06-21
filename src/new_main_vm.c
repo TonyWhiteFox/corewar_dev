@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/21 12:10:53 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/21 17:25:01 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,12 +322,18 @@ void		gamer_on_show(t_gamer *gamer)
 
 void		create_serf(t_virt *v, t_serf *surf)
 {
+	int		i;
+
+	i = 0;
 	surf = (t_serf *)malloc(sizeof(t_serf));
 	ft_bzero(surf, sizeof(t_serf));
 	surf->next = NULL;
 	surf->reg = (int *)malloc(sizeof(int) * REG_NUMBER);
-	ft_bzero(surf->reg, sizeof(sizeof(int) * REG_NUMBER));
-
+	while (i < 16)
+	{
+		surf->reg[i] = 0;
+		i++;
+	}
 	if (!v->serf)
 		v->serf = surf;
 	else
@@ -350,10 +356,10 @@ void		get_start_pos_and_first_serf(t_virt *v, t_gamer *gamer,
 			v->log[(start_pos + i) % MEM_SIZE] = gamer->num;
 			i++;
 		}
-		v->serf->reg[0] = gamer->num * (-1);
+		v->serf->reg[0] = -(gamer->num);
 		v->serf->creater_no = gamer->num;
-		v->last_serf_id += 1;
 		v->serf->id = v->last_serf_id;
+		v->last_serf_id += 1;
 		v->serf->pos = start_pos;
 		start_pos += MEM_SIZE / v->total_gamers;
 		gamer = gamer->next;
@@ -603,6 +609,7 @@ int			find_num(t_virt *v, t_serf *serf, int pos, int size)
 
 void			make_live(t_virt *v, t_serf *serf, int i, int t_dir)
 {
+	//ft_printf("live\n");
 	char		dir[4];
 
 	while (i < g_live[T_DIR_SIZE])
@@ -624,6 +631,7 @@ void			make_live(t_virt *v, t_serf *serf, int i, int t_dir)
 
 void			make_zjmp(t_virt *v, t_serf *serf, int t_dir)
 {
+	//ft_printf("zjmp\n");
 	t_dir = find_num(v, serf, 1, 2);
 	if (serf->jump)
 		serf->pos = calс_new_pos(serf->pos + t_dir % IDX_MOD);
@@ -634,6 +642,7 @@ void			make_zjmp(t_virt *v, t_serf *serf, int t_dir)
 
 void			make_fork(t_virt *v, t_serf *serf, int i, int dir)
 {
+	//ft_printf("fork\n");
 	dir = find_num(v, serf, 1, 2);
 	if (serf->spell == FORK)
 		dir %= IDX_MOD;
@@ -741,13 +750,17 @@ bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
 	ft_bzero(v->option->variable, sizeof(int) * 3);
 	v->option->total_len = 2;
 	temp_ch = v->map[calс_new_pos(serf->pos + 1)];
-	v->option->var_type[0] = (temp_ch >> 7) + ((temp_ch << 1) >> 6);
-	v->option->var_type[1] = ((temp_ch << 2) >> 7) + ((temp_ch << 3) >> 6);
-	v->option->var_type[2] = ((temp_ch << 4) >> 7) + ((temp_ch << 5) >> 6);
+	v->option->var_type[0] = (temp_ch / 128) + ((temp_ch % 128) / 64) * 2;
+	v->option->var_type[1] = (temp_ch % 64) / 32 + ((temp_ch % 32) / 16) * 2;
+	v->option->var_type[2] = (temp_ch % 16) / 8 + ((temp_ch % 8) / 4) * 2;
+	//ft_printf("__%i %i %i %i\n", v->map[calс_new_pos(serf->pos + 1)], v->option->var_type[0], v->option->var_type[1], v->option->var_type[2]);
 	calc_option_len(serf, v->option, 0);
+	//ft_printf("2__%i %i %i %i\n", v->option->total_len, v->option->var_len[0], v->option->var_len[1], v->option->var_len[2]);
 	fill_vars(v, serf, v->option, 0);
-	if (!(check_valid_reg(serf, v->option, 0)) || !check_var_types(serf, v->option))
+	//ft_printf("3__%i %i %i\n", v->option->variable[0], v->option->variable[1], v->option->variable[2]);
+	if (!(check_valid_reg(serf, v->option, 0) && check_var_types(serf, v->option)))
 	{
+		//ft_printf("exit_check");
 		serf->pos = calс_new_pos(serf->pos + v->option->total_len);
 		return (false);
 	}
@@ -756,6 +769,7 @@ bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
 
 void		make_ld(t_serf *serf, t_option *option)
 {
+	//ft_printf("ld\n");
 	if ((option->var_type[0] == DIR || option->var_type[0] == IND)
 		&& option->var_type[1] == REG)
 	{
@@ -774,10 +788,12 @@ void		write_reg(t_serf *serf, t_option *option, int i)
 			option->variable[i] = serf->reg[option->variable[i]];
 		i++;
 	}
+	//ft_printf("Reg: %i %i %i \n", option->variable[0], option->variable[1], option->variable[2]);
 }
 
 void		make_add_sub(t_serf *serf, t_option *option)
 {
+	//ft_printf("add_sub\n");
 	if (option->var_type[0] == REG && option->var_type[1] == REG &&
 		option->var_type[2] == REG)
 	{
@@ -793,18 +809,20 @@ void		make_add_sub(t_serf *serf, t_option *option)
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
-void		make_and_or_xor(t_serf *serf, t_option *option)
+void		make_and_or_xor(t_serf *serf, t_option *option, int save_var)
 {
+	//ft_printf("and_or_xor\n");
+	save_var = option->variable[2];
 	write_reg(serf, option, 0);
 	if (option->var_type[2] == REG)
 	{
 		if (serf->spell == AND)
-			serf->reg[option->variable[2]] = option->variable[0] & option->variable[1];
+			serf->reg[save_var] = option->variable[0] & option->variable[1];
 		else if (serf->spell == OR)
-			serf->reg[option->variable[2]] = option->variable[0] | option->variable[1];
+			serf->reg[save_var] = option->variable[0] | option->variable[1];
 		else if (serf->spell == XOR)
-			serf->reg[option->variable[2]] = option->variable[0] ^ option->variable[1];
-		set_jump(serf, serf->reg[option->variable[2]]);
+			serf->reg[save_var] = option->variable[0] ^ option->variable[1];
+		set_jump(serf, serf->reg[save_var]);
 	}
 	serf->spell = 0;
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
@@ -816,7 +834,9 @@ void		change_map(t_virt *v, t_serf *serf, int reg, int copy_in_pos)
 	char	*temp_ch;
 
 	temp_ch = (char *)(&reg);
+	//ft_printf("Reg__%i Char__%i %i %i %i\n", reg, temp_ch[0], temp_ch[1], temp_ch[2], temp_ch[3]);
 	i = 0;
+
 	while (i < 4)
 	{
 		v->map[calс_new_pos(copy_in_pos + i)] = temp_ch[3 - i];
@@ -825,30 +845,36 @@ void		change_map(t_virt *v, t_serf *serf, int reg, int copy_in_pos)
 	}
 }
 
-void		make_sti(t_virt *v, t_serf *serf, t_option *option)
+void		make_sti(t_virt *v, t_serf *serf, t_option *option, int save_var)
 {
+	//ft_printf("sti\n");
+	save_var = option->variable[0];
 	write_reg(serf, option, 0);
 	if ((option->var_type[2] == REG || option->var_type[2] == DIR)
 			&& option->var_type[0] == REG)
-		change_map(v, serf, serf->reg[option->variable[0]], serf->pos
+		change_map(v, serf, serf->reg[save_var], serf->pos
 				+ (option->variable[1] + option->variable[2]) % IDX_MOD);
 	serf->spell = 0;
+	//ft_printf("%i %i\n", serf->pos + option->total_len, option->total_len);
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
 void		make_st(t_virt *v, t_serf *serf, t_option *option)
 {
+	//ft_printf("st\n");
 	if (option->var_type[0] == REG && option->var_type[1] == REG)
 		serf->reg[option->variable[1]] = serf->reg[option->variable[0]];
 	if (option->var_type[0] == REG && option->var_type[1] == IND)
 		change_map(v, serf, serf->reg[option->variable[0]],
 				serf->pos + option->variable[1] % IDX_MOD);
 	serf->spell = 0;
+	
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
 void		make_aff(t_serf *serf, t_option *option)
 {
+	//ft_printf("aff\n");
 	if (option->var_type[0] == REG)
 	{
 		write_reg(serf, option, 0);
@@ -859,21 +885,23 @@ void		make_aff(t_serf *serf, t_option *option)
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
-void		make_ldi(t_virt *v, t_serf *serf, t_option *option)
+void		make_ldi(t_virt *v, t_serf *serf, t_option *option, int save_var)
 {
+	//ft_printf("ldi\n");
+	save_var = option->variable[2];
 	write_reg(serf, option, 0);
 	if ((option->var_type[1] == REG || option->var_type[1] == DIR)
 		&& option->var_type[2] == REG)
 	{
 		if (serf->spell == LDI)
-			serf->reg[option->variable[2]] = find_num(v, serf,
+			serf->reg[save_var] = find_num(v, serf,
 				(option->variable[0] + option->variable[1]) % IDX_MOD, 4);
 		else if (serf->spell == LLDI)
 		{
 
-			serf->reg[option->variable[2]] = find_num(v, serf,
+			serf->reg[save_var] = find_num(v, serf,
 				option->variable[0] + option->variable[1], 4);
-			set_jump(serf, serf->reg[option->variable[2]]);
+			set_jump(serf, serf->reg[save_var]);
 		}
 	}
 	serf->spell = 0;
@@ -887,19 +915,20 @@ void		spell_book_with_vars(t_virt *v, t_serf *serf, t_option *option)
 	else if (serf->spell == ADD || serf->spell == SUB)
 		make_add_sub(serf, option);
 	else if (serf->spell == AND || serf->spell == OR || serf->spell == XOR)
-		make_and_or_xor(serf, option);
+		make_and_or_xor(serf, option, 0);
 	else if (serf->spell == ST)
 		make_st(v, serf, option);
 	else if (serf->spell == STI)
-		make_sti(v, serf, option);
+		make_sti(v, serf, option, 0);
 	else if (serf->spell == AFF)
 		make_aff(serf, option);
 	else if (serf->spell == LDI || serf->spell == LLDI)
-		make_ldi(v, serf, option);
+		make_ldi(v, serf, option, 0);
 }
 
 void		spell_book(t_virt *v, t_serf *serf)
 {
+	//ft_printf("___SPELL___%i\n", serf->id);
 	if (serf->spell == LIVE)
 		make_live(v, serf, 0, 0);
 	else if (serf->spell == ZJMP)
@@ -915,14 +944,17 @@ int			g_price[17] = {PRICE, 10, 5, 5, 10, 10, 6,
 
 void		multi_cust(t_virt *v, t_serf *serf)
 {
-	serf->left_to_cust--;
-	if (serf->left_to_cust == 0)
-		spell_book(v, serf);
-	if (serf->left_to_cust < -1)
+	if (serf->left_to_cust == -1)
 	{
 		serf->pos = calс_new_pos(serf->pos + 1);
 		serf->left_to_cust = 0;
 		serf->spell = 0;
+	}
+	else
+	{
+	serf->left_to_cust--;
+	if (serf->left_to_cust == 0)
+		spell_book(v, serf);
 	}
 }
 
@@ -951,6 +983,7 @@ t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
 	{
 		v->serf = temp1->next;
 		free(temp1->reg);
+		//ft_printf("kill %i\n", temp1->id);
 		free(temp1);
 		return(v->serf);
 	}
@@ -958,6 +991,7 @@ t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
 	{
 		temp2->next = temp1->next;
 		free(temp1->reg);
+		//ft_printf("kill %i\n", temp1->id);
 		free(temp1);
 		return(temp2->next);
 	}
@@ -999,6 +1033,25 @@ void			extermination_serfs(t_virt *v)
 	v->cycles = 0;
 }
 
+void		dump_map(t_virt *v, int i, int dump)
+{
+	if (v->dump > -1)
+		dump = 32;
+	else
+		dump = 64;
+	ft_printf("0x0000 : ");
+	while (i < MEM_SIZE)
+	{
+		if (i && i % dump == 0)
+			ft_printf("\n%6.4#x : ", i);
+		ft_printf("%.2x ", v->map[i]);
+		++i;
+	}
+	ft_printf("\n");
+	if (!v->vis)
+		exit (0);
+}
+
 void		hide_show_run(t_virt *v)
 {
 	while (v->serf)
@@ -1008,18 +1061,159 @@ void		hide_show_run(t_virt *v)
 		make_a_move(v, v->serf);
 		if (v->cycles == v->cycles_before_die || v->cycles_before_die <= 0)
 			extermination_serfs(v);
-		// if (v->serf && (v->dump == v->total_cycles || v->dump == 0 ||
-		// 	v->d == v->total_cycles || v->d == 0))
-		// {
-		// 	dump_memory(v->map);
-		// 	return (0);
-		// }
+		if (v->serf && (v->dump == v->total_cycles || v->dump == 0 ||
+				v->d == v->total_cycles || v->d == 0))
+			dump_map(v, 0, 0);
 	}
+}
+
+void		winner_is(t_virt *v, t_gamer *gamer)
+{
+	while (gamer->num != v->player_num_last_say_life)
+		gamer = gamer->next;
+	ft_printf("Contestant %i, \"%s\", has won !\n", gamer->num, gamer->name);
+}
+
+void		send_memory_buffers_to_cl(t_virt *v, t_opencl *o)
+{
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_picture, CL_TRUE, 0,
+								o->win_size * sizeof(cl_int),
+								o->ret_pic, 0, NULL, NULL);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_map, CL_TRUE, 0,
+								MEM_SIZE * sizeof(cl_uchar), v->map,
+								0, NULL, NULL);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_log, CL_TRUE,
+								0, MEM_SIZE * sizeof(cl_uint),
+								v->log, 0, NULL, NULL);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_serf, CL_TRUE,
+								0, MEM_SIZE * sizeof(bool),
+								v->have_serf, 0, NULL, NULL);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_live, CL_TRUE,
+								0, MEM_SIZE * sizeof(cl_int),
+								v->live_log, 0, NULL, NULL);
+	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_decor, CL_TRUE,
+								0, 285 * sizeof(bool),
+								o->decor, 0, NULL, NULL);
+	o->ret = clSetKernelArg(o->kernel, 0, sizeof(cl_mem),
+							(void *)&o->mem_picture);
+	o->ret = clSetKernelArg(o->kernel, 1, sizeof(cl_mem),
+							(void *)&o->mem_map);
+	o->ret = clSetKernelArg(o->kernel, 2, sizeof(cl_mem),
+							(void *)&o->mem_log);
+	o->ret = clSetKernelArg(o->kernel, 3, sizeof(cl_mem),
+							(void *)&o->mem_serf);
+	o->ret = clSetKernelArg(o->kernel, 4, sizeof(cl_mem),
+							(void *)&o->mem_live);
+	o->ret = clSetKernelArg(o->kernel, 5, sizeof(cl_mem),
+							(void *)&o->mem_decor);
+}
+
+void		execute_cl(t_virt *v, t_opencl *o, t_mlx *ml)
+{
+	size_t	i;
+
+	i = o->flows + 512;
+	o->ret = clEnqueueNDRangeKernel(o->command_queue, o->kernel, 1, NULL,
+									&i, NULL, 0, NULL, NULL);
+	o->ret = clEnqueueReadBuffer(o->command_queue, o->mem_picture, CL_TRUE, 0,
+			o->win_size * sizeof(cl_int), o->ret_pic, 0, NULL, NULL);
+	i = 0;
+	while (i < o->win_size)
+	{
+		*(int *)(ml->img_adr + i * 4) = o->ret_pic[i];
+		i++;
+	}
+	mlx_put_image_to_window(ml->mlx_ptr, ml->win_ptr, ml->img_ptr, 0, 0);
+
+}
+
+void		send_argument_to_cl(t_virt *v, t_opencl *o)
+{
+	cl_int	tmp_int;
+	send_memory_buffers_to_cl(v, o);
+	tmp_int = (cl_int)v->w_x;
+	o->ret = clSetKernelArg(o->kernel, 6, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)v->total_cycles;
+	o->ret = clSetKernelArg(o->kernel, 7, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)o->flows;
+	o->ret = clSetKernelArg(o->kernel, 8, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)v->cycles_before_die;
+	o->ret = clSetKernelArg(o->kernel, 9, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)v->mlx->cycle_per_frame;
+	o->ret = clSetKernelArg(o->kernel, 10, sizeof(cl_int), &tmp_int);
+	tmp_int = (cl_int)v->mlx->sleep_after_frame;
+	o->ret = clSetKernelArg(o->kernel, 11, sizeof(cl_int), &tmp_int);
+	execute_cl(v, o, v->mlx);
+}
+
+int		mouse_move_hook(int x, int y, t_virt *v)
+{
+	return (0);
+}
+
+int		mouse_click_hook(int k, int x, int y, t_virt *v)
+{
+	return (0);
+}
+
+int		say_good_buy(t_virt *v)
+{
+	exit(0);
+	return (0);
+}
+
+int		key_press(int key, t_virt *v)
+{
+	if (key == 53)
+		say_good_buy(v);
+	if (key == 24 && v->mlx->cycle_per_frame < 99)
+		if (v->mlx->sleep_after_frame == 0)
+			v->mlx->cycle_per_frame += 1;
+		else
+			v->mlx->sleep_after_frame -= 1000;
+	if (key == 27)
+		if (v->mlx->cycle_per_frame > 1)
+			v->mlx->cycle_per_frame -= 1;
+		else
+			v->mlx->sleep_after_frame += 1000;
+	return (0);
+}
+
+int			start_fight_vis(t_virt *v)
+{
+	if (v->serf)
+	{
+		ft_bzero(v->have_serf, MEM_SIZE * sizeof(bool));
+		v->total_cycles++;
+		v->cycles++;
+		make_a_move(v, v->serf);
+		if (v->cycles == v->cycles_before_die || v->cycles_before_die <= 0)
+			extermination_serfs(v);
+		if (v->serf && (v->dump == v->total_cycles || v->dump == 0 ||
+				v->d == v->total_cycles || v->d == 0))
+			dump_map(v, 0, 0);
+		if (v->total_cycles % v->mlx->cycle_per_frame == 0)
+			send_argument_to_cl(v, v->opencl);
+		usleep(v->mlx->sleep_after_frame);
+	}
+	else
+	{
+		winner_is(v, v->gamer);
+		mlx_hook(v->mlx->win_ptr, 2, 2, key_press, v);
+		mlx_hook(v->mlx->win_ptr, 17, 17, say_good_buy, v);
+		mlx_loop(v->mlx->mlx_ptr);
+	}
+	return(0);
 }
 
 void		let_the_show_begin(t_virt *v)
 {
-
+	mlx_loop_hook(v->mlx->mlx_ptr, start_fight_vis, v);
+	mlx_hook(v->mlx->win_ptr, 2, 2, key_press, v);
+	mlx_hook(v->mlx->win_ptr, 17, 17, say_good_buy, v);
+	mlx_hook(v->mlx->win_ptr, 4, 4, mouse_click_hook, v);
+	mlx_hook(v->mlx->win_ptr, 6, 6, mouse_move_hook, v);
+	mlx_loop(v->mlx->mlx_ptr);
 }
 
 void		only_one_will_be_left_alive(t_virt *v)
@@ -1045,5 +1239,6 @@ int			main(int ac, char **av)
 	if (v->vis)
 		heat_visual(v);
 	only_one_will_be_left_alive(v);
-	ft_printf("LOL\n");
+	winner_is(v, v->gamer);
+	exit(0);
 }/**/
