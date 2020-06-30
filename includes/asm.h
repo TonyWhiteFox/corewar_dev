@@ -18,6 +18,7 @@
 # define ERR_READ_EMPTY		"ERROR: Empty input"
 # define ERR_DOUBLE_LABEL	"ERROR: Excessive label delimiter, expected 1"
 # define ERR_WRONG_LABEL	"ERROR: Incorrect label name"
+# define ERR_STR_SPLIT		"ERROR: Can\'t identify tokens in the line"
 
 typedef struct				s_serv
 {
@@ -30,6 +31,7 @@ typedef struct				s_serv
 
 typedef struct				s_instr
 {
+	struct s_list			*sentence;
 	char					*label;
 	int						opcode;
 	int						reg;
@@ -42,4 +44,8 @@ void						lexer(t_serv *s);
 void						parser(t_serv *s);
 void						output(t_serv *s);
 void						ft_error(char *err, t_serv *s);
+int							get_word_len(char const *str, char *c);
+void						ft_lstpushback(struct s_list **begin_list, struct
+							s_list *new);
+
 #endif

@@ -40,13 +40,14 @@ static void		parse_label(t_serv *s)
 		ft_error(ERR_DOUBLE_LABEL, s);
 }
 
-static void		translate(t_serv *s)
+static void		new_instr(t_serv *s)
 {
 	t_instr		*instr;
 	t_instr		*ptr;
 
 	if (!(instr = (t_instr *)malloc(sizeof(*instr))))
 		ft_error(ERR_MALLOC, s);
+	instr->sentence = NULL;
 	instr->label = NULL;
 	instr->next = NULL;
 	s->last_instr = instr;
@@ -59,6 +60,38 @@ static void		translate(t_serv *s)
 			ptr = ptr->next;
 		ptr->next = instr;
 	}
+}
+
+static void		get_sentence(t_serv *s)
+{
+	char	*ptr;
+	t_list	*new;
+	char	*str;
+	size_t	len;
+
+	ptr = s->line;
+
+	while (ptr && *ptr)
+	{
+		while (ft_strchr(WHITESPACE_CHAR, *ptr))
+			ptr++;
+		if (*ptr && !ft_strchr(WHITESPACE_CHAR, *ptr))
+		{
+			len = get_word_len(ptr, WHITESPACE_CHAR);
+			if (!(str = (char *)malloc(sizeof(*str) * len)))
+				ft_error(ERR_STR_SPLIT, s);
+			ft_strncpy(str, ptr, len);
+			new = ft_lstnew(str, len);
+			ft_lstpushback(&s->last_instr->sentence, new);
+			ptr += len;
+		}
+	}
+}
+
+static void		translate(t_serv *s)
+{
+	new_instr(s);
+	get_sentence(s);
 	parse_label(s);
 }
 
