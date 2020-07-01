@@ -74,6 +74,21 @@ size_t			len_to_end(t_serv *s, char end)
 	return (len);
 }
 
+static void		parse_comment(t_serv *s)
+{
+	size_t	len;
+	char	c;
+
+	s->ptr1++;
+	s->ptr2 = s->ptr1;
+	len = len_to_end(s, '\n');
+	add_token(s, init_token(s, COMMENT, s->ptr1, len));
+	s->ptr1 += len;
+	if (*s->ptr1 == '\"')
+		s->ptr1++;
+
+}
+
 static void		parse_str(t_serv *s)
 {
 	size_t	len;
@@ -124,8 +139,10 @@ static void		get_tokens(t_serv *s)
 	while (*s->ptr1)
 	{
 		skip_whitespace(s);
-		if ((*s->ptr1 == COMMENT_CHAR || *s->ptr1 == ALT_COMMENT_CHAR
-				|| *s->ptr1 == '\"' || ft_isalpha(*s->ptr1)))
+		if (*s->ptr1 == COMMENT_CHAR)
+			parse_comment(s);
+		else if (*s->ptr1 == ALT_COMMENT_CHAR || *s->ptr1 == '\"'
+			|| ft_isalpha(*s->ptr1))
 			parse_str(s);
 		else if (*s->ptr1 == SEPARATOR_CHAR)
 			add_token(s, init_token(s, SEPARATOR, s->ptr1++, 1));
@@ -156,12 +173,21 @@ void			print_tokens(t_serv *s)
 
 void			lexer(t_serv *s)
 {
+	char		*buf[READ_SIZE];
+	char		*tmp;
 	ssize_t		size;
 
-	s->buff[READ_SIZE] = '\0';
-	while ((size = read(s->fd, s->buff, READ_SIZE)))
-		get_tokens(s);
-	if (size < 0)
+	size = 0;
+	s->buff = (char *)malloc(1);
+	s->buff[0] = 0;
+	while ((size = read(s->fd, buf, READ_SIZE)))
+	{
+		tmp = s->buff;
+		s->buff = ft_strjoin(tmp, (const char *)buf);
+		free(tmp);
+	}
+	if (size < 0 || !s->buff)
 		ft_error(ERR_READ_FILE, s);
+	get_tokens(s);
 	print_tokens(s);
 }
