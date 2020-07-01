@@ -85,10 +85,19 @@ typedef struct				s_serv
 
 }							t_serv;
 
+typedef struct				s_arg
+{
+	t_arg_type				type;
+	int						value;
+	char					*label;
+}							t_arg;
+
 typedef struct				s_instr
 {
 	char					*label;
 	struct s_op				*op;
+	struct s_arg			args[3];
+	size_t					size;
 	struct s_instr			*next;
 }							t_instr;
 
