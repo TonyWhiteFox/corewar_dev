@@ -12,9 +12,11 @@
 
 #include <stdlib.h>
 #include <asm.h>
+#include <stdio.h>
 
 void	ft_error(char *err, t_serv *s)
 {
+	perror(err);
 	free(s->line);
 	if (s)
 		free(s);

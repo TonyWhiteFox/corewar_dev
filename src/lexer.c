@@ -96,18 +96,15 @@ static void		parse_str(t_serv *s)
 
 	s->ptr2 = s->ptr1;
 	len = 0;
-	c = 0;
-	if (*s->ptr1 == '\"' || *s->ptr1 == '#')
+	if (*s->ptr1 == '\"')
 	{
-		c = *s->ptr1 == '#' ? '\n' : '\"';
 		s->ptr1++;
 		s->ptr2++;
-		len = len_to_end(s, c);
+		len = len_to_end(s, '\"');
 	}
 	else while (ft_strchr(LABEL_CHARS, *s->ptr2++))
 		len++;
-	add_token(s, init_token(s, (c == '#' ? COMMENT : STRING),
-			s->ptr1, len));
+	add_token(s, init_token(s, STRING, s->ptr1, len));
 	s->ptr1 += len;
 	if (*s->ptr1 == '\"')
 		s->ptr1++;
