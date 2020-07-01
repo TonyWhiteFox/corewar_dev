@@ -19,6 +19,9 @@ static void	init_s(t_serv *s)
 	s->line = NULL;
 	s->instr = NULL;
 	s->last_instr = NULL;
+	s->ptr_flag = 0;
+	s->memguru = NULL;
+	s->last_sentence = NULL;
 }
 
 static void	print_usage(void)

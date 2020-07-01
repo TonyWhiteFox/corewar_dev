@@ -47,5 +47,10 @@ void						ft_error(char *err, t_serv *s);
 int							get_word_len(char const *str, char *c);
 void						ft_lstpushback(struct s_list **begin_list, struct
 							s_list *new);
+void						*ft_memguru(size_t size, struct s_list **list);
+void						*ft_memguru_add_arr(void **arr, size_t arr_size,
+							struct s_list **list);
+void						*ft_memguru_add(void *ptr, struct s_list **list);
+t_instr						*init_instr(t_serv *s, struct s_op op);
 
 #endif
