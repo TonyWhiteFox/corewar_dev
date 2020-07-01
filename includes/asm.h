@@ -22,6 +22,8 @@
 # define ERR_DOUBLE_LABEL	"ERROR: Excessive label delimiter, expected 1"
 # define ERR_WRONG_LABEL	"ERROR: Incorrect label name"
 # define ERR_STR_SPLIT		"ERROR: Can\'t identify tokens in the line"
+# define ERR_NAME_LEN		"ERROR: Incorrect program name"
+# define ERR_COMMENT_LEN	"ERROR: Incorrect program comment"
 # define FLAG_LABEL			1
 # define FLAG_ARG			2
 # define FLAG_CHAMP_NAME	4
@@ -67,6 +69,7 @@ typedef struct				s_serv
 	char					buff[READ_SIZE + 1];
 	char					*ptr1;
 	char					*ptr2;
+	t_token					*tok_ptr;
 	struct header_s			header;
 	struct s_instr			*instr;
 	struct s_instr			*last_instr;
