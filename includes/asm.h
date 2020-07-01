@@ -24,6 +24,7 @@
 # define ERR_STR_SPLIT		"ERROR: Can\'t identify tokens in the line"
 # define ERR_NAME_LEN		"ERROR: Incorrect program name"
 # define ERR_COMMENT_LEN	"ERROR: Incorrect program comment"
+# define ERR_PARSE_STRING	"ERROR: Incorrect string token"
 # define FLAG_LABEL			1
 # define FLAG_ARG			2
 # define FLAG_CHAMP_NAME	4
@@ -66,7 +67,7 @@ typedef struct				s_serv
 {
 	int						fd;
 	char					*line;
-	char					buff[READ_SIZE + 1];
+	char					*buff;
 	char					*ptr1;
 	char					*ptr2;
 	t_token					*tok_ptr;
@@ -82,13 +83,8 @@ typedef struct				s_serv
 
 typedef struct				s_instr
 {
-	struct s_op				type;
-	struct s_list			*sentence;
 	char					*label;
-	int						opcode;
-	int						arg1;
-	int						arg2;
-	int						arg3;
+	struct s_op				*op;
 	struct s_instr			*next;
 }							t_instr;
 
@@ -103,6 +99,6 @@ void						*ft_memguru(size_t size, struct s_list **list);
 void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);
 void						*ft_memguru_add(void *ptr, struct s_list **list);
-t_instr						*init_instr(t_serv *s, struct s_op op);
+t_instr *init_instr(t_serv *s);
 
 #endif

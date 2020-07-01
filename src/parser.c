@@ -12,26 +12,23 @@
 
 #include "asm.h"
 #include "libft.h"
+#include "op.h"
 
-t_instr		*init_instr(t_serv *s, t_op op)
+t_instr			*init_instr(t_serv *s)
 {
 	t_instr		*new;
 
 	if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
 		ft_error(ERR_MALLOC, s);
-	new->type = op;
 	new->label = NULL;
-	new->opcode = 0;
-	new->arg1 = 0;
-	new->arg2 = 0;
-	new->arg3 = 0;
+	new->op = NULL;
 	new->next = NULL;
 	return (new);
 }
 
 t_op			*get_op(char *name)
 {
-	unsigned	i;
+	int		i;
 
 	i = 0;
 	while (i < (sizeof(g_op) / sizeof(t_op)))
@@ -47,10 +44,15 @@ static void		add_instr(t_serv *s, t_instr *new)
 {
 	t_instr		*ptr;
 
-	ptr = s->instr;
-	while (ptr->next)
-		ptr = ptr->next;
-	ptr->next = new;
+	if (!s->instr)
+		s->instr = new;
+	else
+	{
+		ptr = s->instr;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new;
+	}
 }
 
 static void	parse_prog_comment(t_serv *s)
@@ -85,15 +87,60 @@ static void	parse_prog_name(t_serv *s)
 		ft_error(ERR_NAME_LEN, s);
 }
 
+static void	parse_arguments(t_serv *s)
+{
+
+}
+
+static void	parse_str(t_serv *s)
+{
+	t_instr		*new;
+	int			i;
+	int			set;
+	t_op		*op;
+
+	if ((op = get_op(s->tok_ptr->content)))
+	{
+		if (s->last_instr)
+			s->last_instr->op = op;
+		else
+		{
+			new = init_instr(s);
+			new->op = op;
+			add_instr(s, new);
+			s->last_instr = new;
+		}
+		parse_arguments(s);
+	}
+	else if (s->tok_ptr->next->type == LABEL)
+	{
+		new = init_instr(s);
+		new->label = s->tok_ptr->content;
+		add_instr(s, new);
+		s->last_instr = new;
+		s->tok_ptr = s->tok_ptr->next;
+	}
+	else
+		ft_error(ERR_PARSE_STRING, s);
+}
+
 void		parser(t_serv *s)
 {
 	s->tok_ptr = s->tokens;
 	while (s->tok_ptr)
 	{
+		ft_printf("%s ", s->tok_ptr->content);
 		if (s->tok_ptr->type == PROG_NAME)
 			parse_prog_name(s);
 		else if (s->tok_ptr->type == PROG_COMMENT)
 			parse_prog_comment(s);
+		else if (s->tok_ptr->type == STRING)
+			parse_str(s);
+		else if (s->tok_ptr->type == COMMENT)
+		{
+			s->tok_ptr = s->tok_ptr->next;
+			continue;
+		}
 		s->tok_ptr = s->tok_ptr->next;
 	}
 }
