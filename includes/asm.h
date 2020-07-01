@@ -66,6 +66,7 @@ typedef struct				s_token
 typedef struct				s_serv
 {
 	int						fd;
+	char					*filename;
 	char					*line;
 	char					*buff;
 	char					*ptr1;
