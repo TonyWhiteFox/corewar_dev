@@ -180,7 +180,8 @@ void			lexer(t_serv *s)
 	while ((size = read(s->fd, buf, READ_SIZE)))
 	{
 		tmp = s->buff;
-		s->buff = ft_strjoin(tmp, (const char *)buf);
+		if (!(s->buff = ft_strjoin(tmp, (const char *)buf)))
+			ft_error(ERR_MALLOC, s);
 		free(tmp);
 	}
 	if (size < 0 || !s->buff)
