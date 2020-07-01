@@ -13,30 +13,79 @@
 #ifndef ASM_H
 # define ASM_H
 
+# include <stdlib.h>
+# include "op.h"
+
 # define ERR_OPEN_FILE		"ERROR: Can\'t open file"
 # define ERR_MALLOC			"ERROR: Can\'t allocate memory"
-# define ERR_READ_EMPTY		"ERROR: Empty input"
+# define ERR_READ_FILE		"ERROR: Incorrect input file"
 # define ERR_DOUBLE_LABEL	"ERROR: Excessive label delimiter, expected 1"
 # define ERR_WRONG_LABEL	"ERROR: Incorrect label name"
 # define ERR_STR_SPLIT		"ERROR: Can\'t identify tokens in the line"
+# define FLAG_LABEL			1
+# define FLAG_ARG			2
+# define FLAG_CHAMP_NAME	4
+# define FLAG_CHAMP_COMM	8
+# define READ_SIZE			4096
+
+typedef enum				e_type
+{
+	IDENTIFER,
+	STRING,
+	COMMENT,
+	COMMAND,
+	DIRECT,
+	NUM,
+	REGISTER,
+	SEPARATOR,
+	NEW_LINE,
+	QUOTE,
+	PROG_NAME,
+	PROG_COMMENT,
+	LABEL,
+
+	OPERATOR,
+	DIRECT_LABEL,
+	INDIRECT,
+	INDIRECT_LABEL,
+	END,
+	WHITESPACE,
+}							t_type;
+
+
+typedef struct				s_token
+{
+	t_type					type;
+	char					*content;
+	struct s_token			*next;
+}							t_token;
 
 typedef struct				s_serv
 {
 	int						fd;
 	char					*line;
+	char					buff[READ_SIZE + 1];
+	char					*ptr1;
+	char					*ptr2;
+	struct header_s			header;
 	struct s_instr			*instr;
 	struct s_instr			*last_instr;
+	t_type 					ptr_flag;
+	struct s_list			*memguru;
+	struct s_list			*last_sentence;
+	struct s_token			*tokens;
 
 }							t_serv;
 
 typedef struct				s_instr
 {
+	struct s_op				type;
 	struct s_list			*sentence;
 	char					*label;
 	int						opcode;
-	int						reg;
-	int						direct;
-	char					*indirect;
+	int						arg1;
+	int						arg2;
+	int						arg3;
 	struct s_instr			*next;
 }							t_instr;
 
