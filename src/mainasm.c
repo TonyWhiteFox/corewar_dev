@@ -16,6 +16,7 @@
 static void	init_s(t_serv *s)
 {
 	s->fd = -1;
+	s->fd_out = -1;
 	s->filename = NULL;
 	s->line = NULL;
 	s->instr = NULL;

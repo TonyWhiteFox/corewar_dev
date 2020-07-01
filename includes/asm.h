@@ -25,6 +25,8 @@
 # define ERR_NAME_LEN		"ERROR: Incorrect program name"
 # define ERR_COMMENT_LEN	"ERROR: Incorrect program comment"
 # define ERR_PARSE_STRING	"ERROR: Incorrect string token"
+# define ERR_CREATE_FILE	"ERROR: Can\'t create output file"
+# define ERR_PARSE_ARG		"ERROR: Can\'t parse argument"
 # define FLAG_LABEL			1
 # define FLAG_ARG			2
 # define FLAG_CHAMP_NAME	4
@@ -66,6 +68,7 @@ typedef struct				s_token
 typedef struct				s_serv
 {
 	int						fd;
+	int						fd_out;
 	char					*filename;
 	char					*line;
 	char					*buff;
