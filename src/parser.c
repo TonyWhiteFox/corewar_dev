@@ -110,7 +110,7 @@ static void	parse_ind(t_serv *s, int i)
 
 static void	parse_dir(t_serv *s, int i)
 {
-	s->last_instr->args[i].type = DIRECT;
+	s->last_instr->args[i].type = T_DIR;
 	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM
 		|| (s->tok_ptr->type == STRING && ft_isnumber(s->tok_ptr->content)))
