@@ -183,6 +183,7 @@ static void	parse_arguments(t_serv *s)
 		else
 			ft_error(ERR_PARSE_ARG, s);
 	}
+	s->last_instr = NULL;
 }
 
 static void	parse_label(t_serv *s)
