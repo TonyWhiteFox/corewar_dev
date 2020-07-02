@@ -193,6 +193,7 @@ void			lexer(t_serv *s)
 			ft_error(ERR_MALLOC, s);
 		free(tmp);
 	}
+	close(s->fd);
 	if (size < 0 || !s->buff)
 		ft_error(ERR_READ_FILE, s);
 	get_tokens(s);

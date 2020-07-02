@@ -13,6 +13,35 @@
 #include "asm.h"
 #include "libft.h"
 
+static int			get_offset(t_serv *s, t_instr *instr, char *label)
+{
+	t_instr		*ptr;
+
+	ptr = s->instr;
+	while (ptr)
+	{
+		if (label && ptr->label && !ft_strcmp(label, ptr->label))
+			break ;
+		ptr = ptr->next;
+	}
+	return (ptr->byte - instr->byte);
+}
+
+static uint32_t		arg_coding_byte(t_instr *ptr)
+{
+	uint32_t	ret;
+
+	ret = 0;
+	ret |= ptr->args[0].type;
+	ret = ret << 3;
+	ret |= ptr->args[1].type;
+	ret = ret << 2;
+	ret |= ptr->args[2].type;
+	ret = ret << 1;
+	return (ret);
+}
+
+
 static uint32_t	big_endian(uint32_t num)
 {
 	uint32_t	b0;
@@ -29,9 +58,61 @@ static uint32_t	big_endian(uint32_t num)
 	return (res);
 }
 
+static void		code_arg(t_serv *s, t_instr *ptr, int i)
+{
+	uint32_t	uint;
+
+	if (ptr->args[i].type == T_DIR)
+	{
+		if (ptr->args[i].label)
+		{
+			uint = big_endian(get_offset(s, ptr, ptr->args[i].label));
+			write(s->fd, &uint, ptr->op->t_dir_size);
+		}
+		else
+		{
+			uint = big_endian(ptr->args[i].value);
+			write(s->fd, &uint, ptr->op->t_dir_size);
+		}
+	}
+	else if (ptr->args[i].type == T_IND)
+	{
+		if (ptr->args[i].label)
+		{
+			uint = big_endian(get_offset(s, ptr, ptr->args[i].label));
+			write(s->fd, &uint, 2);
+		}
+		else
+		{
+			uint = big_endian(ptr->args[i].value);
+			write(s->fd, &uint, 2);
+		}
+	}
+	else if (ptr->args[i].type == T_REG)
+		write(s->fd_out, &ptr->args[i].value, 1);
+}
+
 static void		code_instr(t_serv *s)
 {
+	t_instr		*ptr;
+	char		abc;
+	int			i;
 
+	ptr = s->instr;
+	while (ptr)
+	{
+		write(s->fd_out, &ptr->op->code, 1);
+		if (ptr->op->args_types_code)
+		{
+			abc = arg_coding_byte(ptr);
+			write(s->fd_out, &abc, 1);
+		}
+		i = -1;
+		while (++i < 3 && (ptr->args[1].value != INT32_MAX
+				|| ptr->args[i].label))
+			code_arg(s, ptr, i);
+		ptr = ptr->next;
+	}
 }
 
 static void		code_header(t_serv *s)
@@ -107,7 +188,9 @@ void			output(t_serv *s)
 		ft_error(ERR_MALLOC, s);
 	if ((s->fd_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 		ft_error(ERR_CREATE_FILE, s);
+	ft_printf("Writing output program to %s\n", file);
 	byte_code(s);
+	close(s->fd_out);
 	if (s->flag & FLAG_DUMP)
 		print_code(s);
 	free(file);
