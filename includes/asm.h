@@ -104,6 +104,7 @@ typedef struct				s_instr
 	struct s_op				*op;
 	struct s_arg			args[3];
 	size_t					size;
+	size_t					byte;
 	struct s_instr			*next;
 }							t_instr;
 

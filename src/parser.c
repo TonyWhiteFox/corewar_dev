@@ -30,6 +30,7 @@ t_instr			*init_instr(t_serv *s)
 		new->args[i].value = INT32_MAX;
 		new->args[i].label = NULL;
 	}
+	new->byte = 0;
 	new->next = NULL;
 	return (new);
 }
@@ -254,6 +255,7 @@ static void set_size(t_serv *s)
 					arg++;
 			}
 		}
+		ptr->byte = s->header.prog_size;
 		ptr->size = 1 + (ptr->op->args_types_code ? 1 : 0) + arg;
 		s->header.prog_size += ptr->size;
 		ptr = ptr->next;
