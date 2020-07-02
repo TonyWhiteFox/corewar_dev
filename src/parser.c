@@ -233,6 +233,32 @@ static void	parse_all_labels(t_serv *s)
 
 }
 
+static void set_size(t_serv *s)
+{
+	t_instr		*ptr;
+	int			i;
+	int			arg;
+
+	ptr = s->instr;
+	while (ptr)
+	{
+		i = -1;
+		arg = 0;
+		while (++i < 3)
+		{
+			if (ptr->args[i].value != INT32_MAX || ptr->args[i].label)
+			{
+				if (ptr->args[i].type == T_DIR)
+					arg += ptr->op->t_dir_size;
+				else
+					arg++;
+			}
+		}
+		ptr->size = 1 + (ptr->op->args_types_code ? 1 : 0) + arg;
+		ptr = ptr->next;
+	}
+}
+
 void		parser(t_serv *s)
 {
 	s->tok_ptr = s->tokens;
@@ -255,4 +281,5 @@ void		parser(t_serv *s)
 		s->tok_ptr = s->tok_ptr->next;
 	}
 	parse_all_labels(s);
+	set_size(s);
 }
