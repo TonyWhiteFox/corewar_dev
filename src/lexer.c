@@ -54,7 +54,8 @@ static void		parse_num(t_serv *s)
 		len++;
 		s->ptr2++;
 	}
-	while (*s->ptr2 != SEPARATOR_CHAR && *s->ptr2 != '\n')
+	while (*s->ptr2 != SEPARATOR_CHAR && *s->ptr2 != '\n'
+		&& !ft_strchr(WHITESPACE_CHARS, *s->ptr2))
 	{
 		if (!ft_isdigit(*s->ptr2))
 			ft_error(ERR_WRONG_VALUE, s);
@@ -194,5 +195,4 @@ void			lexer(t_serv *s)
 	if (size < 0 || !s->buff)
 		ft_error(ERR_READ_FILE, s);
 	get_tokens(s);
-	print_tokens(s);
 }
