@@ -35,6 +35,8 @@
 # define FLAG_CHAMP_NAME	4
 # define FLAG_CHAMP_COMM	8
 # define READ_SIZE			4096
+# define FLAG_DUMP			1
+# define FLAG_DEBUG			2
 
 typedef enum				e_type
 {
@@ -72,6 +74,7 @@ typedef struct				s_serv
 {
 	int						fd;
 	int						fd_out;
+	int						flag;
 	char					*filename;
 	char					*line;
 	char					*buff;

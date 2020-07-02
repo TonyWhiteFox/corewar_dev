@@ -32,5 +32,7 @@ void	output(t_serv *s)
 	if ((s->fd_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 		ft_error(ERR_CREATE_FILE, s);
 	write_code(s);
+	if (s->flag & FLAG_DUMP)
+		print_code(s);
 	free(file);
 }

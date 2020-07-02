@@ -27,7 +27,8 @@ static void		add_token(t_serv *s, t_token *new)
 			ptr = ptr->next;
 		ptr->next = new;
 	}
-	ft_printf("%s ", new->content);
+	if (s->flag & FLAG_DEBUG)
+		ft_printf(" // %s", new->content);
 }
 
 static t_token	*init_token(t_serv *s, t_type type, char *str, size_t len)
