@@ -28,6 +28,8 @@
 # define ERR_PARSE_STRING	"ERROR: Incorrect string token"
 # define ERR_CREATE_FILE	"ERROR: Can\'t create output file"
 # define ERR_PARSE_ARG		"ERROR: Can\'t parse argument"
+# define ERR_PARSE_ARG_NUM	"ERROR: Wrong number of arguments"
+# define ERR_PARSE_DIR		"ERROR: STRING token expected after %"
 # define FLAG_LABEL			1
 # define FLAG_ARG			2
 # define FLAG_CHAMP_NAME	4
