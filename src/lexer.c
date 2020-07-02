@@ -54,8 +54,13 @@ static void		parse_num(t_serv *s)
 		len++;
 		s->ptr2++;
 	}
-	while (ft_isdigit(*s->ptr2++))
+	while (*s->ptr2 != SEPARATOR_CHAR && *s->ptr2 != '\n')
+	{
+		if (!ft_isdigit(*s->ptr2))
+			ft_error(ERR_WRONG_VALUE, s);
 		len++;
+		s->ptr2++;
+	}
 	add_token(s, init_token(s, NUM, s->ptr1, len));
 	s->ptr1 += len;
 }
@@ -139,7 +144,7 @@ static void		get_tokens(t_serv *s)
 		if (*s->ptr1 == COMMENT_CHAR)
 			parse_comment(s);
 		else if (*s->ptr1 == ALT_COMMENT_CHAR || *s->ptr1 == '\"'
-			|| ft_isalpha(*s->ptr1))
+			|| ft_strchr(LABEL_CHARS, *s->ptr1))
 			parse_str(s);
 		else if (*s->ptr1 == SEPARATOR_CHAR)
 			add_token(s, init_token(s, SEPARATOR, s->ptr1++, 1));
@@ -151,8 +156,10 @@ static void		get_tokens(t_serv *s)
 			add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
 		else if (*s->ptr1 == LABEL_CHAR)
 			add_token(s, init_token(s, LABEL, s->ptr1++, 1));
-		else
+		else if (*s->ptr1 == '-')
 			parse_num(s);
+		else
+			ft_error(ERR_STR_SPLIT, s);
 	}
 }
 
