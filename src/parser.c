@@ -255,6 +255,7 @@ static void set_size(t_serv *s)
 			}
 		}
 		ptr->size = 1 + (ptr->op->args_types_code ? 1 : 0) + arg;
+		s->header.prog_size += ptr->size;
 		ptr = ptr->next;
 	}
 }
