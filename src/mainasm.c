@@ -25,6 +25,7 @@ static void	init_s(t_serv *s)
 	s->ptr_flag = 0;
 	s->memguru = NULL;
 	s->last_sentence = NULL;
+	s->header.magic = COREWAR_EXEC_MAGIC;
 }
 
 static void	print_usage(void)

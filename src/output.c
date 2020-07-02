@@ -13,9 +13,45 @@
 #include "asm.h"
 #include "libft.h"
 
-static void		write_code(t_serv *s)
+static uint32_t	big_endian(uint32_t num)
+{
+	uint32_t	b0;
+	uint32_t	b1;
+	uint32_t	b2;
+	uint32_t	b3;
+	uint32_t	res;
+
+	b0 = (num & 0x000000ff) << 24u;
+	b1 = (num & 0x0000ff00) << 8u;
+	b2 = (num & 0x00ff0000) >> 8u;
+	b3 = (num & 0xff000000) >> 24u;
+	res = b0 | b1 | b2 | b3;
+	return (res);
+}
+
+static void		code_instr(t_serv *s)
 {
 
+}
+
+static void		code_header(t_serv *s)
+{
+	uint32_t	uint;
+
+	uint = big_endian(s->header.magic);
+	write(s->fd_out, &uint, 4);
+	write(s->fd_out, s->header.prog_name, PROG_NAME_LENGTH);
+	write(s->fd_out, "\0\0\0\0", 4);
+	uint = big_endian(s->header.prog_size);
+	write(s->fd_out, &uint, 4);
+	write(s->fd_out, s->header.comment, COMMENT_LENGTH);
+	write(s->fd_out, "\0\0\0\0", 4);
+}
+
+static void		byte_code(t_serv *s)
+{
+	code_header(s);
+	code_instr(s);
 }
 
 static void		print_arg(t_instr *ptr, int i)
@@ -71,7 +107,7 @@ void			output(t_serv *s)
 		ft_error(ERR_MALLOC, s);
 	if ((s->fd_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 		ft_error(ERR_CREATE_FILE, s);
-	write_code(s);
+	byte_code(s);
 	if (s->flag & FLAG_DUMP)
 		print_code(s);
 	free(file);
