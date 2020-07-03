@@ -17,7 +17,8 @@ NAME2	= $(PROGECTSUB)
 
 SRC1		= new_main_vm.c\
 
-SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c ft_str_split.c ft_memguru.c
+SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c ft_str_split.c \
+	ft_memguru.c lexer_parse.c output_utils.c parser_args.c parser_tokens.c
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
 HEADERSUB	= $(INCDIR)$(PROGECTSUB).h

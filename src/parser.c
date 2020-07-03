@@ -49,7 +49,7 @@ t_op			*get_op(char *name)
 	return (NULL);
 }
 
-static void		add_instr(t_serv *s, t_instr *new)
+void			add_instr(t_serv *s, t_instr *new)
 {
 	t_instr		*ptr;
 
@@ -64,166 +64,7 @@ static void		add_instr(t_serv *s, t_instr *new)
 	}
 }
 
-static void	parse_prog_comment(t_serv *s)
-{
-	size_t		len;
-
-	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == STRING)
-	{
-		len = ft_strlen(s->tok_ptr->content);
-		if (!len || len > COMMENT_LENGTH)
-			ft_error(ERR_COMMENT_LEN, s);
-		ft_strcpy(s->header.comment, s->tok_ptr->content);
-	}
-	else
-		ft_error(ERR_COMMENT_LEN, s);
-}
-
-static void	parse_prog_name(t_serv *s)
-{
-	size_t		len;
-
-	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == STRING)
-	{
-		len = ft_strlen(s->tok_ptr->content);
-		if (!len || len > PROG_NAME_LENGTH)
-			ft_error(ERR_NAME_LEN, s);
-		ft_strcpy(s->header.prog_name, s->tok_ptr->content);
-	}
-	else
-		ft_error(ERR_NAME_LEN, s);
-}
-static void	parse_reg(t_serv *s, int i)
-{
-	s->last_instr->args[i].type = T_REG;
-	s->last_instr->args[i].value = ft_atoi(&s->tok_ptr->content[1]);
-	s->tok_ptr = s->tok_ptr->next;
-}
-
-static void	parse_ind(t_serv *s, int i)
-{
-	s->last_instr->args[i].type = T_IND;
-	s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-	s->tok_ptr = s->tok_ptr->next;
-
-	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-	else if (s->tok_ptr->type == LABEL)
-	{
-		s->tok_ptr = s->tok_ptr->next;
-		if (s->tok_ptr->type == STRING || s->tok_ptr->type == NUM)
-			s->last_instr->args[i].label = s->tok_ptr->content;
-		else
-			ft_error(ERR_PARSE_DIR, s);
-	}
-	else
-		ft_error(ERR_PARSE_ARG, s);
-	s->tok_ptr = s->tok_ptr->next;
-}
-
-static void	parse_dir(t_serv *s, int i)
-{
-	s->last_instr->args[i].type = T_DIR;
-	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == NUM
-		|| (s->tok_ptr->type == STRING && ft_isnumber(s->tok_ptr->content)))
-		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-	else if (s->tok_ptr->type == LABEL)
-	{
-		s->tok_ptr = s->tok_ptr->next;
-		if (s->tok_ptr->type == STRING || s->tok_ptr->type == NUM)
-			s->last_instr->args[i].label = s->tok_ptr->content;
-		else
-			ft_error(ERR_PARSE_DIR, s);
-	}
-	else
-		ft_error(ERR_PARSE_ARG, s);
-	s->tok_ptr = s->tok_ptr->next;
-}
-
-static void	parse_arg(t_serv *s, int i)
-{
-	if (s->tok_ptr->type == DIRECT)
-		parse_dir(s, i);
-	else if (s->tok_ptr->type == STRING)
-	{
-		if (s->tok_ptr->content[0] == REG_CHAR)
-			parse_reg(s, i);
-		else if (ft_isnumber(s->tok_ptr->content))
-			s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-		else
-			ft_error(ERR_PARSE_ARG, s);
-	}
-	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL)
-		parse_ind(s, i);
-	else
-		ft_error(ERR_PARSE_ARG, s);
-}
-
-static void	parse_arguments(t_serv *s)
-{
-	int			i;
-
-	i = 0;
-	s->tok_ptr = s->tok_ptr->next;
-	while (s->tok_ptr->type != NEW_LINE)
-	{
-		parse_arg(s, i++);
-		if (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type == COMMENT)
-			s->tok_ptr = s->tok_ptr->next;
-		else if (s->tok_ptr->type == NEW_LINE)
-			break ;
-		else
-			ft_error(ERR_PARSE_ARG, s);
-	}
-	s->last_instr = NULL;
-}
-
-static void	parse_label(t_serv *s)
-{
-	t_instr		*new;
-
-	new = init_instr(s);
-	new->label = s->tok_ptr->content;
-	add_instr(s, new);
-	s->last_instr = new;
-	s->tok_ptr = s->tok_ptr->next;
-}
-
-static int		parse_op(t_serv *s)
-{
-	t_instr		*new;
-	t_op		*op;
-
-	if ((op = get_op(s->tok_ptr->content)))
-	{
-		if (s->last_instr)
-			s->last_instr->op = op;
-		else
-		{
-			new = init_instr(s);
-			new->op = op;
-			add_instr(s, new);
-			s->last_instr = new;
-		}
-		return (1);
-	}
-	return (0);
-}
-
-static void	parse_str(t_serv *s)
-{
-	if (parse_op(s))
-		parse_arguments(s);
-	else if (s->tok_ptr->next->type == LABEL)
-		parse_label(s);
-	else
-		ft_error(ERR_PARSE_STRING, s);
-}
-
-static void set_size(t_serv *s)
+static void		set_size(t_serv *s)
 {
 	t_instr		*ptr;
 	int			i;
@@ -251,7 +92,7 @@ static void set_size(t_serv *s)
 	}
 }
 
-void		parser(t_serv *s)
+void			parser(t_serv *s)
 {
 	s->tok_ptr = s->tokens;
 	while (s->tok_ptr)
@@ -264,7 +105,7 @@ void		parser(t_serv *s)
 		else if (s->tok_ptr->type == PROG_COMMENT)
 			parse_prog_comment(s);
 		else if (s->tok_ptr->type == STRING)
-			parse_str(s);
+			parse_string(s);
 		else if (s->tok_ptr->type == COMMENT)
 		{
 			s->tok_ptr = s->tok_ptr->next;

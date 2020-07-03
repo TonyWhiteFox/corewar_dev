@@ -13,7 +13,7 @@
 #include "asm.h"
 #include "libft.h"
 
-static void	init_s(t_serv *s)
+static void		init_s(t_serv *s)
 {
 	s->fd = -1;
 	s->fd_out = -1;
@@ -28,7 +28,7 @@ static void	init_s(t_serv *s)
 	s->header.magic = COREWAR_EXEC_MAGIC;
 }
 
-static void	print_usage(void)
+static void		print_usage(void)
 {
 	ft_printf("Usage: ./asm <champion>.s [-a|-d]\n");
 	ft_printf("\t\t-a\tDump annotated program on standard output\n");
@@ -54,7 +54,7 @@ static t_serv	*read_file(char *file)
 	return (NULL);
 }
 
-int			main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_serv	*s;
 	int		i;

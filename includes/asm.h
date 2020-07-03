@@ -119,5 +119,30 @@ void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);
 void						*ft_memguru_add(void *ptr, struct s_list **list);
 t_instr						*init_instr(t_serv *s);
+void						parse_num(t_serv *s);
+void						parse_comment(t_serv *s);
+void						parse_str(t_serv *s);
+void						parse_command(t_serv *s);
+void						add_token(t_serv *s, t_token *new);
+t_token						*init_token(t_serv *s, t_type type, char *str,
+							size_t len);
+size_t						len_to_end(t_serv *s, char end);
+int							get_offset(t_serv *s, t_instr *instr, char *label);
+uint32_t					arg_coding_byte(t_instr *ptr);
+uint32_t					big_endian(uint32_t num);
+void						print_arg(t_instr *ptr, int i);
+void						print_code(t_serv *s);
+void						parse_reg(t_serv *s, int i);
+void						parse_ind(t_serv *s, int i);
+void						parse_dir(t_serv *s, int i);
+void						parse_arg(t_serv *s, int i);
+void						parse_arguments(t_serv *s);
+void						parse_prog_comment(t_serv *s);
+void						parse_prog_name(t_serv *s);
+void						parse_label(t_serv *s);
+int							parse_op(t_serv *s);
+void						parse_string(t_serv *s);
+t_op						*get_op(char *name);
+void						add_instr(t_serv *s, t_instr *new);
 
 #endif
