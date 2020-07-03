@@ -62,7 +62,6 @@ typedef enum				e_type
 	WHITESPACE,
 }							t_type;
 
-
 typedef struct				s_token
 {
 	t_type					type;
@@ -81,10 +80,10 @@ typedef struct				s_serv
 	char					*ptr1;
 	char					*ptr2;
 	t_token					*tok_ptr;
-	struct header_s			header;
+	struct s_header			header;
 	struct s_instr			*instr;
 	struct s_instr			*last_instr;
-	t_type 					ptr_flag;
+	t_type					ptr_flag;
 	struct s_list			*memguru;
 	struct s_list			*last_sentence;
 	struct s_token			*tokens;
@@ -119,6 +118,6 @@ void						*ft_memguru(size_t size, struct s_list **list);
 void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);
 void						*ft_memguru_add(void *ptr, struct s_list **list);
-t_instr *init_instr(t_serv *s);
+t_instr						*init_instr(t_serv *s);
 
 #endif
