@@ -37,7 +37,7 @@ t_instr			*init_instr(t_serv *s)
 
 t_op			*get_op(char *name)
 {
-	int		i;
+	size_t		i;
 
 	i = 0;
 	while (i < (sizeof(g_op) / sizeof(t_op)))
@@ -107,6 +107,20 @@ static void	parse_ind(t_serv *s, int i)
 	s->last_instr->args[i].type = T_IND;
 	s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
 	s->tok_ptr = s->tok_ptr->next;
+
+	if (s->tok_ptr->type == NUM)
+		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+	else if (s->tok_ptr->type == LABEL)
+	{
+		s->tok_ptr = s->tok_ptr->next;
+		if (s->tok_ptr->type == STRING || s->tok_ptr->type == NUM)
+			s->last_instr->args[i].label = s->tok_ptr->content;
+		else
+			ft_error(ERR_PARSE_DIR, s);
+	}
+	else
+		ft_error(ERR_PARSE_ARG, s);
+	s->tok_ptr = s->tok_ptr->next;
 }
 
 static void	parse_dir(t_serv *s, int i)
@@ -129,23 +143,6 @@ static void	parse_dir(t_serv *s, int i)
 	s->tok_ptr = s->tok_ptr->next;
 }
 
-static int8_t	get_arg_type(t_type type)
-{
-	if (type == DIRECT || type == DIRECT_LABEL)
-		return (T_DIR);
-	else if (type == INDIRECT || type == INDIRECT_LABEL)
-		return (T_IND);
-	else if (type == REGISTER)
-		return (T_REG);
-	else
-		return (0);
-}
-
-static void	parse_label_arg(t_serv *s)
-{
-
-}
-
 static void	parse_arg(t_serv *s, int i)
 {
 	if (s->tok_ptr->type == DIRECT)
@@ -159,9 +156,7 @@ static void	parse_arg(t_serv *s, int i)
 		else
 			ft_error(ERR_PARSE_ARG, s);
 	}
-	else if (s->tok_ptr->type == LABEL)
-		parse_label_arg(s);
-	else if (s->tok_ptr->type == NUM)
+	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL)
 		parse_ind(s, i);
 	else
 		ft_error(ERR_PARSE_ARG, s);
@@ -170,7 +165,6 @@ static void	parse_arg(t_serv *s, int i)
 static void	parse_arguments(t_serv *s)
 {
 	int			i;
-	t_op		*op;
 
 	i = 0;
 	s->tok_ptr = s->tok_ptr->next;
@@ -229,11 +223,6 @@ static void	parse_str(t_serv *s)
 		ft_error(ERR_PARSE_STRING, s);
 }
 
-static void	parse_all_labels(t_serv *s)
-{
-
-}
-
 static void set_size(t_serv *s)
 {
 	t_instr		*ptr;
@@ -283,6 +272,5 @@ void		parser(t_serv *s)
 		}
 		s->tok_ptr = s->tok_ptr->next;
 	}
-	parse_all_labels(s);
 	set_size(s);
 }

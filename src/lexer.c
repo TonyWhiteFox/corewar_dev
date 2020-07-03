@@ -84,7 +84,6 @@ size_t			len_to_end(t_serv *s, char end)
 static void		parse_comment(t_serv *s)
 {
 	size_t	len;
-	char	c;
 
 	s->ptr1++;
 	s->ptr2 = s->ptr1;
@@ -99,7 +98,6 @@ static void		parse_comment(t_serv *s)
 static void		parse_str(t_serv *s)
 {
 	size_t	len;
-	char	c;
 
 	s->ptr2 = s->ptr1;
 	len = 0;
