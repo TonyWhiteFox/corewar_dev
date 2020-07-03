@@ -62,10 +62,12 @@ $(OBJDIR)%.o:$(SRCDIR)%.c $(HEADERMAIN) $(HEADERSUB)
 	@echo "$(CHANGE)∰$(RESET)\c"
 	@$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
 
-$(FT_LIB):
+FORCE: ;
+
+$(FT_LIB): FORCE
 	@make -C $(FT)
 
-$(MLX_LIB):
+$(MLX_LIB): FORCE
 	@make -C $(MLX)
 
 $(NAME1): $(OBJ1)
