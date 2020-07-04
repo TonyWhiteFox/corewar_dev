@@ -18,6 +18,8 @@ static void		init_s(t_serv *s)
 	s->fd = -1;
 	s->fd_out = -1;
 	s->flag = 0;
+	s->i_line = 1;
+	s->out_line = 0;
 	s->filename = NULL;
 	s->line = NULL;
 	s->instr = NULL;

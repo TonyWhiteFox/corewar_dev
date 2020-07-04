@@ -74,6 +74,8 @@ typedef struct				s_serv
 	int						fd;
 	int						fd_out;
 	int						flag;
+	size_t					i_line;
+	size_t					out_line;
 	char					*filename;
 	char					*line;
 	char					*buff;

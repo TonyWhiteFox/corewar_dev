@@ -16,7 +16,7 @@
 
 void			add_token(t_serv *s, t_token *new)
 {
-	t_token		*ptr;
+	t_token			*ptr;
 
 	if (!s->tokens)
 		s->tokens = new;
@@ -28,7 +28,13 @@ void			add_token(t_serv *s, t_token *new)
 		ptr->next = new;
 	}
 	if (s->flag & FLAG_DEBUG)
+	{
+		if (s->out_line != s->i_line)
+			ft_printf("%d: ", (s->out_line = s->i_line));
 		ft_printf(" // %s", new->content);
+		if (new->type == NEW_LINE)
+			s->i_line++;
+	}
 }
 
 t_token			*init_token(t_serv *s, t_type type, char *str, size_t len)
@@ -71,7 +77,7 @@ static void		get_tokens(t_serv *s)
 			add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
 		else if (*s->ptr1 == LABEL_CHAR)
 			add_token(s, init_token(s, LABEL, s->ptr1++, 1));
-		else if (*s->ptr1 == '-')
+		else if (*s->ptr1 == '-' || *s->ptr1 == '+')
 			parse_num(s);
 		else
 			ft_error(ERR_STR_SPLIT, s);
