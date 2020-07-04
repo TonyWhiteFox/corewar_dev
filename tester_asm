@@ -1,0 +1,17 @@
+if [ "$1" = clean ]
+then
+	echo $1
+	rm Original_exe/champs/*.cor
+	rm champs/*.cor
+else
+	for i in Original_exe/champs/*.s; do
+	  Original_exe/asm $i 2>&1
+	done
+	echo "Original asm done"
+  printf '\033[0;34m'
+	for i in champs/*.s; do
+	  printf "Writing $i: "
+	  ./asm $i 2>&1
+	done
+	echo "User asm done"
+fi
