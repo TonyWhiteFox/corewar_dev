@@ -48,18 +48,13 @@ void	parse_prog_name(t_serv *s)
 
 void	parse_label(t_serv *s)
 {
-	t_instr		*new;
-
-	new = init_instr(s);
-	new->label = s->tok_ptr->content;
-	add_instr(s, new);
-	s->last_instr = new;
+	s->last_instr = init_instr(s);
+	s->last_instr->label = s->tok_ptr->content;
 	s->tok_ptr = s->tok_ptr->next;
 }
 
 int		parse_op(t_serv *s)
 {
-	t_instr		*new;
 	t_op		*op;
 
 	if ((op = get_op(s->tok_ptr->content)))
@@ -68,10 +63,8 @@ int		parse_op(t_serv *s)
 			s->last_instr->op = op;
 		else
 		{
-			new = init_instr(s);
-			new->op = op;
-			add_instr(s, new);
-			s->last_instr = new;
+			s->last_instr = init_instr(s);
+			s->last_instr->op = op;
 		}
 		return (1);
 	}

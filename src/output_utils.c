@@ -80,8 +80,7 @@ void			print_instr(t_instr *ptr)
 		ft_printf("%-5d(%-2d) :        ", ptr->byte, ptr->size);
 		ft_printf("%-10s", ptr->op->name);
 		j = -1;
-		while (++j < 3 && (ptr->args[j].value != INT32_MAX
-						   || ptr->args[j].label))
+		while (++j < 3 && ptr->args[j].type)
 			print_arg(ptr, j);
 		ft_printf("\n");
 		ptr = ptr->next;

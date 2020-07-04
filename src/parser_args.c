@@ -133,7 +133,6 @@ void	parse_arguments(t_serv *s)
 		else
 			ft_error(ERR_PARSE_ARG, s);
 	}
-	if (s->flag & FLAG_INSTR)
-		print_instr(s->last_instr);
+	add_instr(s, s->last_instr);
 	s->last_instr = NULL;
 }
