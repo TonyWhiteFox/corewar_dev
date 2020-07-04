@@ -38,6 +38,7 @@
 # define FLAG_DUMP			1
 # define FLAG_DEBUG			2
 # define FLAG_INSTR			4
+# define HEX_CHARS			"0123456789abcdef"
 
 typedef enum				e_type
 {
@@ -148,5 +149,7 @@ void						parse_string(t_serv *s);
 t_op						*get_op(char *name);
 void						add_instr(t_serv *s, t_instr *new);
 void						print_instr(t_instr *ptr);
+int							ft_atoi_base(char *nb, int base);
+int							ft_atoi_check(char *nb);
 
 #endif

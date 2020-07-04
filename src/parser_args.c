@@ -13,11 +13,12 @@
 #include "op.h"
 #include "libft.h"
 #include "asm.h"
+#include <errno.h>
 
 void	parse_reg(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_REG;
-	s->last_instr->args[i].value = ft_atoi(&s->tok_ptr->content[1]);
+	s->last_instr->args[i].value = ft_atoi_check(&s->tok_ptr->content[1]);
 	s->tok_ptr = s->tok_ptr->next;
 }
 
@@ -25,11 +26,11 @@ void	parse_ind(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_IND;
 	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
 	else if (s->tok_ptr->type == STRING)
 	{
 		if (ft_isnumber(s->tok_ptr->content))
-			s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+			s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
 		else
 			ft_error(ERR_PARSE_ARG_NUM, s);
 	}
@@ -46,13 +47,50 @@ void	parse_ind(t_serv *s, int i)
 	s->tok_ptr = s->tok_ptr->next;
 }
 
+int		ft_is_bin(char *nb)
+{
+	size_t		i;
+
+	errno = 0;
+	i = ft_strlen(nb);
+	if (i > 2 && nb[0] == '0' && nb[1] == 'b' && ft_isnumber(&nb[2]))
+		return (1);
+	errno = 33;
+	return (0);
+}
+
+int		ft_is_hex(char *nb)
+{
+	size_t		i;
+
+	errno = 0;
+	i = ft_strlen(nb);
+	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X'))
+	{
+		nb = &nb[1];
+		while (*(++nb))
+		{
+			if (!ft_strchr(HEX_CHARS, *nb))
+			{
+				errno = 33;
+				return (0);
+			}
+		}
+		return (1);
+	}
+	errno = 33;
+	return (0);
+}
+
 void	parse_dir(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_DIR;
 	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == NUM
-		|| (s->tok_ptr->type == STRING && ft_isnumber(s->tok_ptr->content)))
-		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+	if (s->tok_ptr->type == NUM)
+		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
+	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content)
+	|| ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
+		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
 	else if (s->tok_ptr->type == LABEL)
 	{
 		s->tok_ptr = s->tok_ptr->next;
