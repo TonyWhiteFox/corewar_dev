@@ -52,7 +52,7 @@ static void		code_instr(t_serv *s)
 	while (ptr)
 	{
 		write(s->fd_out, &ptr->op->code, 1);
-		if (ptr->op->args_types_code)
+		if (ptr->op && ptr->op->args_types_code)
 		{
 			abc = arg_coding_byte(ptr);
 			write(s->fd_out, &abc, 1);

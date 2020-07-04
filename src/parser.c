@@ -86,7 +86,9 @@ static void		set_size(t_serv *s)
 			}
 		}
 		ptr->byte = s->header.prog_size;
-		ptr->size = 1 + (ptr->op->args_types_code ? 1 : 0) + arg;
+		ptr->size++;
+		if (ptr->op)
+			ptr->size += (ptr->op->args_types_code ? 1 : 0) + arg;
 		s->header.prog_size += ptr->size;
 		ptr = ptr->next;
 	}
