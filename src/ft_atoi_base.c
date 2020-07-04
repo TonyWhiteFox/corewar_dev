@@ -13,7 +13,7 @@
 #include "libft.h"
 #include <errno.h>
 
-static int	convert_and_check_nb(char c, int base)
+static int				convert_and_check_nb(char c, int base)
 {
 	int		result;
 
@@ -79,24 +79,3 @@ int						ft_atoi_base(char *nb, int base)
 	return (result);
 }
 
-int						ft_atoi_check(char *nb)
-{
-	size_t		i;
-	int			ret;
-
-	errno = 0;
-	ret = -1;
-	i = ft_strlen(nb);
-	if (i > 2 && nb[0] == '0')
-	{
-		if (nb[1] == 'x' || nb[1] == 'X')
-			ret = ft_atoi_base(&nb[2], 16);
-		else if (nb[1] == 'b')
-			ret = ft_atoi_base(&nb[2], 2);
-		else
-			errno = 33;
-	}
-	else
-		ret = ft_atoi_base(nb, 10);
-	return (ret);
-}

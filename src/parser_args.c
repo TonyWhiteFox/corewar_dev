@@ -18,7 +18,7 @@
 void	parse_reg(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_REG;
-	s->last_instr->args[i].value = ft_atoi_check(&s->tok_ptr->content[1]);
+	s->last_instr->args[i].value = ft_atoi_check(s, &s->tok_ptr->content[1]);
 	s->tok_ptr = s->tok_ptr->next;
 }
 
@@ -26,11 +26,11 @@ void	parse_ind(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_IND;
 	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
+		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
 	else if (s->tok_ptr->type == STRING)
 	{
 		if (ft_isnumber(s->tok_ptr->content))
-			s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
+			s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
 		else
 			ft_error(ERR_PARSE_ARG_NUM, s);
 	}
@@ -87,10 +87,10 @@ void	parse_dir(t_serv *s, int i)
 	s->last_instr->args[i].type = T_DIR;
 	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
+		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
 	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content)
 	|| ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
-		s->last_instr->args[i].value = ft_atoi_check(s->tok_ptr->content);
+		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
 	else if (s->tok_ptr->type == LABEL)
 	{
 		s->tok_ptr = s->tok_ptr->next;

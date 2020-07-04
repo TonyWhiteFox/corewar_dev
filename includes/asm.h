@@ -150,6 +150,6 @@ t_op						*get_op(char *name);
 void						add_instr(t_serv *s, t_instr *new);
 void						print_instr(t_instr *ptr);
 int							ft_atoi_base(char *nb, int base);
-int							ft_atoi_check(char *nb);
+int							ft_atoi_check(t_serv *s, char *nb);
 
 #endif
