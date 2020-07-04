@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cursor.c                                           :+:      :+:    :+:   */
+/*   is_negative_number.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/14 15:19:31 by lshellie          #+#    #+#             */
-/*   Updated: 2020/06/08 20:19:05 by ldonnor-         ###   ########.fr       */
+/*   Created: 2020/06/15 23:14:13 by ldonnor-          #+#    #+#             */
+/*   Updated: 2020/06/15 23:20:57 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "corewar.h"
+#include "libft.h"
 
-void		set_cursor(t_cursor **first, t_cursor *cursor)
+int			ft_is_negative_number(char *c)
 {
-	t_cursor *tmp;
-
-	if (!*first)
-		*first = cursor;
-	else
+	if (*c != '-')
+		return (0);
+	c++;
+	while(*c)
 	{
-		tmp = *first;
-		*first = cursor;
-		cursor->next = tmp;
+		if (*c < '0' || *c > '9')
+			return (0);
+		c++;
 	}
-}
-
-t_cursor	*new_cursor(void)
-{
-	t_cursor *new;
-
-	if (!(new = (t_cursor *)ft_memalloc(sizeof(t_cursor))))
-		return (0);
-	if (!(new->reg = (int *)ft_memalloc(sizeof(int) * REG_NUMBER)))
-		return (0);
-	return (new);
+	return(1);
 }

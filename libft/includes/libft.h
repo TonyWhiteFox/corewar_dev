@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 15:46:33 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/03/04 13:17:27 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/06/15 23:14:30 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_atoi(const char *str);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
+int					ft_isnumber(char *c);
+int					ft_is_positive_number(char *c);
+int					ft_is_negative_number(char *c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);

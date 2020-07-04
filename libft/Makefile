@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldonnor- <ldonnor-@student.21-school.ru    +#+  +:+       +#+         #
+#    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/14 23:29:50 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/03/04 12:37:12 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/06/15 23:16:21 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,9 @@ SRCS		= $(S_DIR)ft_atoi.c\
 			$(S_DIR)ft_lstdeldel.c\
 			$(S_DIR)get_next_line.c\
 			$(S_DIR)ft_revers.c\
+			$(S_DIR)ft_is_positive_number.c\
+			$(S_DIR)ft_is_negative_number.c\
+			$(S_DIR)ft_isnumber.c\
 			$(S_PIR)array_of_param_pf.c\
 			$(S_PIR)check_valid_pf.c\
 			$(S_PIR)feed_x_pf.c\
@@ -108,6 +111,7 @@ SRCS		= $(S_DIR)ft_atoi.c\
 			$(S_PIR)ret_float_pf.c\
 			$(S_PIR)ret_int_pf.c\
 			$(S_PIR)zero_val_pf.c
+
 
 HEADERS		= $(INCDIR)libft.h\
 			$(INCDIR)ft_printf.h

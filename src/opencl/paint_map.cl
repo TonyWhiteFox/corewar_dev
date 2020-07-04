@@ -1,6 +1,5 @@
 __kernel void alfavit(__global int* picture, int start_pos, int back_color,
-	int front_color, int w_x, int w_x2, int w_x3, int w_x4, int w_x5, int w_x6,
-	int w_x7, int w_x8, int w_x9, int w_x10, int w_x11,
+	int front_color, int w_x,
 	int x11, int x12, int x13, int x14, int x15, int x16, int x17,
 	int x21, int x22, int x23, int x24, int x25, int x26, int x27,
 	int x31, int x32, int x33, int x34, int x35, int x36, int x37,
@@ -13,6 +12,18 @@ __kernel void alfavit(__global int* picture, int start_pos, int back_color,
 	int x101, int x102, int x103, int x104, int x105, int x106, int x107,
 	int x111, int x112, int x113, int x114, int x115, int x116, int x117)
 {
+	int w_x2 = w_x * 2;
+	int w_x3 = w_x * 3;
+	int w_x4 = w_x * 4;
+	int w_x5 = w_x * 5;
+	int w_x6 = w_x * 6;
+	int w_x7 = w_x * 7;
+	int w_x8 = w_x * 8;
+	int w_x9 = w_x * 9;
+	int w_x10 = w_x * 10;
+	int w_x11 = w_x * 11;
+	int w_x12 = w_x * 12;
+
 	if (x11 == 1)
 		picture[start_pos + w_x + 1] = front_color;
 	else
@@ -416,673 +427,7 @@ __kernel void alfavit(__global int* picture, int start_pos, int back_color,
 		picture[start_pos + w_x11 + 7] = front_color;
 	else
 		picture[start_pos + w_x11 + 7] = back_color;
-}
 
-__kernel void kercorewar(__global int* picture, __global uchar* field,
-						__global int* changes, __global bool* cursor,
-						__global int* live,
-						const int w_x, const int w_y,
-						const int flows, const int total_cycle)
-{
-	int gid = get_global_id(0);
-
-	int	back_color = 0x000000;
-	int	front_color = 0x888888;
-	int half_gid = gid / 2;
-	int change = changes[half_gid];
-	int tithe_change = change / 10;
-	if (change > 0)
-	{
-		switch (change % 10)
-		{
-			case 0:
-				front_color = 0x990000;
-				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
-					front_color = 0xFF0000;
-				break;
-			case 1:
-				front_color = 0x9900;
-				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
-					front_color = 0xFF00;
-				break;
-			case 2:
-				front_color = 0x9999;
-				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
-					front_color = 0xFFFF;
-				break;
-			case 3:
-				front_color = 0x990099;
-				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
-					front_color = 0xFF00FF;
-				break;
-		}
-	}
-
-	if (cursor[half_gid] == true)
-	{
-		back_color = front_color;
-		front_color = 0x000000;
-	}
-
-
-	if (live[half_gid] > 0)
-	{
-		tithe_change = live[half_gid] / 10;
-		if (tithe_change + 50 >= total_cycle)
-		{
-			front_color = 0xFFFFFF;
-			switch (live[half_gid] % 10)
-			{
-				case 0:
-					back_color = 0xCC0000;
-					break;
-				case 1:
-					back_color = 0xCC00;
-					break;
-				case 2:
-					back_color = 0xCCCC;
-					break;
-				case 3:
-					back_color = 0xCC00CC;
-					break;
-			}
-		}
-	}
-
-	int value = field[half_gid];
-	if (gid % 2 > 0)
-		value = value % 16;
-	else
-		value = value / 16;
-	int	num_x = gid % 128;
-	int	num_y = gid / 128;
-	int start_x = 30 + num_x * 9 + num_x / 2 * 3;
-	int start_y = 30 + num_y * 15;
-	int start_pos = start_y * w_x + start_x;
-	int w_x2 = w_x * 2;
-	int w_x3 = w_x * 3;
-	int w_x4 = w_x * 4;
-	int w_x5 = w_x * 5;
-	int w_x6 = w_x * 6;
-	int w_x7 = w_x * 7;
-	int w_x8 = w_x * 8;
-	int w_x9 = w_x * 9;
-	int w_x10 = w_x * 10;
-	int w_x11 = w_x * 11;
-	int w_x12 = w_x * 12;
-	switch (value)
-	{
-		case 0:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5,	w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 1, 1, 1, 1, 0, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				0, 1, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 0, 0, 0);
-			break;
-		case 1:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5,	w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 0, 0, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 1, 0);
-			break;
-		case 2:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 0, 0, 0, 0, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				0, 1, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 1, 1, 1,
-				0, 0, 0, 1, 1, 1, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 1, 1, 1, 0, 0, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0);
-			break;
-		case 3:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 1, 0,
-				0, 0, 0, 0, 0, 1, 1,
-				0, 1, 0, 0, 0, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 4:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 1, 1, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 1, 1, 1, 1);
-			break;
-		case 5:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 6:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 0, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 7:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0);
-			break;
-		case 8:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				0, 1, 1, 1, 1, 1, 0,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 9:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				1, 0, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 10:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 	1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 11:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0);
-			break;
-		case 12:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 13:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0);
-			break;
-		case 14:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1);
-			break;
-		case 15:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0);
-			break;
-		case 16:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 17:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 18:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 19:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 1, 1, 1, 1, 0,
-				0, 0, 1, 1, 1, 1, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 0, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 1, 0,
-				0, 0, 1, 1, 1, 1, 0);
-			break;
-		case 20:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 0, 1, 1, 1, 1,
-				0, 0, 0, 1, 1, 1, 1,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				0, 0, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				0, 1, 1, 1, 1, 0, 0);
-			break;
-		case 21:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 1, 1, 0, 1, 0,
-				1, 1, 1, 1, 1, 0, 0,
-				1, 1, 0, 1, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 22:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1);
-			break;
-		case 23:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 0, 1, 1, 0,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 24:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 0, 0, 1, 1,
-				1, 1, 1, 1, 0, 1, 1,
-				1, 1, 0, 1, 1, 1, 1,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 25:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 26:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				0, 1, 0, 0, 0, 0, 0);
-			break;
-		case 27:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 0,
-				1, 1, 0, 1, 1, 1, 0,
-				1, 1, 0, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 1);
-			break;
-		case 28:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				0, 1, 0, 0, 0, 1, 1);
-			break;
-		case 29:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 1, 1, 1, 1, 1,0-,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				0, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 30:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0,
-				0, 0, 1, 1, 0, 0, 0);
-			break;
-		case 31:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 1, 1, 1, 0);
-			break;
-		case 32:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 0, 1, 0, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 0, 1, 0, 0, 0);
-			break;
-		case 33:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 0, 1, 1, 0);
-			break;
-		case 34:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 0, 1, 1, 1,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 1, 1, 0, 1, 1, 0,
-				1, 1, 1, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
-			break;
-		case 35:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 0, 1, 1, 1,
-				0, 1, 1, 0, 1, 1, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 1, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 0, 1, 1, 1, 0, 0);
-			break;
-		case 36:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1,
-				0, 0, 0, 0, 1, 1, 1,
-				0, 0, 0, 1, 1, 1, 0,
-				0, 0, 1, 1, 1, 0, 0,
-				0, 1, 1, 1, 0, 0, 0,
-				1, 1, 1, 0, 0, 0, 0,
-				1, 1, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1);
-			break;
-		case 37:
-			alfavit(picture, start_pos, back_color, front_color, w_x,
-				w_x2, w_x3, w_x4, w_x5, w_x6, w_x7, w_x8, w_x9, w_x10, w_x11,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1);
-			break;
-	}
 	picture[start_pos] = back_color;
 	picture[start_pos + 1] = back_color;
 	picture[start_pos + 2] = back_color;
@@ -1123,4 +468,873 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 	picture[start_pos + w_x12 + 6] = back_color;
 	picture[start_pos + w_x12 + 7] = back_color;
 	picture[start_pos + w_x12 + 8] = back_color;
+}
+
+__kernel void print_char(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x, int char_n)
+{
+	switch (char_n)
+	{
+		case 0:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				0, 1, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 1:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0);
+			break;
+		case 2:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 3:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 4:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 1, 1, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 1, 1);
+			break;
+		case 5:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 6:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 7:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 8:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 9:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 10:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 	1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 11:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 12:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 13:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 14:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 15:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0);
+			break;
+		case 16:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 17:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 18:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 1, 0);
+			break;
+		case 19:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 1, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 0, 0);
+			break;
+		case 20:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 0, 1, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 21:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 22:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 0, 1, 1, 0,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 23:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 0, 1, 1,
+				1, 1, 1, 1, 0, 1, 1,
+				1, 1, 0, 1, 1, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 24:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 25:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				0, 1, 0, 0, 0, 0, 0);
+			break;
+		case 26:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 1);
+			break;
+		case 27:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1);
+			break;
+		case 28:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 29:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 30:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 31:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 0, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 0, 1, 0, 0, 0);
+			break;
+		case 32:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0);
+			break;
+		case 33:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				1, 1, 1, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 34:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0);
+			break;
+		case 35:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 0, 0, 0,
+				1, 1, 1, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 36:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 37:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0);
+			break;
+	}
+}
+
+__kernel void print_map(__global int* picture, __global uchar* field,
+						__global int* changes, __global bool* cursor,
+						__global int* live, const int w_x,
+						const int total_cycle, int gid, int back_color,
+						int front_color, int num_x, int num_y,
+						int start_x, int start_y, int start_pos)
+{
+	int value;
+	int half_gid;
+	int change;
+	int tithe_change;
+
+	half_gid = gid / 2;
+	change = changes[half_gid];
+	tithe_change = change / 10;
+	if (change > 0)
+	{
+		switch (change % 10)
+		{
+			case 1:
+				front_color = 0x990000;
+				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
+					front_color = 0xFF0000;
+				break;
+			case 2:
+				front_color = 0x9900;
+				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
+					front_color = 0xFF00;
+				break;
+			case 3:
+				front_color = 0x9999;
+				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
+					front_color = 0xFFFF;
+				break;
+			case 4:
+				front_color = 0x990099;
+				if ((tithe_change + 50 >= total_cycle) && (tithe_change > 1))
+					front_color = 0xFF00FF;
+				break;
+		}
+	}
+
+	if (cursor[half_gid] == true)
+	{
+		back_color = front_color;
+		front_color = 0x000000;
+	}
+
+
+	if (live[half_gid] > 0)
+	{
+		tithe_change = live[half_gid] / 10;
+		if (tithe_change + 50 >= total_cycle)
+		{
+			front_color = 0xFFFFFF;
+			switch (live[half_gid] % 10)
+			{
+				case 1:
+					back_color = 0xCC0000;
+					break;
+				case 2:
+					back_color = 0xCC00;
+					break;
+				case 3:
+					back_color = 0xCCCC;
+					break;
+				case 4:
+					back_color = 0xCC00CC;
+					break;
+			}
+		}
+	}
+
+	value = field[half_gid];
+	if (gid % 2 > 0)
+		value = value % 16;
+	else
+		value = value / 16;
+	num_x = gid % 128;
+	num_y = gid / 128;
+	start_x = 30 + num_x * 9 + num_x / 2 * 3;
+	start_y = 30 + num_y * 15;
+	start_pos = start_y * w_x + start_x;
+	print_char(picture, start_pos, back_color, front_color, w_x, value);
+}
+
+__kernel void print_logo(__global int* picture, __global bool* decor, const int w_x,
+						const int total_cycle, int gid, int back_color,
+						int front_color, int num_x, int num_y,
+						int start_x, int start_y, int start_pos, int flows,
+						int temp, int cycles_per_frame, int sleep_after_frame)
+{
+	gid = gid - flows;
+	if (gid < 285)
+	{
+		num_x = gid % 15;
+		num_y = gid / 15;
+		start_x = 30 + (131 + num_x * 2) * 9 + (130 / 2 + num_x * 2) * 3;
+		start_y = 30 + num_y * 15;
+		start_pos = start_y * w_x + start_x;
+		if (decor[gid] == true)
+			back_color = 0xFF0000;
+		else
+			back_color = 0x333333;
+		temp = 1000000384 - (total_cycle / cycles_per_frame);
+		if (sleep_after_frame == 0)
+			if ((num_y*2.5 == (total_cycle / cycles_per_frame) % 128)
+				|| (num_x*3 == (total_cycle / cycles_per_frame) % 128)
+				|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
+				back_color += 0x009900;
+		print_char(picture, start_pos, back_color, front_color, w_x, 37);
+		print_char(picture, start_pos + 12, back_color, front_color, w_x, 37);
+	}
+}
+
+__kernel void print_numbers(__global int* picture, const int w_x,
+						const int total_cycle, int gid, int back_color,
+						int front_color, int start_x, int start_y, int start_pos,
+						int flows, int temp, int cycles_per_frame, int sleep_after_frame,
+						int cycles_to_die)
+{
+	gid = gid - 285 - flows;
+	if (gid < 40)
+	{
+		back_color = 0x303030;
+		switch (gid / 10)
+		{
+			case 0:
+				start_y = 30 + 20 * 15;
+				temp = total_cycle;
+				front_color = 0xFF00;
+				break;
+			case 1:
+				start_y = 30 + 21 * 15;
+				temp = cycles_to_die;
+				gid = gid - 10;
+				front_color = 0xFF00FF;
+				break;
+			case 2:
+				start_y = 30 + 22 * 15;
+				temp = cycles_per_frame;
+				gid = gid - 20;
+				front_color = 0xFFFF00;
+				break;
+			case 3:
+				start_y = 30 + 23 * 15;
+				temp = sleep_after_frame;
+				gid = gid - 30;
+				front_color = 0xFFFF;
+				break;
+		}
+		start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid) * 3;
+		start_pos = start_y * w_x + start_x;
+		while (gid > 0)
+		{
+			temp = temp / 10;
+			gid = gid - 1;
+		}
+		gid = temp % 10;
+		print_char(picture, start_pos, back_color, front_color, w_x, gid);
+	}
+}
+
+__kernel void print_comment(__global int* picture, const int w_x,
+						int gid, int back_color, int front_color,
+						int start_x, int start_y, int start_pos,
+						int flows)
+{
+	gid = gid - (flows + 285 + 80);
+	back_color = 0x303030;
+	if (gid < 12)
+	{
+		start_y = 30 + 20 * 15;
+		front_color = 0xFF00;
+		start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
+	}
+	else if (gid < 25)
+	{
+		start_y = 30 + 21 * 15;
+		front_color = 0xFF00FF;
+		start_x = 30 + (131 + gid - 12) * 9 + (130 / 2 + gid - 12) * 3;
+
+	}
+	else if (gid < 41)
+	{
+		start_y = 30 + 22 * 15;
+		front_color = 0xFFFF00;
+		start_x = 30 + (131 + gid - 25) * 9 + (130 / 2 + gid - 25) * 3;
+	}
+	else
+	{
+		start_y = 30 + 23 * 15;
+		front_color = 0xFFFF;
+		start_x = 30 + (131 + gid - 41) * 9 + (130 / 2 + gid - 41) * 3;
+	}
+	start_pos = start_y * w_x + start_x;
+	switch (gid)
+	{
+		case 0:
+		case 2:
+		case 19:
+		case 49:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'T' - 'A' + 10);
+			break;
+		case 1:
+		case 20:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'O' - 'A' + 10);
+			break;
+		case 3:
+		case 38:
+		case 47:
+			print_char(picture, start_pos, back_color, front_color, w_x, 10);
+			break;
+		case 4:
+		case 9:
+		case 15:
+		case 28:
+		case 42:
+		case 56:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'L' - 'A' + 10);
+			break;
+		case 5:
+		case 18:
+		case 21:
+		case 31:
+		case 35:
+		case 46:
+		case 52:
+			print_char(picture, start_pos, back_color, front_color, w_x, 37);
+				break;
+		case 6:
+		case 8:
+		case 12:
+		case 14:
+		case 25:
+		case 27:
+		case 53:
+		case 55:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'C' - 'A' + 10);
+				break;
+		case 7:
+		case 13:
+		case 26:
+		case 54:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'Y' - 'A' + 10);
+				break;
+		case 10:
+		case 16:
+		case 24:
+		case 29:
+		case 33:
+		case 40:
+		case 43:
+		case 44:
+		case 50:
+		case 57:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'E' - 'A' + 10);
+				break;
+		case 11:
+		case 17:
+		case 30:
+		case 41:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'S' - 'A' + 10);
+				break;
+		case 22:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'D' - 'A' + 10);
+				break;
+		case 23:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'I' - 'A' + 10);
+				break;
+		case 32:
+		case 45:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+				break;
+		case 34:
+		case 37:
+		case 51:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'R' - 'A' + 10);
+				break;
+		case 36:
+		case 48:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'F' - 'A' + 10);
+				break;
+		case 39:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'M' - 'A' + 10);
+				break;
+	}
+}
+
+__kernel void kercorewar(__global int* picture, __global uchar* field,
+						__global int* changes, __global bool* cursor,
+						__global int* live, __global bool* decor, const int w_x,
+						const int total_cycle, const int flows, const int cycles_to_die,
+						const int cycles_per_frame, const int sleep_after_frame)
+{
+	int gid = get_global_id(0);
+	int	back_color = 0x000000;
+	int	front_color = 0x888888;
+	int	num_x;
+	int	num_y;
+	int start_x;
+	int start_y;
+	int start_pos;
+	int temp;
+	if (gid < flows)
+	{
+		print_map(picture, field, changes, cursor, live, w_x,
+				total_cycle, gid, back_color, front_color,
+				num_x, num_y, start_x, start_y, start_pos);
+	}
+	if (gid >= flows && gid < flows + 285)
+	{
+		print_logo(picture, decor, w_x, total_cycle, gid, back_color,
+					front_color, num_x, num_y, start_x, start_y, start_pos, 
+					flows, temp, cycles_per_frame, sleep_after_frame);
+	}
+	if (gid >= flows + 285 && gid < flows + 285 + 80)
+	{
+		print_numbers(picture, w_x, total_cycle, gid, back_color,
+					 front_color, start_x, start_y, start_pos, flows,
+					 temp, cycles_per_frame, sleep_after_frame, cycles_to_die);
+	}
+	if (gid >= flows + 285 + 80 && gid < flows + 285 + 80 + 58)
+	{
+		print_comment(picture, w_x, gid, back_color, front_color,
+					start_x, start_y, start_pos, flows);
+	}
 }
