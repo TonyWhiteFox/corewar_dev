@@ -80,10 +80,13 @@ int		parse_op(t_serv *s)
 
 void	parse_string(t_serv *s)
 {
-	if (parse_op(s))
-		parse_arguments(s);
-	else if (s->tok_ptr->next->type == LABEL)
+	if (s->tok_ptr->next->type == LABEL)
+	{
 		parse_label(s);
+		s->tok_ptr = s->tok_ptr->next;
+	}
+	else if (parse_op(s))
+		parse_arguments(s);
 	else
 		ft_error(ERR_PARSE_STRING, s);
 }

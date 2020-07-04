@@ -24,10 +24,15 @@ void	parse_reg(t_serv *s, int i)
 void	parse_ind(t_serv *s, int i)
 {
 	s->last_instr->args[i].type = T_IND;
-	s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM)
 		s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+	else if (s->tok_ptr->type == STRING)
+	{
+		if (ft_isnumber(s->tok_ptr->content))
+			s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
+		else
+			ft_error(ERR_PARSE_ARG_NUM, s);
+	}
 	else if (s->tok_ptr->type == LABEL)
 	{
 		s->tok_ptr = s->tok_ptr->next;
@@ -65,16 +70,10 @@ void	parse_arg(t_serv *s, int i)
 {
 	if (s->tok_ptr->type == DIRECT)
 		parse_dir(s, i);
-	else if (s->tok_ptr->type == STRING)
-	{
-		if (s->tok_ptr->content[0] == REG_CHAR)
-			parse_reg(s, i);
-		else if (ft_isnumber(s->tok_ptr->content))
-			s->last_instr->args[i].value = ft_atoi(s->tok_ptr->content);
-		else
-			ft_error(ERR_PARSE_ARG, s);
-	}
-	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL)
+	else if (s->tok_ptr->type == STRING && s->tok_ptr->content[0] == REG_CHAR)
+		parse_reg(s, i);
+	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL
+			|| s->tok_ptr->type == STRING)
 		parse_ind(s, i);
 	else
 		ft_error(ERR_PARSE_ARG, s);

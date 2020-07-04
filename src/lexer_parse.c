@@ -21,7 +21,7 @@ void		parse_num(t_serv *s)
 
 	len = 0;
 	s->ptr2 = s->ptr1;
-	if (*s->ptr2 == '-')
+	if (*s->ptr2 == '-' || *s->ptr2 == '+')
 	{
 		len++;
 		s->ptr2++;
