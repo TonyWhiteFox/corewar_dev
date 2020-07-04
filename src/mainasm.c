@@ -70,6 +70,8 @@ int				main(int argc, char **argv)
 				s->flag |= FLAG_DUMP;
 			if (!ft_strcmp(argv[i], "-d"))
 				s->flag |= FLAG_DEBUG;
+			if (!ft_strcmp(argv[i], "-i"))
+				s->flag |= FLAG_INSTR;
 		}
 		lexer(s);
 		parser(s);

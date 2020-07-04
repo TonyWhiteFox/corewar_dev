@@ -101,7 +101,11 @@ void			parser(t_serv *s)
 			parse_prog_name(s);
 		else if (s->tok_ptr->type == NEW_LINE && s->last_instr
 				&& s->last_instr->op)
+		{
+			if (s->flag & FLAG_INSTR)
+				print_instr(s->last_instr);
 			s->last_instr = NULL;
+		}
 		else if (s->tok_ptr->type == PROG_COMMENT)
 			parse_prog_comment(s);
 		else if (s->tok_ptr->type == STRING)

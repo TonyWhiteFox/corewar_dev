@@ -69,6 +69,25 @@ void			print_arg(t_instr *ptr, int i)
 		ft_printf("%-17d", ptr->args[i].value);
 }
 
+void			print_instr(t_instr *ptr)
+{
+	int		j;
+
+	if (ptr)
+	{
+		if (ptr->label)
+			ft_printf("%-10d:    %s:\n", ptr->byte, ptr->label);
+		ft_printf("%-5d(%-2d) :        ", ptr->byte, ptr->size);
+		ft_printf("%-10s", ptr->op->name);
+		j = -1;
+		while (++j < 3 && (ptr->args[j].value != INT32_MAX
+						   || ptr->args[j].label))
+			print_arg(ptr, j);
+		ft_printf("\n");
+		ptr = ptr->next;
+	}
+}
+
 void			print_code(t_serv *s)
 {
 	t_instr		*ptr;

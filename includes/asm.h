@@ -37,6 +37,7 @@
 # define READ_SIZE			4096
 # define FLAG_DUMP			1
 # define FLAG_DEBUG			2
+# define FLAG_INSTR			4
 
 typedef enum				e_type
 {
@@ -146,5 +147,6 @@ int							parse_op(t_serv *s);
 void						parse_string(t_serv *s);
 t_op						*get_op(char *name);
 void						add_instr(t_serv *s, t_instr *new);
+void						print_instr(t_instr *ptr);
 
 #endif
