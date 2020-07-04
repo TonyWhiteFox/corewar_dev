@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 21:04:13 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/21 17:25:01 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/04 09:49:24 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,8 @@ int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
 				temp = gamer->num;
 				gamer = gamer->next;
 			}
+			if (!gamer && numb <= v->total_gamers)
+				return(numb);
 		}
 		if (numb < temp)
 			return (numb);
@@ -296,10 +298,12 @@ void		find_last_negative_player(t_virt *v, t_gamer *gamer,
 								t_gamer *temp, bool isFind)
 {
 	while (gamer->next && !isFind)
+	{
 		if (gamer->next->num > 0)
 			isFind = TRUE;
 		else
 			gamer = gamer->next;
+	}
 	if (!isFind)
 		get_all_number_for_gamers(v->gamer);
 	else
@@ -375,6 +379,7 @@ void		send_gamers(t_virt *v)
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
+		ft_printf("3");
 		find_last_negative_player(v, v->gamer, NULL, FALSE);
 		gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	}
@@ -1112,7 +1117,7 @@ void		execute_cl(t_virt *v, t_opencl *o, t_mlx *ml)
 {
 	size_t	i;
 
-	i = o->flows + 512;
+	i = o->flows + 1024;
 	o->ret = clEnqueueNDRangeKernel(o->command_queue, o->kernel, 1, NULL,
 									&i, NULL, 0, NULL, NULL);
 	o->ret = clEnqueueReadBuffer(o->command_queue, o->mem_picture, CL_TRUE, 0,
@@ -1167,15 +1172,19 @@ int		key_press(int key, t_virt *v)
 	if (key == 53)
 		say_good_buy(v);
 	if (key == 24 && v->mlx->cycle_per_frame < 99)
+	{
 		if (v->mlx->sleep_after_frame == 0)
 			v->mlx->cycle_per_frame += 1;
 		else
 			v->mlx->sleep_after_frame -= 1000;
+	}
 	if (key == 27)
+	{
 		if (v->mlx->cycle_per_frame > 1)
 			v->mlx->cycle_per_frame -= 1;
 		else
 			v->mlx->sleep_after_frame += 1000;
+	}
 	return (0);
 }
 

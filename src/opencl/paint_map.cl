@@ -470,446 +470,544 @@ __kernel void alfavit(__global int* picture, int start_pos, int back_color,
 	picture[start_pos + w_x12 + 8] = back_color;
 }
 
-__kernel void print_0(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
+__kernel void print_char(__global int* picture, int start_pos, int back_color,
+					int front_color, int w_x, int char_n)
 {
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0);
-}
-
-__kernel void print_1(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_2(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 0, 0, 0, 0, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					0, 1, 0, 0, 0, 1, 1,
-					0, 0, 0, 0, 1, 1, 1,
-					0, 0, 0, 1, 1, 1, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 0, 0, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_3(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 1, 1, 0,
-					0, 0, 0, 0, 0, 1, 1,
-					0, 1, 0, 0, 0, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_4(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					1, 1, 0, 0, 0, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 1, 1, 1, 1);
-}
-
-__kernel void print_5(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 0, 0, 1, 0,
-					1, 1, 0, 0, 0, 0, 0,
-					1, 1, 0, 0, 0, 0, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 0, 0, 0, 0, 1, 1,
-					0, 0, 0, 0, 0, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_6(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 0, 0, 0, 1,
-					1, 1, 0, 0, 0, 0, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_7(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					0, 0, 0, 0, 0, 1, 1,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0);
-}
-
-__kernel void print_8(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_9(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 1,
-					0, 0, 0, 0, 0, 1, 1,
-					1, 0, 0, 0, 0, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					0, 1, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_A(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					1, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 1, 1, 1, 0,
-					0, 1, 1, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 1, 0, 1, 1);
-}
-
-__kernel void print_B(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 1, 0, 0, 0, 0,
-					1, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 0, 1, 1, 0, 0);
-}
-
-__kernel void print_C(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 0, 0, 1, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 0, 1, 1, 1, 0, 0);
-}
-
-__kernel void print_D(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 0, 0, 1, 1, 1,
-					0, 0, 0, 0, 1, 1, 0,
-					0, 0, 1, 1, 1, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 0, 1, 1, 0, 1, 0);
-}
-
-__kernel void print_E(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 0, 0, 1, 0,
-					0, 1, 1, 0, 1, 0, 0,
-					0, 1, 1, 1, 0, 0, 0,
-					0, 1, 1, 0, 0, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 0, 1, 1, 1, 0, 0);
-}
-
-__kernel void print_F(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 0, 1, 1, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0);
-}
-
-__kernel void print_T(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 0, 1, 1, 0, 0);
-}
-
-__kernel void print_o(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0);
-}
-
-__kernel void print_L(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 1, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 0, 1, 1, 0, 0, 0);
-}
-
-__kernel void print_Y(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					1, 1, 1, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 0, 1, 1, 1, 1, 0,
-					1, 0, 0, 0, 1, 1, 0,
-					1, 1, 0, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 0, 0);
-}
-
-__kernel void print_S(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 0, 0, 1, 0,
-					0, 0, 1, 1, 0, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 1, 0, 0, 1, 1, 0,
-					0, 1, 1, 1, 1, 1, 0,
-					0, 0, 1, 1, 1, 0, 0);
-}
-
-__kernel void print_I(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 0, 1, 1, 0, 0,
-					0, 0, 1, 1, 1, 1, 0);
-}
-
-__kernel void print_P(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 1, 0, 1, 1, 1, 0,
-					1, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 0, 1, 1,
-					0, 1, 1, 0, 1, 1, 0,
-					1, 1, 1, 1, 1, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 0, 1, 0, 0, 0, 0);
-}
-
-__kernel void print_R(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 1, 0, 1, 1, 0, 0,
-					1, 1, 1, 1, 1, 1, 0,
-					0, 1, 1, 0, 1, 1, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0,
-					0, 1, 1, 0, 0, 0, 0);
-}
-
-__kernel void print_M(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					1, 0, 0, 0, 0, 0, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 1, 0, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 1, 1, 1, 1, 1,
-					1, 1, 0, 1, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1,
-					1, 1, 0, 0, 0, 1, 1);
-}
-
-__kernel void print_empty(__global int* picture, int start_pos, int back_color,
-					int front_color, int w_x)
-{
-	alfavit(picture, start_pos, back_color, front_color, w_x,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0);
+	switch (char_n)
+	{
+		case 0:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				0, 1, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 1:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0);
+			break;
+		case 2:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 0, 0, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 3:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 4:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 1, 1, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 1, 1);
+			break;
+		case 5:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 6:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 7:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 8:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 9:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 0, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 10:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 	1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 11:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 12:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 13:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0);
+			break;
+		case 14:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 15:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0);
+			break;
+		case 16:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 17:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 18:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 0, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 1, 0);
+			break;
+		case 19:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 1, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 1,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				0, 0, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 0, 0);
+			break;
+		case 20:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 1, 1, 0, 1, 0,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 21:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 22:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 0, 1, 1, 0,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 23:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 0, 1, 1,
+				1, 1, 1, 1, 0, 1, 1,
+				1, 1, 0, 1, 1, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 24:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 25:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				0, 1, 0, 0, 0, 0, 0);
+			break;
+		case 26:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 1);
+			break;
+		case 27:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 0, 0, 0, 1, 1);
+			break;
+		case 28:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 29:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 1, 1, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0,
+				0, 0, 1, 1, 0, 0, 0);
+			break;
+		case 30:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 1, 1, 1, 0);
+			break;
+		case 31:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 0, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 0, 1, 0, 0, 0);
+			break;
+		case 32:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 0, 1, 0, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0);
+			break;
+		case 33:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				1, 1, 1, 0, 1, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1);
+			break;
+		case 34:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 0, 1, 1, 1,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 0, 1, 1, 1, 0, 0);
+			break;
+		case 35:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 0, 0, 1, 1,
+				0, 0, 0, 0, 1, 1, 1,
+				0, 0, 0, 1, 1, 1, 0,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 0, 0, 0,
+				1, 1, 1, 0, 0, 0, 0,
+				1, 1, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 36:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1);
+			break;
+		case 37:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0);
+			break;
+	}
 }
 
 __kernel void print_map(__global int* picture, __global uchar* field,
@@ -995,56 +1093,209 @@ __kernel void print_map(__global int* picture, __global uchar* field,
 	start_x = 30 + num_x * 9 + num_x / 2 * 3;
 	start_y = 30 + num_y * 15;
 	start_pos = start_y * w_x + start_x;
-	switch (value)
+	print_char(picture, start_pos, back_color, front_color, w_x, value);
+}
+
+__kernel void print_logo(__global int* picture, __global bool* decor, const int w_x,
+						const int total_cycle, int gid, int back_color,
+						int front_color, int num_x, int num_y,
+						int start_x, int start_y, int start_pos, int flows,
+						int temp, int cycles_per_frame, int sleep_after_frame)
+{
+	gid = gid - flows;
+	if (gid < 285)
+	{
+		num_x = gid % 15;
+		num_y = gid / 15;
+		start_x = 30 + (131 + num_x * 2) * 9 + (130 / 2 + num_x * 2) * 3;
+		start_y = 30 + num_y * 15;
+		start_pos = start_y * w_x + start_x;
+		if (decor[gid] == true)
+			back_color = 0xFF0000;
+		else
+			back_color = 0x333333;
+		temp = 1000000384 - (total_cycle / cycles_per_frame);
+		if (sleep_after_frame == 0)
+			if ((num_y*2.5 == (total_cycle / cycles_per_frame) % 128)
+				|| (num_x*3 == (total_cycle / cycles_per_frame) % 128)
+				|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
+				back_color += 0x009900;
+		print_char(picture, start_pos, back_color, front_color, w_x, 37);
+		print_char(picture, start_pos + 12, back_color, front_color, w_x, 37);
+	}
+}
+
+__kernel void print_numbers(__global int* picture, const int w_x,
+						const int total_cycle, int gid, int back_color,
+						int front_color, int start_x, int start_y, int start_pos,
+						int flows, int temp, int cycles_per_frame, int sleep_after_frame,
+						int cycles_to_die)
+{
+	gid = gid - 285 - flows;
+	if (gid < 40)
+	{
+		back_color = 0x303030;
+		switch (gid / 10)
+		{
+			case 0:
+				start_y = 30 + 20 * 15;
+				temp = total_cycle;
+				front_color = 0xFF00;
+				break;
+			case 1:
+				start_y = 30 + 21 * 15;
+				temp = cycles_to_die;
+				gid = gid - 10;
+				front_color = 0xFF00FF;
+				break;
+			case 2:
+				start_y = 30 + 22 * 15;
+				temp = cycles_per_frame;
+				gid = gid - 20;
+				front_color = 0xFFFF00;
+				break;
+			case 3:
+				start_y = 30 + 23 * 15;
+				temp = sleep_after_frame;
+				gid = gid - 30;
+				front_color = 0xFFFF;
+				break;
+		}
+		start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid) * 3;
+		start_pos = start_y * w_x + start_x;
+		while (gid > 0)
+		{
+			temp = temp / 10;
+			gid = gid - 1;
+		}
+		gid = temp % 10;
+		print_char(picture, start_pos, back_color, front_color, w_x, gid);
+	}
+}
+
+__kernel void print_comment(__global int* picture, const int w_x,
+						int gid, int back_color, int front_color,
+						int start_x, int start_y, int start_pos,
+						int flows)
+{
+	gid = gid - (flows + 285 + 80);
+	back_color = 0x303030;
+	if (gid < 12)
+	{
+		start_y = 30 + 20 * 15;
+		front_color = 0xFF00;
+		start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
+	}
+	else if (gid < 25)
+	{
+		start_y = 30 + 21 * 15;
+		front_color = 0xFF00FF;
+		start_x = 30 + (131 + gid - 12) * 9 + (130 / 2 + gid - 12) * 3;
+
+	}
+	else if (gid < 41)
+	{
+		start_y = 30 + 22 * 15;
+		front_color = 0xFFFF00;
+		start_x = 30 + (131 + gid - 25) * 9 + (130 / 2 + gid - 25) * 3;
+	}
+	else
+	{
+		start_y = 30 + 23 * 15;
+		front_color = 0xFFFF;
+		start_x = 30 + (131 + gid - 41) * 9 + (130 / 2 + gid - 41) * 3;
+	}
+	start_pos = start_y * w_x + start_x;
+	switch (gid)
 	{
 		case 0:
-			print_0(picture, start_pos, back_color, front_color, w_x);
+		case 2:
+		case 19:
+		case 49:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'T' - 'A' + 10);
 			break;
 		case 1:
-			print_1(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 2:
-			print_2(picture, start_pos, back_color, front_color, w_x);
+		case 20:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'O' - 'A' + 10);
 			break;
 		case 3:
-			print_3(picture, start_pos, back_color, front_color, w_x);
+		case 38:
+		case 47:
+			print_char(picture, start_pos, back_color, front_color, w_x, 10);
 			break;
 		case 4:
-			print_4(picture, start_pos, back_color, front_color, w_x);
+		case 9:
+		case 15:
+		case 28:
+		case 42:
+		case 56:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'L' - 'A' + 10);
 			break;
 		case 5:
-			print_5(picture, start_pos, back_color, front_color, w_x);
-			break;
+		case 18:
+		case 21:
+		case 31:
+		case 35:
+		case 46:
+		case 52:
+			print_char(picture, start_pos, back_color, front_color, w_x, 37);
+				break;
 		case 6:
-			print_6(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 7:
-			print_7(picture, start_pos, back_color, front_color, w_x);
-			break;
 		case 8:
-			print_8(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 9:
-			print_9(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 10:
-			print_A(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 11:
-			print_B(picture, start_pos, back_color, front_color, w_x);
-			break;
 		case 12:
-			print_C(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 13:
-			print_D(picture, start_pos, back_color, front_color, w_x);
-			break;
 		case 14:
-			print_E(picture, start_pos, back_color, front_color, w_x);
-			break;
-		case 15:
-			print_F(picture, start_pos, back_color, front_color, w_x);
-			break;
+		case 25:
+		case 27:
+		case 53:
+		case 55:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'C' - 'A' + 10);
+				break;
+		case 7:
+		case 13:
+		case 26:
+		case 54:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'Y' - 'A' + 10);
+				break;
+		case 10:
+		case 16:
+		case 24:
+		case 29:
+		case 33:
+		case 40:
+		case 43:
+		case 44:
+		case 50:
+		case 57:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'E' - 'A' + 10);
+				break;
+		case 11:
+		case 17:
+		case 30:
+		case 41:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'S' - 'A' + 10);
+				break;
+		case 22:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'D' - 'A' + 10);
+				break;
+		case 23:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'I' - 'A' + 10);
+				break;
+		case 32:
+		case 45:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+				break;
+		case 34:
+		case 37:
+		case 51:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'R' - 'A' + 10);
+				break;
+		case 36:
+		case 48:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'F' - 'A' + 10);
+				break;
+		case 39:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'M' - 'A' + 10);
+				break;
 	}
 }
 
@@ -1069,225 +1320,21 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 				total_cycle, gid, back_color, front_color,
 				num_x, num_y, start_x, start_y, start_pos);
 	}
-	else
+	if (gid >= flows && gid < flows + 285)
 	{
-		gid = gid - flows;
-		if (gid < 285)
-		{
-			num_x = gid % 15;
-			num_y = gid / 15;
-			start_x = 30 + (131 + num_x * 2) * 9 + (130 / 2 + num_x * 2) * 3;
-			start_y = 30 + num_y * 15;
-			start_pos = start_y * w_x + start_x;
-			if (decor[gid] == true)
-				back_color = 0xFF0000;
-			else
-				back_color = 0x333333;
-			temp = 1000000384 - (total_cycle / cycles_per_frame);
-			if (sleep_after_frame == 0)
-				if ((num_y*2.5 == (total_cycle / cycles_per_frame) % 128)
-					|| (num_x*3 == (total_cycle / cycles_per_frame) % 128)
-					|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
-					back_color += 0x009900;
-			print_empty(picture, start_pos, back_color, front_color, w_x);
-			print_empty(picture, start_pos + 12, back_color, front_color, w_x);
-		}
-		else
-		{
-			gid = gid - 285;
-			if (gid < 40)
-			{
-				back_color = 0x303030;
-				switch (gid / 10)
-				{
-					case 0:
-						start_y = 30 + 20 * 15;
-						temp = total_cycle;
-						front_color = 0xFF00;
-						break;
-					case 1:
-						start_y = 30 + 21 * 15;
-						temp = cycles_to_die;
-						gid = gid - 10;
-						front_color = 0xFF00FF;
-						break;
-					case 2:
-						start_y = 30 + 22 * 15;
-						temp = cycles_per_frame;
-						gid = gid - 20;
-						front_color = 0xFFFF00;
-						break;
-					case 3:
-						start_y = 30 + 23 * 15;
-						temp = sleep_after_frame;
-						gid = gid - 30;
-						front_color = 0xFFFF;
-						break;
-				}
-				start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid) * 3;
-				start_pos = start_y * w_x + start_x;
-				while (gid > 0)
-				{
-					temp = temp / 10;
-					gid = gid - 1;
-				}
-				gid = temp % 10;
-				switch (gid)
-				{
-					case 0:
-						print_0(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 1:
-						print_1(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 2:
-						print_2(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 3:
-						print_3(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 4:
-						print_4(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 5:
-						print_5(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 6:
-						print_6(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 7:
-						print_7(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 8:
-						print_8(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 9:
-						print_9(picture, start_pos, back_color, front_color, w_x);
-						break;
-				}
-			}
-			else if (gid < 98)
-			{
-				gid = gid - 40;
-				back_color = 0x303030;
-				if (gid < 12)
-				{
-					start_y = 30 + 20 * 15;
-					front_color = 0xFF00;
-					start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
-				}
-				else if (gid < 25)
-				{
-					start_y = 30 + 21 * 15;
-					front_color = 0xFF00FF;
-					start_x = 30 + (131 + gid - 12) * 9 + (130 / 2 + gid - 12) * 3;
-
-				}
-				else if (gid < 41)
-				{
-					start_y = 30 + 22 * 15;
-					front_color = 0xFFFF00;
-					start_x = 30 + (131 + gid - 25) * 9 + (130 / 2 + gid - 25) * 3;
-				}
-				else
-				{
-					start_y = 30 + 23 * 15;
-					front_color = 0xFFFF;
-					start_x = 30 + (131 + gid - 41) * 9 + (130 / 2 + gid - 41) * 3;
-				}
-				start_pos = start_y * w_x + start_x;
-				switch (gid)
-				{
-					case 0:
-					case 2:
-					case 19:
-					case 49:
-						print_T(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 1:
-					case 20:
-						print_o(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 3:
-					case 38:
-					case 47:
-						print_A(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 4:
-					case 9:
-					case 15:
-					case 28:
-					case 42:
-					case 56:
-						print_L(picture, start_pos, back_color, front_color, w_x);
-						break;
-					case 5:
-					case 18:
-					case 21:
-					case 31:
-					case 35:
-					case 46:
-					case 52:
-						print_empty(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 6:
-					case 8:
-					case 12:
-					case 14:
-					case 25:
-					case 27:
-					case 53:
-					case 55:
-						print_C(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 7:
-					case 13:
-					case 26:
-					case 54:
-						print_Y(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 10:
-					case 16:
-					case 24:
-					case 29:
-					case 33:
-					case 40:
-					case 43:
-					case 44:
-					case 50:
-					case 57:
-						print_E(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 11:
-					case 17:
-					case 30:
-					case 41:
-						print_S(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 22:
-						print_D(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 23:
-						print_I(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 32:
-					case 45:
-						print_P(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 34:
-					case 37:
-					case 51:
-						print_R(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 36:
-					case 48:
-						print_F(picture, start_pos, back_color, front_color, w_x);
-							break;
-					case 39:
-						print_M(picture, start_pos, back_color, front_color, w_x);
-							break;
-				}
-			}
-		}
+		print_logo(picture, decor, w_x, total_cycle, gid, back_color,
+					front_color, num_x, num_y, start_x, start_y, start_pos, 
+					flows, temp, cycles_per_frame, sleep_after_frame);
+	}
+	if (gid >= flows + 285 && gid < flows + 285 + 80)
+	{
+		print_numbers(picture, w_x, total_cycle, gid, back_color,
+					 front_color, start_x, start_y, start_pos, flows,
+					 temp, cycles_per_frame, sleep_after_frame, cycles_to_die);
+	}
+	if (gid >= flows + 285 + 80 && gid < flows + 285 + 80 + 58)
+	{
+		print_comment(picture, w_x, gid, back_color, front_color,
+					start_x, start_y, start_pos, flows);
 	}
 }
