@@ -1,17 +1,33 @@
-if [ "$1" = clean ]
-then
-	echo $1
-	rm Original_exe/champs/*.cor
-	rm champs/*.cor
-else
-	for i in Original_exe/champs/*.s; do
-	  Original_exe/asm $i 2>&1
-	done
-	echo "Original asm done"
+TEST_DIR='./test'
+SRC_DIR='./Original_exe'
+
+echo $1
+rm -rf $TEST_DIR
+mkdir $TEST_DIR
+
+files=$(find $SRC_DIR -name *.s)
+for i in $files; do
+  file=$(basename $i .s)
+  file_dir=$(dirname $i)
+  printf '\033[0;32m'
+  printf "ORIG: Translating $file: "
+  $SRC_DIR/asm $i 2>&1
+  md5_orig=$(md5 -q $file_dir/$file.cor)
+  if [ -z "$md5_orig" ]
+  then
+    printf $md5_orig
+    echo ""
+  fi
+
+  printf '\033[0m'
+  cp $i $TEST_DIR
+
   printf '\033[0;34m'
-	for i in champs/*.s; do
-	  printf "Writing $i: "
-	  ./asm $i 2>&1
-	done
-	echo "User asm done"
-fi
+  printf "USER: Translating $file: "
+  ./asm $TEST_DIR/$file.s 2>&1
+  echo "==============================="
+
+done
+#@rm md5.txt
+#for i in ./champs/*.s; do
+#done
