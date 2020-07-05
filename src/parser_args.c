@@ -17,33 +17,40 @@
 
 void	parse_reg(t_serv *s, int i)
 {
+	t_bytes			value;
+
+	value.num = ft_atoi_check(&s->tok_ptr->content[1]);
+	if (value.unum1 > REG_NUMBER)
+	{
+		errno = EDOM;
+		ft_error(ERR_REG, s);
+	}
 	s->last_instr->args[i].type = T_REG;
-	s->last_instr->args[i].value = ft_atoi_check(s, &s->tok_ptr->content[1]);
+	s->last_instr->args[i].value = value;
+	s->last_instr->args[i].code = value;
 	s->tok_ptr = s->tok_ptr->next;
 }
 
 void	parse_ind(t_serv *s, int i)
 {
+	t_bytes			value;
+	t_list			*new;
+
+	new = NULL;
 	s->last_instr->args[i].type = T_IND;
-	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
-	else if (s->tok_ptr->type == STRING)
+	if (s->tok_ptr->type == LABEL_REF)
 	{
-		if (ft_isnumber(s->tok_ptr->content))
-			s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
-		else
-			ft_error(ERR_PARSE_ARG_NUM, s);
-	}
-	else if (s->tok_ptr->type == LABEL)
-	{
-		s->tok_ptr = s->tok_ptr->next;
-		if (s->tok_ptr->type == STRING || s->tok_ptr->type == NUM)
-			s->last_instr->args[i].label = s->tok_ptr->content;
-		else
-			ft_error(ERR_PARSE_DIR, s);
+		s->last_instr->args[i].label = s->tok_ptr->content;
+		new = ft_memguru(sizeof(*new), &s->memguru);
+		new->content = s->last_instr;
+		ft_lstadd(&s->arg_labels, new);
 	}
 	else
-		ft_error(ERR_PARSE_ARG, s);
+	{
+		value.num = ft_atoi_check(s->tok_ptr->content);
+		s->last_instr->args[i].value = value;
+		s->last_instr->args[i].code.unum4 = swap_bytes_old(value.unum4, 2);
+	}
 	s->tok_ptr = s->tok_ptr->next;
 }
 
@@ -84,23 +91,26 @@ int		ft_is_hex(char *nb)
 
 void	parse_dir(t_serv *s, int i)
 {
+	t_list		*new;
+
 	s->last_instr->args[i].type = T_DIR;
 	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM)
-		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
-	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content)
-	|| ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
-		s->last_instr->args[i].value = ft_atoi_check(s, s->tok_ptr->content);
-	else if (s->tok_ptr->type == LABEL)
+		s->last_instr->args[i].value.num = ft_atoi_check(s->tok_ptr->content);
+	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content) ||
+	ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
+		s->last_instr->args[i].value.num = ft_atoi_check(s->tok_ptr->content);
+	else if (s->tok_ptr->type == LABEL_REF)
 	{
-		s->tok_ptr = s->tok_ptr->next;
-		if (s->tok_ptr->type == STRING || s->tok_ptr->type == NUM)
-			s->last_instr->args[i].label = s->tok_ptr->content;
-		else
-			ft_error(ERR_PARSE_DIR, s);
+		s->last_instr->args[i].label = s->tok_ptr->content;
+		new = ft_memguru(sizeof(*new), &s->memguru);
+		new->content = s->last_instr;
+		ft_lstadd(&s->arg_labels, new);
 	}
 	else
 		ft_error(ERR_PARSE_ARG, s);
+	s->last_instr->args[i].code.unum4 = swap_bytes_old(s->last_instr->args[i]
+			.value.unum4, s->last_instr->op->reduced_dir_size ? 2 : 4);
 	s->tok_ptr = s->tok_ptr->next;
 }
 
@@ -110,7 +120,7 @@ void	parse_arg(t_serv *s, int i)
 		parse_dir(s, i);
 	else if (s->tok_ptr->type == STRING && s->tok_ptr->content[0] == REG_CHAR)
 		parse_reg(s, i);
-	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL
+	else if (s->tok_ptr->type == NUM || s->tok_ptr->type == LABEL_REF
 			|| s->tok_ptr->type == STRING)
 		parse_ind(s, i);
 	else

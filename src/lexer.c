@@ -23,7 +23,7 @@ void			add_token(t_serv *s, t_token *new)
 	else
 	{
 		ptr = s->tokens;
-		while (ptr->next)
+		while (ptr && ptr->next)
 			ptr = ptr->next;
 		ptr->next = new;
 	}
@@ -41,9 +41,11 @@ t_token			*init_token(t_serv *s, t_type type, char *str, size_t len)
 {
 	t_token		*new;
 
-	new = ft_memguru(sizeof(*new), &s->memguru);
+	if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
+		ft_error(ERR_MALLOC, s);
 	new->type = type;
-	new->content = ft_memguru(len + 1, &s->memguru);
+	if (!(new->content = ft_memguru(len + 1, &s->memguru)))
+		ft_error(ERR_MALLOC, s);
 	ft_strncpy(new->content, str, len);
 	new->content[len] = '\0';
 	new->next = NULL;
@@ -62,10 +64,9 @@ static void		get_tokens(t_serv *s)
 	while (*s->ptr1)
 	{
 		skip_whitespace(s);
-		if (*s->ptr1 == COMMENT_CHAR)
+		if (*s->ptr1 == COMMENT_CHAR || *s->ptr1 == ALT_COMMENT_CHAR)
 			parse_comment(s);
-		else if (*s->ptr1 == ALT_COMMENT_CHAR || *s->ptr1 == '\"'
-			|| ft_strchr(LABEL_CHARS, *s->ptr1))
+		else if (*s->ptr1 == '\"' || ft_strchr(LABEL_CHARS, *s->ptr1))
 			parse_str(s);
 		else if (*s->ptr1 == SEPARATOR_CHAR)
 			add_token(s, init_token(s, SEPARATOR, s->ptr1++, 1));
@@ -76,7 +77,7 @@ static void		get_tokens(t_serv *s)
 		else if (*s->ptr1 == DIRECT_CHAR)
 			add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
 		else if (*s->ptr1 == LABEL_CHAR)
-			add_token(s, init_token(s, LABEL, s->ptr1++, 1));
+			parse_ref_label(s);
 		else if (*s->ptr1 == '-' || *s->ptr1 == '+')
 			parse_num(s);
 		else

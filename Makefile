@@ -17,9 +17,9 @@ NAME2	= $(PROGECTSUB)
 
 SRC1		= new_main_vm.c\
 
-SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c ft_str_split.c \
+SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c \
 	ft_memguru.c lexer_parse.c output_utils.c parser_args.c parser_tokens.c \
-	ft_atoi_base.c
+	ft_atoi_base.c code.c op.c
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
 HEADERSUB	= $(INCDIR)$(PROGECTSUB).h
@@ -40,7 +40,7 @@ OBJ1	= $(addprefix $(OBJDIR),$(SRC1:.c=.o))
 OBJ2	= $(addprefix $(OBJDIR),$(SRC2:.c=.o))
 
 CC		= gcc
-CFLAGS	= -Wall -Wextra -g -O3 #-Werror
+CFLAGS	= -Wall -Wextra -g #-Werror
 
 MLX		= ./miniLibX/
 MLX_LIB	= $(addprefix $(MLX),mlx.a)

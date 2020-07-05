@@ -77,11 +77,10 @@ static int			ft_int_ovfl(char *num)
 				return (0);
 		}
 	}
-	errno = ERANGE;
-	return (1);
+	return (neg ? INT32_MIN : INT32_MAX);
 }
 
-int						ft_atoi_check(t_serv *s, char *nb)
+int ft_atoi_check(char *nb)
 {
 	size_t		i;
 	int			ret;
@@ -91,18 +90,14 @@ int						ft_atoi_check(t_serv *s, char *nb)
 	i = ft_strlen(nb);
 	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X' || nb[1] == 'b'))
 	{
-		if (ft_int_ovfl(&nb[2]))
-			errno = ERANGE;
-		else if (nb[1] == 'x' || nb[1] == 'X')
+		if (nb[1] == 'x' || nb[1] == 'X')
 			ret = ft_atoi_base(nb, 16);
 		else if (nb[1] == 'b')
 			ret = ft_atoi_base(nb, 2);
 		else
 			errno = EDOM;
 	}
-	else if (!ft_int_ovfl(nb))
+	else if (!(ret = ft_int_ovfl(nb)))
 		ret = ft_atoi_base(nb, 10);
-	if (ret == -1 && errno)
-		ft_error(ERR_PARSE_ARG, s);
 	return (ret);
 }

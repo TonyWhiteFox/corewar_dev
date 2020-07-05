@@ -48,9 +48,10 @@ void	parse_prog_name(t_serv *s)
 
 void	parse_label(t_serv *s)
 {
+	if (s->last_instr)
+		add_instr(s, s->last_instr);
 	s->last_instr = init_instr(s);
 	s->last_instr->label = s->tok_ptr->content;
-	s->tok_ptr = s->tok_ptr->next;
 }
 
 int		parse_op(t_serv *s)
@@ -73,12 +74,7 @@ int		parse_op(t_serv *s)
 
 void	parse_string(t_serv *s)
 {
-	if (s->tok_ptr->next->type == LABEL)
-	{
-		parse_label(s);
-		s->tok_ptr = s->tok_ptr->next;
-	}
-	else if (parse_op(s))
+	if (parse_op(s))
 		parse_arguments(s);
 	else
 		ft_error(ERR_PARSE_STRING, s);

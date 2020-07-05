@@ -27,10 +27,11 @@ t_instr			*init_instr(t_serv *s)
 	while (++i < 3)
 	{
 		new->args[i].type = 0;
-		new->args[i].value = INT32_MAX;
+		new->args[i].value.num = 0;
 		new->args[i].label = NULL;
 	}
 	new->byte = 0;
+	new->acb = 0;
 	new->size = 0;
 	new->next = NULL;
 	return (new);
@@ -55,7 +56,7 @@ static void		set_size(t_serv *s, t_instr *ptr)
 	int			i;
 	int			arg;
 
-	if (ptr)
+	if (ptr && ptr->op)
 	{
 		i = -1;
 		arg = 0;
@@ -63,8 +64,12 @@ static void		set_size(t_serv *s, t_instr *ptr)
 		{
 			if (ptr->args[i].type)
 			{
-				if (ptr->args[i].type == T_DIR)
-					arg += ptr->op->t_dir_size;
+				if (ptr->args[i].type == T_IND || (ptr->args[i].type == T_DIR
+				&& ptr->op->reduced_dir_size))
+					arg += 2;
+				else if (ptr->args[i].type == T_DIR &&
+				!ptr->op->reduced_dir_size)
+					arg += 4;
 				else
 					arg++;
 			}
@@ -72,7 +77,7 @@ static void		set_size(t_serv *s, t_instr *ptr)
 		ptr->byte = s->header.prog_size;
 		ptr->size++;
 		if (ptr->op)
-			ptr->size += (ptr->op->args_types_code ? 1 : 0) + arg;
+			ptr->size += (ptr->op->is_acb ? 1 : 0) + arg;
 		s->header.prog_size += ptr->size;
 	}
 }
@@ -90,10 +95,11 @@ void			add_instr(t_serv *s, t_instr *new)
 			ptr = ptr->next;
 		ptr->next = new;
 	}
+	if (new->op && new->op->is_acb)
+		new->acb = arg_coding_byte(new);
 	set_size(s, new);
 	if (s->flag & FLAG_INSTR)
 		print_instr(s->last_instr);
-
 }
 
 void			parser(t_serv *s)
@@ -111,6 +117,8 @@ void			parser(t_serv *s)
 		}
 		else if (s->tok_ptr->type == PROG_COMMENT)
 			parse_prog_comment(s);
+		else if (s->tok_ptr->type == LABEL)
+			parse_label(s);
 		else if (s->tok_ptr->type == STRING)
 			parse_string(s);
 		else if (s->tok_ptr->type == COMMENT)
@@ -120,4 +128,5 @@ void			parser(t_serv *s)
 		}
 		s->tok_ptr = s->tok_ptr->next;
 	}
+	code_labels(s);
 }

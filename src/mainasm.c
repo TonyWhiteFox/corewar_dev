@@ -28,13 +28,16 @@ static void		init_s(t_serv *s)
 	s->memguru = NULL;
 	s->last_sentence = NULL;
 	s->header.magic = COREWAR_EXEC_MAGIC;
+	s->arg_labels = NULL;
+	s->tokens = NULL;
 }
 
 static void		print_usage(void)
 {
-	ft_printf("Usage: ./asm <champion>.s [-a|-d]\n");
+	ft_printf("Usage: ./asm <champion>.s [-a | -d | -i]\n");
 	ft_printf("\t\t-a\tDump annotated program on standard output\n");
 	ft_printf("\t\t-d\tDebug mode\n");
+	ft_printf("\t\t-i\tPrint parsed instructions\n");
 }
 
 static t_serv	*read_file(char *file)

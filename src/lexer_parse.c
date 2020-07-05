@@ -65,10 +65,19 @@ void		parse_str(t_serv *s)
 	}
 	else
 	{
-		while (ft_strchr(LABEL_CHARS, *s->ptr2++))
+		while (ft_strchr(LABEL_CHARS, *s->ptr2))
+		{
 			len++;
+			s->ptr2++;
+		}
 	}
-	add_token(s, init_token(s, STRING, s->ptr1, len));
+	if (*s->ptr2 == LABEL_CHAR)
+	{
+		add_token(s, init_token(s, LABEL, s->ptr1, len));
+		len++;
+	}
+	else
+		add_token(s, init_token(s, STRING, s->ptr1, len));
 	s->ptr1 += len;
 	if (*s->ptr1 == '\"')
 		s->ptr1++;
@@ -85,5 +94,20 @@ void		parse_command(t_serv *s)
 	else if (!ft_strncmp(s->ptr1, COMMENT_CMD_STRING,
 			(len = ft_strlen(COMMENT_CMD_STRING))))
 		add_token(s, init_token(s, PROG_COMMENT, s->ptr1, len));
+	else
+		ft_error(ERR_COMMAND, s);
+	s->ptr1 += len;
+}
+
+void		parse_ref_label(t_serv *s)
+{
+	size_t	len;
+
+	s->ptr1++;
+	s->ptr2 = s->ptr1;
+	len = 0;
+	while (ft_strchr(LABEL_CHARS, *s->ptr2++))
+		len++;
+	add_token(s, init_token(s, LABEL_REF, s->ptr1, len));
 	s->ptr1 += len;
 }

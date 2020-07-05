@@ -30,6 +30,9 @@
 # define ERR_PARSE_ARG		"ERROR: Can\'t parse argument"
 # define ERR_PARSE_ARG_NUM	"ERROR: Wrong number of arguments"
 # define ERR_PARSE_DIR		"ERROR: STRING token expected after %"
+# define ERR_REG			"ERROR: Incorrect REGISTER argument value"
+# define ERR_NO_LABEL		"ERROR: No such label"
+# define ERR_COMMAND		"ERROR: Undefined command"
 # define FLAG_LABEL			1
 # define FLAG_ARG			2
 # define FLAG_CHAMP_NAME	4
@@ -55,6 +58,7 @@ typedef enum				e_type
 	PROG_NAME,
 	PROG_COMMENT,
 	LABEL,
+	LABEL_REF,
 
 	OPERATOR,
 	DIRECT_LABEL,
@@ -71,6 +75,18 @@ typedef struct				s_token
 	struct s_token			*next;
 }							t_token;
 
+typedef union				u_bytes
+{
+	int						num;
+	int8_t					num1;
+	int16_t					num2;
+	int32_t					num4;
+	uint8_t					unum1;
+	uint16_t				unum2;
+	uint32_t				unum4;
+	unsigned char			bytes[4];
+}							t_bytes;
+
 typedef struct				s_serv
 {
 	int						fd;
@@ -83,6 +99,7 @@ typedef struct				s_serv
 	char					*buff;
 	char					*ptr1;
 	char					*ptr2;
+	struct s_list			*arg_labels;
 	t_token					*tok_ptr;
 	struct s_header			header;
 	struct s_instr			*instr;
@@ -97,8 +114,9 @@ typedef struct				s_serv
 typedef struct				s_arg
 {
 	t_arg_type				type;
-	int						value;
+	t_bytes					value;
 	char					*label;
+	t_bytes 				code;
 }							t_arg;
 
 typedef struct				s_instr
@@ -106,6 +124,7 @@ typedef struct				s_instr
 	char					*label;
 	struct s_op				*op;
 	struct s_arg			args[3];
+	unsigned char			acb;
 	size_t					size;
 	size_t					byte;
 	struct s_instr			*next;
@@ -115,9 +134,6 @@ void						lexer(t_serv *s);
 void						parser(t_serv *s);
 void						output(t_serv *s);
 void						ft_error(char *err, t_serv *s);
-int							get_word_len(char const *str, char *c);
-void						ft_lstpushback(struct s_list **begin_list, struct
-							s_list *new);
 void						*ft_memguru(size_t size, struct s_list **list);
 void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);
@@ -132,10 +148,9 @@ t_token						*init_token(t_serv *s, t_type type, char *str,
 							size_t len);
 size_t						len_to_end(t_serv *s, char end);
 int							get_offset(t_serv *s, t_instr *instr, char *label);
-uint32_t					arg_coding_byte(t_instr *ptr);
-uint32_t					big_endian(uint32_t num);
+unsigned char arg_coding_byte(t_instr *ptr);
 void						print_arg(t_instr *ptr, int i);
-void						print_code(t_serv *s);
+void						print_dump(t_serv *s);
 void						parse_reg(t_serv *s, int i);
 void						parse_ind(t_serv *s, int i);
 void						parse_dir(t_serv *s, int i);
@@ -150,6 +165,10 @@ t_op						*get_op(char *name);
 void						add_instr(t_serv *s, t_instr *new);
 void						print_instr(t_instr *ptr);
 int							ft_atoi_base(char *nb, int base);
-int							ft_atoi_check(t_serv *s, char *nb);
+int							ft_atoi_check(char *nb);
+void print_instr_code(t_instr *instr, int pass);
+uint32_t					swap_bytes_old(uint32_t num, size_t len);
+void						parse_ref_label(t_serv *s);
+void						code_labels(t_serv *s);
 
 #endif

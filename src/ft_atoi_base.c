@@ -79,3 +79,31 @@ int						ft_atoi_base(char *nb, int base)
 	return (result);
 }
 
+char					*ft_itoa_base_u(unsigned long n, int base)
+{
+	char				*str;
+	char				*tab;
+	unsigned long		o;
+	size_t				size;
+	unsigned long		tmp;
+
+	tab = "0123456789abcdef";
+	size = 0;
+	tmp = n;
+	while (tmp /= base)
+		size++;
+	if (base < 2 || base > 16)
+		return (0);
+	size++;
+	if (!(str = ft_strnew(size)))
+		return (NULL);
+	if (!n)
+		str[0] = '0';
+	while (n)
+	{
+		o = n % base;
+		str[--size] = tab[o];
+		n /= base;
+	}
+	return (str);
+}

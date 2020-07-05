@@ -13,60 +13,48 @@
 #include "libft.h"
 #include "asm.h"
 
-int				get_offset(t_serv *s, t_instr *instr, char *label)
+void				print_arg_code(t_instr *ptr, int i, int pass)
 {
-	t_instr		*ptr;
+	unsigned char		len;
+	t_arg				arg;
 
-	ptr = s->instr;
-	while (ptr)
+	len = 0;
+	arg = ptr->args[i];
+	if (arg.type == T_REG)
+		ft_printf("%-18s", ft_itoa(arg.code.num));
+	else if (pass == 2)
+		ft_printf("%-18s", ft_itoa(arg.value.num));
+	else if (arg.type == T_IND || (arg.type == T_DIR && ptr->op->reduced_dir_size))
 	{
-		if (label && ptr->label && !ft_strcmp(label, ptr->label))
-			break ;
-		ptr = ptr->next;
+		ft_printf("%-4u", arg.code.bytes[0]);
+		ft_printf("%-4u", arg.code.bytes[1]);
+		ft_printf("          ");
 	}
-	return (ptr->byte - instr->byte);
-}
-
-uint32_t		arg_coding_byte(t_instr *ptr)
-{
-	uint32_t	ret;
-
-	ret = 0;
-	ret |= ptr->args[0].type;
-	ret = ret << 3;
-	ret |= ptr->args[1].type;
-	ret = ret << 2;
-	ret |= ptr->args[2].type;
-	ret = ret << 1;
-	return (ret);
-}
-
-uint32_t		big_endian(uint32_t num)
-{
-	uint32_t	b0;
-	uint32_t	b1;
-	uint32_t	b2;
-	uint32_t	b3;
-	uint32_t	res;
-
-	b0 = (num & 0x000000ff) << 24u;
-	b1 = (num & 0x0000ff00) << 8u;
-	b2 = (num & 0x00ff0000) >> 8u;
-	b3 = (num & 0xff000000) >> 24u;
-	res = b0 | b1 | b2 | b3;
-	return (res);
+	else if (arg.type == T_DIR)
+	{
+		while (len < 4)
+			ft_printf("%-4u", ptr->args[i].code.bytes[len++]);
+		ft_printf("  ");
+	}
 }
 
 void			print_arg(t_instr *ptr, int i)
 {
-	if (ptr->args[i].type == T_DIR)
-		write(1, "%", 1);
-	else if (ptr->args[i].type == T_REG)
-		write(1, "r", 1);
-	if (ptr->args[i].label)
-		ft_printf(":%-16s", ptr->args[i].label);
+	if (ptr->args[i].type == T_DIR || ptr->args[i].type == T_REG)
+	{
+		if (ptr->args[i].type == T_DIR)
+			write(1, "%", 1);
+		else if (ptr->args[i].type == T_REG)
+			write(1, "r", 1);
+		if (ptr->args[i].label)
+			ft_printf(":%-16s", ptr->args[i].label);
+		else
+			ft_printf("%-17d", ptr->args[i].value);
+	}
+	else if (ptr->args[i].label)
+		ft_printf(":%-17s", ptr->args[i].label);
 	else
-		ft_printf("%-17d", ptr->args[i].value);
+		ft_printf("%-18d", ptr->args[i].value);
 }
 
 void			print_instr(t_instr *ptr)
@@ -76,41 +64,50 @@ void			print_instr(t_instr *ptr)
 	if (ptr)
 	{
 		if (ptr->label)
-			ft_printf("%-10d:    %s:\n", ptr->byte, ptr->label);
-		ft_printf("%-5d(%-2d) :        ", ptr->byte, ptr->size);
-		ft_printf("%-10s", ptr->op->name);
-		j = -1;
-		while (++j < 3 && ptr->args[j].type)
-			print_arg(ptr, j);
-		ft_printf("\n");
-		ptr = ptr->next;
+			ft_printf("%-11d:    %s:\n", ptr->byte, ptr->label);
+		if (ptr->op)
+		{
+			ft_printf("%-5d(%-3d) :        ", ptr->byte, ptr->size);
+			ft_printf("%-10s", ptr->op->name);
+			j = -1;
+			while (++j < 3 && ptr->args[j].type)
+				print_arg(ptr, j);
+			ft_printf("\n");
+		}
 	}
 }
 
-void			print_code(t_serv *s)
+void			print_instr_code(t_instr *instr, int pass)
+{
+	int			j;
+
+	ft_printf("                    ");
+	ft_printf("%-4u", instr->op->code);
+	ft_printf("%-6.u", instr->acb);
+	j = -1;
+	while (++j < 3 && instr->args[j].type)
+		print_arg_code(instr, j, pass);
+	ft_printf("\n");
+}
+
+void			print_dump(t_serv *s)
 {
 	t_instr		*ptr;
-	size_t		i;
-	int			j;
 
 	ft_printf("Dumping annotated program on standard output\n");
 	ft_printf("Program size : %d bytes\n", s->header.prog_size);
 	ft_printf("Name : \"%s\"\n", s->header.prog_name);
-	ft_printf("Comment : \"%s\"\n", s->header.comment);
-	i = 0;
+	ft_printf("Comment : \"%s\"\n\n", s->header.comment);
 	ptr = s->instr;
 	while (ptr)
 	{
-		if (ptr->label)
-			ft_printf("%-10d:    %s:\n", i, ptr->label);
-		ft_printf("%-5d(%-2d) :        ", i, ptr->size);
-		ft_printf("%-10s", ptr->op->name);
-		j = -1;
-		while (++j < 3 && (ptr->args[j].value != INT32_MAX
-		|| ptr->args[j].label))
-			print_arg(ptr, j);
-		ft_printf("\n");
-		i += ptr->size;
+		print_instr(ptr);
+		if (ptr->op)
+		{
+			print_instr_code(ptr, 1);
+			print_instr_code(ptr, 2);
+			ft_printf("\n");
+		}
 		ptr = ptr->next;
 	}
 }
