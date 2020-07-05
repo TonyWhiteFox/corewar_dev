@@ -41,10 +41,10 @@ t_op			*get_op(char *name)
 	size_t		i;
 
 	i = 0;
-	while (i < (sizeof(g_op) / sizeof(t_op)))
+	while (i < (sizeof(g_op_tab) / sizeof(t_op)))
 	{
-		if (!ft_strcmp(g_op[i].name, name))
-			return (&g_op[i]);
+		if (!ft_strcmp(g_op_tab[i].name, name))
+			return (&g_op_tab[i]);
 		i++;
 	}
 	return (NULL);
