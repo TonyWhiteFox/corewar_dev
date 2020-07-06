@@ -19,6 +19,8 @@ void	parse_reg(t_serv *s, int i)
 {
 	t_bytes			value;
 
+	if (!(s->last_instr->op->args_types[i] & T_REG))
+		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
 	value = ft_atoi_check(&s->tok_ptr->content[1]);
 	if (value.unum1 > REG_NUMBER)
 		ft_error(ERR_REG, s, EDOM);
@@ -35,6 +37,8 @@ void	parse_ind(t_serv *s, int i)
 	t_bytes			value;
 	t_list			*new;
 
+	if (!(s->last_instr->op->args_types[i] & T_IND))
+		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
 	new = NULL;
 	s->last_instr->args[i].type = T_IND;
 	s->last_instr->args[i].code_size = IND_SIZE;
@@ -94,6 +98,8 @@ void	parse_dir(t_serv *s, int i)
 	t_list		*new;
 	t_arg		*arg;
 
+	if (!(s->last_instr->op->args_types[i] & T_DIR))
+		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
 	arg = &s->last_instr->args[i];
 	arg->type = T_DIR;
 	arg->code_size = (s->last_instr->op->reduced_dir_size ?

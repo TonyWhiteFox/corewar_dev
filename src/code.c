@@ -13,6 +13,18 @@
 #include "asm.h"
 #include "libft.h"
 
+static uint8_t	type_code(int8_t type)
+{
+	if (type == T_DIR)
+		return (DIR_CODE);
+	else if (type == T_REG)
+		return (REG_CODE);
+	else if (type == T_IND)
+		return (IND_CODE);
+	else
+		return (0);
+}
+
 unsigned char arg_coding_byte(t_instr *ptr)
 {
 	uint8_t		b0;
@@ -21,9 +33,9 @@ unsigned char arg_coding_byte(t_instr *ptr)
 	uint8_t		b3;
 	uint8_t		ret;
 
-	b0 = ptr->args[0].type << 6;
-	b1 = ptr->args[1].type << 4;
-	b2 = ptr->args[2].type << 2;
+	b0 = type_code(ptr->args[0].type) << 6;
+	b1 = type_code(ptr->args[1].type) << 4;
+	b2 = type_code(ptr->args[2].type) << 2;
 	b3 = 0;
 	ret = b0 | b1 | b2 | b3;
 	return (ret);

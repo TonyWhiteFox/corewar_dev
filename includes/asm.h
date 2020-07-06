@@ -29,6 +29,7 @@
 # define ERR_CREATE_FILE	"ERROR: Can\'t create output file"
 # define ERR_PARSE_ARG		"ERROR: Can\'t parse argument"
 # define ERR_PARSE_ARG_NUM	"ERROR: Wrong number of arguments"
+# define ERR_PARSE_ARG_TYPE	"ERROR: Incorrect argument type"
 # define ERR_PARSE_DIR		"ERROR: STRING token expected after %"
 # define ERR_REG			"ERROR: Incorrect REGISTER argument value"
 # define ERR_NO_LABEL		"ERROR: No such label"
