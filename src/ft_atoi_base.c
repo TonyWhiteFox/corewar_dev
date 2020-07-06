@@ -64,7 +64,7 @@ int						ft_atoi_base(char *nb, int base)
 	int		length;
 
 	if (base == 10)
-		return (ft_atoi(nb));
+		return ((int)ft_atoi(nb));
 	while (*nb == ' ' || *nb == '\t' || *nb == '\n'
 		   || *nb == '\v' || *nb == '\r' || *nb == '\f')
 		nb++;

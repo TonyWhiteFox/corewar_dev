@@ -27,6 +27,7 @@ t_instr			*init_instr(t_serv *s)
 	new->op = NULL;
 	while (++i < 3)
 	{
+		new->args[i].code_size = 0;
 		new->args[i].is_label = 0;
 		new->args[i].type = 0;
 		new->args[i].value.num = 0;
@@ -56,30 +57,15 @@ t_op			*get_op(char *name)
 static void		set_size(t_serv *s, t_instr *ptr)
 {
 	int			i;
-	int			arg;
 
 	ptr->byte = s->header.prog_size;
 	if (ptr && ptr->op)
 	{
-		i = -1;
-		arg = 0;
-		while (++i < 3)
-		{
-			if (ptr->args[i].type)
-			{
-				if (ptr->args[i].type == T_IND || (ptr->args[i].type == T_DIR
-				&& ptr->op->reduced_dir_size))
-					arg += 2;
-				else if (ptr->args[i].type == T_DIR &&
-				!ptr->op->reduced_dir_size)
-					arg += 4;
-				else
-					arg++;
-			}
-		}
 		ptr->size++;
-		if (ptr->op)
-			ptr->size += (ptr->op->is_acb ? 1 : 0) + arg;
+		ptr->size += ptr->op->is_acb;
+		i = -1;
+		while (++i < 3)
+			ptr->size += ptr->args[i].code_size;
 		s->header.prog_size += ptr->size;
 	}
 }
@@ -111,8 +97,7 @@ void			parser(t_serv *s)
 	{
 		if (s->tok_ptr->type == PROG_NAME)
 			parse_prog_name(s);
-		else if (s->tok_ptr->type == NEW_LINE && s->last_instr
-				&& s->last_instr->op)
+		else if (s->tok_ptr->type == NEW_LINE && s->last_instr)
 		{
 			add_instr(s, s->last_instr);
 			s->last_instr = NULL;

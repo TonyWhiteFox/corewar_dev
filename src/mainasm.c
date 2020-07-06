@@ -30,6 +30,7 @@ static void		init_s(t_serv *s)
 	s->memguru = NULL;
 	s->last_sentence = NULL;
 	s->header.magic = COREWAR_EXEC_MAGIC;
+	s->header.prog_size = 0;
 	ft_bzero(s->header.prog_name, PROG_NAME_LENGTH + 1);
 	ft_bzero(s->header.comment, COMMENT_LENGTH + 1);
 	s->arg_labels = NULL;

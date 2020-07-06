@@ -52,35 +52,6 @@ void			print_tokens(t_serv *s)
 	}
 }
 
-static int			ft_int_ovfl(char *num)
-{
-	size_t			len;
-	unsigned int	neg;
-
-	neg = 0;
-	if (*num == '-')
-	{
-		neg = 1;
-		num++;
-	}
-	len = ft_strlen(num);
-	if (len < 10)
-		return (0);
-	else if (len == 10)
-	{
-		if (num[len - 2] < '4')
-			return (0);
-		if (num[len - 2] == '4')
-		{
-			if (!neg && num[len - 1] <= '7')
-				return (0);
-			else if (neg && num[len - 1] <= '8')
-				return (0);
-		}
-	}
-	return (neg ? INT32_MAX : -1);
-}
-
 t_bytes				ft_atoi_check(char *nb)
 {
 	size_t		i;
@@ -97,7 +68,7 @@ t_bytes				ft_atoi_check(char *nb)
 		else
 			errno = EDOM;
 	}
-	else if (!(ret.num = ft_int_ovfl(nb)))
-		ret.num = ft_atoi_base(nb, 10);
+	else
+		ret.num = ft_atoi(nb);
 	return (ret);
 }

@@ -88,19 +88,21 @@ static void		get_tokens(t_serv *s)
 
 void			lexer(t_serv *s)
 {
-	char		*buf[READ_SIZE];
+	char		buf[READ_SIZE + 1];
 	char		*tmp;
 	ssize_t		size;
 
 	size = 0;
+	ft_bzero(buf, READ_SIZE + 1);
 	s->buff = (char *)malloc(1);
-	s->buff[0] = 0;
+	s->buff[0] = '\0';
 	while ((size = read(s->fd, buf, READ_SIZE)))
 	{
 		tmp = s->buff;
 		if (!(s->buff = ft_strjoin(tmp, (const char *)buf)))
 			ft_error(ERR_MALLOC, s, ENOMEM);
 		free(tmp);
+		ft_bzero(buf, READ_SIZE + 1);
 	}
 	close(s->fd);
 	if (size < 0 || !s->buff)
