@@ -1,33 +1,46 @@
 TEST_DIR='./test'
 SRC_DIR='./Original_exe'
 
+RED='\e[31m'
+EOC='\e[0m'
+BLUE='\033[0;34m'
+
 echo $1
 rm -rf $TEST_DIR
+files=$(find $SRC_DIR -name *.cor)
+for i in $files; do
+  rm $i
+  done
 mkdir $TEST_DIR
 
 files=$(find $SRC_DIR -name *.s)
 for i in $files; do
-  file=$(basename $i .s)
-  file_dir=$(dirname $i)
+  out_name=$(basename $i .s)
+  out_dir=$(dirname $i)
   printf '\033[0;32m'
-  printf "ORIG: Translating $file: "
+  printf "ORIG: Translating $out_name: "
   $SRC_DIR/asm $i 2>&1
-  md5_orig=$(md5 -q $file_dir/$file.cor)
-  if [ -z "$md5_orig" ]
-  then
-    printf $md5_orig
-    echo ""
-  fi
+  md5_orig=$(md5 -q $out_dir/$out_name.cor)
+  echo $md5_orig
+  printf $EOC
 
-  printf '\033[0m'
   cp $i $TEST_DIR
 
-  printf '\033[0;34m'
-  printf "USER: Translating $file: "
-  ./asm $TEST_DIR/$file.s 2>&1
+  printf $BLUE
+  printf "USER: Translating $out_name: "
+  ./asm $TEST_DIR/$out_name.s 2>&1
+  md5_user=$(md5 -q $TEST_DIR/$out_name.cor)
+  echo $md5_user
+  if [ -z true ]
+     then printf $RED"ZERO\n"$EOC;
+  fi
+  if [ $md5_orig == $md5_user ]
+  then printf $EOC"OK\n";
+  else
+    printf $RED"KO\n"
+    printf $EOC
+  fi
+
   echo "==============================="
 
 done
-#@rm md5.txt
-#for i in ./champs/*.s; do
-#done
