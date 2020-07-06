@@ -88,11 +88,12 @@ void			code_labels(t_serv *s)
 			if (arg->label)
 			{
 				arg->value.num = get_offset(s, instr, arg->label);
-				if (arg->type == T_IND || (arg->type == T_DIR &&
-				instr->op->reduced_dir_size))
-					size = 2;
+				if (arg->type == T_IND)
+					size = IND_SIZE;
+				else if (arg->type == T_DIR && instr->op->reduced_dir_size)
+					size = DIR_SIZE / 2;
 				else
-					size = 4;
+					size = DIR_SIZE;
 				arg->code.unum4 = swap_bytes_old(arg->value.unum4,size);
 			}
 		}
