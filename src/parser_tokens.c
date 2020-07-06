@@ -22,7 +22,7 @@ void	parse_prog_comment(t_serv *s)
 	if (s->tok_ptr->type == STRING)
 	{
 		len = ft_strlen(s->tok_ptr->content);
-		if (!len || len > COMMENT_LENGTH)
+		if (len > COMMENT_LENGTH)
 			ft_error(ERR_COMMENT_LEN, s);
 		ft_strcpy(s->header.comment, s->tok_ptr->content);
 	}
