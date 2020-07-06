@@ -27,6 +27,7 @@ void	parse_reg(t_serv *s, int i)
 	}
 	s->last_instr->args[i].type = T_REG;
 	s->last_instr->args[i].value = value;
+	s->last_instr->args[i].code_size = 1;
 	s->last_instr->args[i].code = value;
 	s->tok_ptr = s->tok_ptr->next;
 }
@@ -38,6 +39,7 @@ void	parse_ind(t_serv *s, int i)
 
 	new = NULL;
 	s->last_instr->args[i].type = T_IND;
+	s->last_instr->args[i].code_size = IND_SIZE;
 	if (s->tok_ptr->type == LABEL_REF)
 	{
 		s->last_instr->args[i].label = s->tok_ptr->content;
@@ -96,6 +98,8 @@ void	parse_dir(t_serv *s, int i)
 
 	arg = &s->last_instr->args[i];
 	arg->type = T_DIR;
+	arg->code_size = (s->last_instr->op->reduced_dir_size ?
+			DIR_SIZE / 2 : DIR_SIZE);
 	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM)
 		arg->value.num = ft_atoi_check(s->tok_ptr->content);
@@ -111,8 +115,7 @@ void	parse_dir(t_serv *s, int i)
 	}
 	else
 		ft_error(ERR_PARSE_ARG, s);
-	arg->code.unum4 = swap_bytes_old(arg->value.unum4,
-			s->last_instr->op->reduced_dir_size ? DIR_SIZE / 2 : DIR_SIZE);
+	arg->code.unum4 = swap_bytes_old(arg->value.unum4, arg->code_size);
 	s->tok_ptr = s->tok_ptr->next;
 }
 

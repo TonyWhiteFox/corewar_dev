@@ -75,7 +75,6 @@ void			code_labels(t_serv *s)
 	t_instr		*instr;
 	t_arg		*arg;
 	int			i;
-	size_t		size;
 
 	list = s->arg_labels;
 	while (list)
@@ -89,12 +88,12 @@ void			code_labels(t_serv *s)
 			{
 				arg->value.num = get_offset(s, instr, arg->label);
 				if (arg->type == T_IND)
-					size = IND_SIZE;
+					arg->code_size = IND_SIZE;
 				else if (arg->type == T_DIR && instr->op->reduced_dir_size)
-					size = DIR_SIZE / 2;
+					arg->code_size = DIR_SIZE / 2;
 				else
-					size = DIR_SIZE;
-				arg->code.unum4 = swap_bytes_old(arg->value.unum4,size);
+					arg->code_size = DIR_SIZE;
+				arg->code.unum4 = swap_bytes_old(arg->value.unum4,arg->code_size);
 			}
 		}
 		list = list->next;
