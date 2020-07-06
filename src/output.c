@@ -37,7 +37,7 @@ static void		write_instr_code(t_serv *s)
 	while (ptr)
 	{
 		write(s->fd_out, &ptr->op->code, 1);
-		if (ptr->op->is_acb)
+		if (ptr->op && ptr->op->is_acb)
 			write(s->fd_out, &ptr->acb, 1);
 		i = -1;
 		while (++i < 3 && (ptr->args[i].type))
