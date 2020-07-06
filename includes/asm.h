@@ -79,12 +79,12 @@ typedef struct				s_token
 typedef union				u_bytes
 {
 	int						num;
-	int8_t					num1;
-	int16_t					num2;
-	int32_t					num4;
-	uint8_t					unum1;
-	uint16_t				unum2;
-	uint32_t				unum4;
+	char					num1;
+	short					num2;
+	int						num4;
+	unsigned char			unum1;
+	unsigned short			unum2;
+	unsigned int			unum4;
 	unsigned char			bytes[4];
 }							t_bytes;
 
@@ -170,7 +170,7 @@ void						print_instr(t_instr *ptr);
 int							ft_atoi_base(char *nb, int base);
 t_bytes						ft_atoi_check(char *nb);
 void						print_instr_code(t_instr *instr, int pass);
-uint32_t					swap_bytes_old(uint32_t num, size_t len);
+unsigned int 				swap_bytes_old(unsigned int num, size_t len);
 void						parse_ref_label(t_serv *s);
 void						code_labels(t_serv *s);
 

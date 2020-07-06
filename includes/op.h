@@ -71,13 +71,13 @@ typedef struct					s_header
 typedef struct					s_op
 {
 	char						*name;
-	uint8_t						args_num;
-	uint8_t						args_types[3];
-	uint8_t						code;
-	uint32_t					cycles;
+	unsigned char				args_num;
+	unsigned char				args_types[3];
+	unsigned char				code;
+	unsigned int				cycles;
 	char						desc[50];
-	uint8_t						is_acb;
-	uint8_t						reduced_dir_size;
+	unsigned char				is_acb;
+	unsigned char				reduced_dir_size;
 }								t_op;
 
 t_op							g_op_tab[17];

@@ -16,7 +16,7 @@
 
 static void		write_header_code(t_serv *s)
 {
-	uint32_t	uint;
+	unsigned int	uint;
 
 	uint = swap_bytes_old(s->header.magic, 4);
 	write(s->fd_out, &uint, 4);

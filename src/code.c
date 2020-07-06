@@ -13,7 +13,7 @@
 #include "asm.h"
 #include "libft.h"
 
-static uint8_t	type_code(int8_t type)
+static unsigned char	type_code(int8_t type)
 {
 	if (type == T_DIR)
 		return (DIR_CODE);
@@ -25,13 +25,13 @@ static uint8_t	type_code(int8_t type)
 		return (0);
 }
 
-unsigned char arg_coding_byte(t_instr *ptr)
+unsigned char			arg_coding_byte(t_instr *ptr)
 {
-	uint8_t		b0;
-	uint8_t		b1;
-	uint8_t		b2;
-	uint8_t		b3;
-	uint8_t		ret;
+	unsigned char	b0;
+	unsigned char	b1;
+	unsigned char	b2;
+	unsigned char	b3;
+	unsigned char	ret;
 
 	b0 = type_code(ptr->args[0].type) << 6;
 	b1 = type_code(ptr->args[1].type) << 4;
@@ -55,13 +55,13 @@ int				get_offset(t_serv *s, t_instr *instr, char *label)
 	return (0);
 }
 
-uint32_t		swap_bytes_old(uint32_t num, size_t len)
+unsigned int swap_bytes_old(unsigned int num, size_t len)
 {
-	uint32_t	b0;
-	uint32_t	b1;
-	uint32_t	b2;
-	uint32_t	b3;
-	uint32_t	res;
+	unsigned int	b0;
+	unsigned int	b1;
+	unsigned int	b2;
+	unsigned int	b3;
+	unsigned int	res;
 
 	res = 0;
 	if (len == 4)
