@@ -38,6 +38,7 @@ for i in $files; do
   then printf $EOC"OK\n";
   else
     printf $RED"KO\n"
+    cmp $TEST_DIR/$out_name.cor $out_dir/$out_name.cor
     printf $EOC
   fi
 
