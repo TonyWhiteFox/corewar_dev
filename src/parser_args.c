@@ -22,6 +22,7 @@ void	parse_reg(t_serv *s, int i)
 	value = ft_atoi_check(&s->tok_ptr->content[1]);
 	if (value.unum1 > REG_NUMBER)
 		ft_error(ERR_REG, s, EDOM);
+	s->last_instr->args[i].token = s->tok_ptr->content;
 	s->last_instr->args[i].type = T_REG;
 	s->last_instr->args[i].value = value;
 	s->last_instr->args[i].code_size = 1;
@@ -39,7 +40,8 @@ void	parse_ind(t_serv *s, int i)
 	s->last_instr->args[i].code_size = IND_SIZE;
 	if (s->tok_ptr->type == LABEL_REF)
 	{
-		s->last_instr->args[i].label = s->tok_ptr->content;
+		s->last_instr->args[i].is_label = 1;
+		s->last_instr->args[i].token = s->tok_ptr->content;
 		if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
 			ft_error(ERR_MALLOC, s, ENOMEM);
 		new->content = s->last_instr;
@@ -97,18 +99,23 @@ void	parse_dir(t_serv *s, int i)
 	arg->code_size = (s->last_instr->op->reduced_dir_size ?
 			DIR_SIZE / 2 : DIR_SIZE);
 	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == NUM)
-		arg->value = ft_atoi_check(s->tok_ptr->content);
-	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content) ||
-	ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
-		arg->value = ft_atoi_check(s->tok_ptr->content);
-	else if (s->tok_ptr->type == LABEL_REF)
+	if (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
+		s->tok_ptr->type == LABEL_REF)
 	{
-		arg->label = s->tok_ptr->content;
-		if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
-			ft_error(ERR_MALLOC, s, ENOMEM);
-		new->content = s->last_instr;
-		ft_lstadd(&s->arg_labels, new);
+		arg->token = s->tok_ptr->content;
+		if (s->tok_ptr->type == NUM)
+			arg->value = ft_atoi_check(s->tok_ptr->content);
+		else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content)
+		|| ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
+			arg->value = ft_atoi_check(s->tok_ptr->content);
+		else if (s->tok_ptr->type == LABEL_REF)
+		{
+			arg->is_label = 1;
+			if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
+				ft_error(ERR_MALLOC, s, ENOMEM);
+			new->content = s->last_instr;
+			ft_lstadd(&s->arg_labels, new);
+		}
 	}
 	else
 		ft_error(ERR_PARSE_ARG, s, EINVAL);

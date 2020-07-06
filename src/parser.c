@@ -27,9 +27,10 @@ t_instr			*init_instr(t_serv *s)
 	new->op = NULL;
 	while (++i < 3)
 	{
+		new->args[i].is_label = 0;
 		new->args[i].type = 0;
 		new->args[i].value.num = 0;
-		new->args[i].label = NULL;
+		new->args[i].token = NULL;
 	}
 	new->byte = 0;
 	new->acb = 0;
@@ -57,6 +58,7 @@ static void		set_size(t_serv *s, t_instr *ptr)
 	int			i;
 	int			arg;
 
+	ptr->byte = s->header.prog_size;
 	if (ptr && ptr->op)
 	{
 		i = -1;
@@ -75,7 +77,6 @@ static void		set_size(t_serv *s, t_instr *ptr)
 					arg++;
 			}
 		}
-		ptr->byte = s->header.prog_size;
 		ptr->size++;
 		if (ptr->op)
 			ptr->size += (ptr->op->is_acb ? 1 : 0) + arg;

@@ -46,13 +46,13 @@ void			print_arg(t_instr *ptr, int i)
 			write(1, "%", 1);
 		else if (ptr->args[i].type == T_REG)
 			write(1, "r", 1);
-		if (ptr->args[i].label)
-			ft_printf(":%-16s", ptr->args[i].label);
+		if (ptr->args[i].is_label)
+			ft_printf(":%-16s", ptr->args[i].token);
 		else
 			ft_printf("%-17d", ptr->args[i].value);
 	}
-	else if (ptr->args[i].label)
-		ft_printf(":%-17s", ptr->args[i].label);
+	else if (ptr->args[i].is_label)
+		ft_printf(":%-17s", ptr->args[i].token);
 	else
 		ft_printf("%-18d", ptr->args[i].value);
 }

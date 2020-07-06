@@ -115,7 +115,8 @@ typedef struct				s_arg
 {
 	t_arg_type				type;
 	t_bytes					value;
-	char					*label;
+	size_t					is_label;
+	char					*token;
 	size_t					code_size;
 	t_bytes 				code;
 }							t_arg;

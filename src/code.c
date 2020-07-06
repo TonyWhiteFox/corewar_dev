@@ -84,9 +84,9 @@ void			code_labels(t_serv *s)
 		while (++i < 3)
 		{
 			arg = &(instr->args[i]);
-			if (arg->label)
+			if (arg->is_label)
 			{
-				arg->value.num = get_offset(s, instr, arg->label);
+				arg->value.num = get_offset(s, instr, arg->token);
 				if (arg->type == T_IND)
 					arg->code_size = IND_SIZE;
 				else if (arg->type == T_DIR && instr->op->reduced_dir_size)
