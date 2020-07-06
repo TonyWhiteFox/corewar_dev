@@ -22,7 +22,7 @@ SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c \
 	ft_atoi_base.c code.c op.c
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
-HEADERSUB	= $(INCDIR)$(PROGECTSUB).h
+HEADERSUB	= $(INCDIR)asm.h $(INCDIR)op.h
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -79,7 +79,7 @@ $(NAME1): $(OBJ1)
 
 $(NAME2): $(OBJ2)
 	@echo "\n$(NAME2):$(FTAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
-	@$(CC) -framework OpenCL $(OBJ2) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME2)
+	@$(CC) $(OBJ2) $(FT_LNK) -o $(NAME2)
 	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(GREEN)was  created.$(RESET)"
 
 clean:
