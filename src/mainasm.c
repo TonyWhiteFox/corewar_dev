@@ -57,7 +57,7 @@ static t_serv	*read_file(char *file)
 		s->filename = ft_strdup(file);
 		ft_memguru_add(s->filename, &s->memguru);
 		if ((s->fd = open(file, O_RDONLY)) == -1)
-			ft_error(ERR_OPEN_FILE, s, EBADF);
+			ft_error(ERR_OPEN_FILE, s, errno);
 		return (s);
 	}
 	return (NULL);
