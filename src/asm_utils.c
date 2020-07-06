@@ -77,27 +77,27 @@ static int			ft_int_ovfl(char *num)
 				return (0);
 		}
 	}
-	return (neg ? INT32_MIN : INT32_MAX);
+	return (neg ? INT32_MAX : -1);
 }
 
-int ft_atoi_check(char *nb)
+t_bytes				ft_atoi_check(char *nb)
 {
 	size_t		i;
-	int			ret;
+	t_bytes		ret;
 
 	errno = 0;
-	ret = -1;
+	ret.num = -1;
 	i = ft_strlen(nb);
 	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X' || nb[1] == 'b'))
 	{
 		if (nb[1] == 'x' || nb[1] == 'X')
-			ret = ft_atoi_base(nb, 16);
+			ret.unum4 = ft_atoi_base(nb, 16);
 		else if (nb[1] == 'b')
-			ret = ft_atoi_base(nb, 2);
+			ret.unum4 = ft_atoi_base(nb, 2);
 		else
 			errno = EDOM;
 	}
-	else if (!(ret = ft_int_ovfl(nb)))
-		ret = ft_atoi_base(nb, 10);
+	else if (!(ret.num = ft_int_ovfl(nb)))
+		ret.num = ft_atoi_base(nb, 10);
 	return (ret);
 }

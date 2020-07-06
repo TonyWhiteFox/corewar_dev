@@ -19,7 +19,7 @@ void	parse_reg(t_serv *s, int i)
 {
 	t_bytes			value;
 
-	value.num = ft_atoi_check(&s->tok_ptr->content[1]);
+	value = ft_atoi_check(&s->tok_ptr->content[1]);
 	if (value.unum1 > REG_NUMBER)
 	{
 		errno = EDOM;
@@ -49,7 +49,7 @@ void	parse_ind(t_serv *s, int i)
 	}
 	else
 	{
-		value.num = ft_atoi_check(s->tok_ptr->content);
+		value = ft_atoi_check(s->tok_ptr->content);
 		s->last_instr->args[i].value = value;
 		s->last_instr->args[i].code.unum4 = swap_bytes_old(value.unum4, IND_SIZE);
 	}
@@ -102,10 +102,10 @@ void	parse_dir(t_serv *s, int i)
 			DIR_SIZE / 2 : DIR_SIZE);
 	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM)
-		arg->value.num = ft_atoi_check(s->tok_ptr->content);
+		arg->value = ft_atoi_check(s->tok_ptr->content);
 	else if (s->tok_ptr->type == STRING && (ft_isnumber(s->tok_ptr->content) ||
 	ft_is_hex(s->tok_ptr->content) || ft_is_bin(s->tok_ptr->content)))
-		arg->value.num = ft_atoi_check(s->tok_ptr->content);
+		arg->value = ft_atoi_check(s->tok_ptr->content);
 	else if (s->tok_ptr->type == LABEL_REF)
 	{
 		arg->label = s->tok_ptr->content;
