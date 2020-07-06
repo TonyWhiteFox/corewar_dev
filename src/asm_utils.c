@@ -16,13 +16,23 @@
 #include <stdio.h>
 #include <errno.h>
 
+static void		ft_lstdel_content(void *content, size_t size)
+{
+	free(content);
+	*(&size) = 0;
+}
+
 void			ft_error(char *err, t_serv *s, int err_code)
 {
 	errno = err_code;
 	perror(err);
 	free(s->line);
 	if (s)
+	{
+		ft_lstdel(&s->memguru, &ft_lstdel_content);
+		free(s->line);
 		free(s);
+	}
 	exit(1);
 }
 

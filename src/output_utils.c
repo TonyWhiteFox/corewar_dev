@@ -21,9 +21,9 @@ void				print_arg_code(t_instr *ptr, int i, int pass)
 	len = 0;
 	arg = ptr->args[i];
 	if (arg.type == T_REG)
-		ft_printf("%-18s", ft_itoa(arg.code.num));
+		ft_printf("%-18d", arg.code.num);
 	else if (pass == 2)
-		ft_printf("%-18s", ft_itoa(arg.value.num));
+		ft_printf("%-18d", arg.value.num);
 	else if (arg.type == T_IND || (arg.type == T_DIR && ptr->op->reduced_dir_size))
 	{
 		ft_printf("%-4u", arg.code.bytes[0]);
