@@ -21,7 +21,7 @@
 # define ERR_READ_FILE		"ERROR: Incorrect input file"
 # define ERR_DOUBLE_LABEL	"ERROR: Excessive label delimiter, expected 1"
 # define ERR_WRONG_LABEL	"ERROR: Incorrect label name"
-# define ERR_WRONG_VALUE	"ERROR: Incorrect value, integer expected"
+# define ERR_WRONG_VALUE	"ERROR: Incorrect value, numerical value expected"
 # define ERR_STR_SPLIT		"ERROR: Can\'t identify tokens in the line"
 # define ERR_NAME_LEN		"ERROR: Incorrect program name"
 # define ERR_COMMENT_LEN	"ERROR: Incorrect program comment"
@@ -134,7 +134,7 @@ typedef struct				s_instr
 void						lexer(t_serv *s);
 void						parser(t_serv *s);
 void						output(t_serv *s);
-void						ft_error(char *err, t_serv *s);
+void ft_error(char *err, t_serv *s, int err_code);
 void						*ft_memguru(size_t size, struct s_list **list);
 void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);

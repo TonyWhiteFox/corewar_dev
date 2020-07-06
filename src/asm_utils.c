@@ -16,8 +16,9 @@
 #include <stdio.h>
 #include <errno.h>
 
-void			ft_error(char *err, t_serv *s)
+void			ft_error(char *err, t_serv *s, int err_code)
 {
+	errno = err_code;
 	perror(err);
 	free(s->line);
 	if (s)
@@ -33,7 +34,7 @@ size_t			len_to_end(t_serv *s, char end)
 	while (*s->ptr2 != end)
 	{
 		if (!*s->ptr2++)
-			ft_error(ERR_STR_SPLIT, s);
+			ft_error(ERR_STR_SPLIT, s, EINVAL);
 		len++;
 	}
 	return (len);
@@ -85,7 +86,6 @@ t_bytes				ft_atoi_check(char *nb)
 	size_t		i;
 	t_bytes		ret;
 
-	errno = 0;
 	ret.num = -1;
 	i = ft_strlen(nb);
 	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X' || nb[1] == 'b'))

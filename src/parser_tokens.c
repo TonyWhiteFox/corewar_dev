@@ -13,6 +13,7 @@
 #include "op.h"
 #include "libft.h"
 #include "asm.h"
+#include <errno.h>
 
 void	parse_prog_comment(t_serv *s)
 {
@@ -23,11 +24,11 @@ void	parse_prog_comment(t_serv *s)
 	{
 		len = ft_strlen(s->tok_ptr->content);
 		if (len > COMMENT_LENGTH)
-			ft_error(ERR_COMMENT_LEN, s);
+			ft_error(ERR_COMMENT_LEN, s, ERANGE);
 		ft_strcpy(s->header.comment, s->tok_ptr->content);
 	}
 	else
-		ft_error(ERR_COMMENT_LEN, s);
+		ft_error(ERR_COMMENT_LEN, s, EDOM);
 }
 
 void	parse_prog_name(t_serv *s)
@@ -39,11 +40,11 @@ void	parse_prog_name(t_serv *s)
 	{
 		len = ft_strlen(s->tok_ptr->content);
 		if (!len || len > PROG_NAME_LENGTH)
-			ft_error(ERR_NAME_LEN, s);
+			ft_error(ERR_NAME_LEN, s, ERANGE);
 		ft_strcpy(s->header.prog_name, s->tok_ptr->content);
 	}
 	else
-		ft_error(ERR_NAME_LEN, s);
+		ft_error(ERR_NAME_LEN, s, EDOM);
 }
 
 void	parse_label(t_serv *s)
@@ -77,5 +78,5 @@ void	parse_string(t_serv *s)
 	if (parse_op(s))
 		parse_arguments(s);
 	else
-		ft_error(ERR_PARSE_STRING, s);
+		ft_error(ERR_PARSE_STRING, s, EINVAL);
 }

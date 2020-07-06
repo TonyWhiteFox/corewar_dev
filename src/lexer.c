@@ -13,6 +13,7 @@
 #include "asm.h"
 #include "libft.h"
 #include "op.h"
+#include <errno.h>
 
 void			add_token(t_serv *s, t_token *new)
 {
@@ -42,10 +43,10 @@ t_token			*init_token(t_serv *s, t_type type, char *str, size_t len)
 	t_token		*new;
 
 	if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
-		ft_error(ERR_MALLOC, s);
+		ft_error(ERR_MALLOC, s, ENOMEM);
 	new->type = type;
 	if (!(new->content = ft_memguru(len + 1, &s->memguru)))
-		ft_error(ERR_MALLOC, s);
+		ft_error(ERR_MALLOC, s, ENOMEM);
 	ft_strncpy(new->content, str, len);
 	new->content[len] = '\0';
 	new->next = NULL;
@@ -81,7 +82,7 @@ static void		get_tokens(t_serv *s)
 		else if (*s->ptr1 == '-' || *s->ptr1 == '+')
 			parse_num(s);
 		else
-			ft_error(ERR_STR_SPLIT, s);
+			ft_error(ERR_STR_SPLIT, s, EINVAL);
 	}
 }
 
@@ -98,11 +99,11 @@ void			lexer(t_serv *s)
 	{
 		tmp = s->buff;
 		if (!(s->buff = ft_strjoin(tmp, (const char *)buf)))
-			ft_error(ERR_MALLOC, s);
+			ft_error(ERR_MALLOC, s, ENOMEM);
 		free(tmp);
 	}
 	close(s->fd);
 	if (size < 0 || !s->buff)
-		ft_error(ERR_READ_FILE, s);
+		ft_error(ERR_READ_FILE, s, errno);
 	get_tokens(s);
 }

@@ -12,6 +12,7 @@
 
 #include "asm.h"
 #include "libft.h"
+#include <errno.h>
 
 static void		write_header_code(t_serv *s)
 {
@@ -59,11 +60,11 @@ static void		open_file(t_serv *s)
 
 	len = ft_strlen(s->filename);
 	if (!(tmp = ft_strndup(s->filename, len - 2)))
-		ft_error(ERR_MALLOC, s);
+		ft_error(ERR_MALLOC, s, ENOMEM);
 	if (!(file = ft_strjoin(tmp, ".cor")))
-		ft_error(ERR_MALLOC, s);
+		ft_error(ERR_MALLOC, s, ENOMEM);
 	if ((s->fd_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
-		ft_error(ERR_CREATE_FILE, s);
+		ft_error(ERR_CREATE_FILE, s, EBADF);
 	ft_printf("Writing output program to %s\n", file);
 	free(file);
 }

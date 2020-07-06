@@ -13,6 +13,7 @@
 #include "asm.h"
 #include "libft.h"
 #include "op.h"
+#include <errno.h>
 
 t_instr			*init_instr(t_serv *s)
 {
@@ -21,7 +22,7 @@ t_instr			*init_instr(t_serv *s)
 
 	i = -1;
 	if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
-		ft_error(ERR_MALLOC, s);
+		ft_error(ERR_MALLOC, s, ENOMEM);
 	new->label = NULL;
 	new->op = NULL;
 	while (++i < 3)

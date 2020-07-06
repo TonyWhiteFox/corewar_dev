@@ -12,9 +12,11 @@
 
 #include "asm.h"
 #include "libft.h"
+#include <errno.h>
 
 static void		init_s(t_serv *s)
 {
+	errno = 0;
 	s->fd = -1;
 	s->fd_out = -1;
 	s->flag = 0;
@@ -50,12 +52,12 @@ static t_serv	*read_file(char *file)
 	if ((len = ft_strlen(file)) && file[len - 2] == '.' && file[len - 1] == 's')
 	{
 		if (!(s = malloc(sizeof(*s))))
-			ft_error(ERR_MALLOC, s);
+			ft_error(ERR_MALLOC, s, ENOMEM);
 		init_s(s);
 		s->filename = ft_strdup(file);
 		ft_memguru_add(s->filename, &s->memguru);
 		if ((s->fd = open(file, O_RDONLY)) == -1)
-			ft_error(ERR_OPEN_FILE, s);
+			ft_error(ERR_OPEN_FILE, s, EBADF);
 		return (s);
 	}
 	return (NULL);

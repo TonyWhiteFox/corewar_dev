@@ -14,6 +14,7 @@
 #include "op.h"
 #include "asm.h"
 #include "libft.h"
+#include <errno.h>
 
 void		parse_num(t_serv *s)
 {
@@ -30,7 +31,7 @@ void		parse_num(t_serv *s)
 		&& !ft_strchr(WHITESPACE_CHARS, *s->ptr2))
 	{
 		if (!ft_isdigit(*s->ptr2))
-			ft_error(ERR_WRONG_VALUE, s);
+			ft_error(ERR_WRONG_VALUE, s, EINVAL);
 		len++;
 		s->ptr2++;
 	}
@@ -95,7 +96,7 @@ void		parse_command(t_serv *s)
 			(len = ft_strlen(COMMENT_CMD_STRING))))
 		add_token(s, init_token(s, PROG_COMMENT, s->ptr1, len));
 	else
-		ft_error(ERR_COMMAND, s);
+		ft_error(ERR_COMMAND, s, EINVAL);
 	s->ptr1 += len;
 }
 

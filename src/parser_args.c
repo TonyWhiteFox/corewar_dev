@@ -21,10 +21,7 @@ void	parse_reg(t_serv *s, int i)
 
 	value = ft_atoi_check(&s->tok_ptr->content[1]);
 	if (value.unum1 > REG_NUMBER)
-	{
-		errno = EDOM;
-		ft_error(ERR_REG, s);
-	}
+		ft_error(ERR_REG, s, EDOM);
 	s->last_instr->args[i].type = T_REG;
 	s->last_instr->args[i].value = value;
 	s->last_instr->args[i].code_size = 1;
@@ -43,7 +40,8 @@ void	parse_ind(t_serv *s, int i)
 	if (s->tok_ptr->type == LABEL_REF)
 	{
 		s->last_instr->args[i].label = s->tok_ptr->content;
-		new = ft_memguru(sizeof(*new), &s->memguru);
+		if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
+			ft_error(ERR_MALLOC, s, ENOMEM);
 		new->content = s->last_instr;
 		ft_lstadd(&s->arg_labels, new);
 	}
@@ -60,11 +58,10 @@ int		ft_is_bin(char *nb)
 {
 	size_t		i;
 
-	errno = 0;
 	i = ft_strlen(nb);
 	if (i > 2 && nb[0] == '0' && nb[1] == 'b' && ft_isnumber(&nb[2]))
 		return (1);
-	errno = 33;
+	errno = EDOM;
 	return (0);
 }
 
@@ -72,7 +69,6 @@ int		ft_is_hex(char *nb)
 {
 	size_t		i;
 
-	errno = 0;
 	i = ft_strlen(nb);
 	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X'))
 	{
@@ -81,13 +77,13 @@ int		ft_is_hex(char *nb)
 		{
 			if (!ft_strchr(HEX_CHARS, *nb))
 			{
-				errno = 33;
+				errno = EDOM;
 				return (0);
 			}
 		}
 		return (1);
 	}
-	errno = 33;
+	errno = EDOM;
 	return (0);
 }
 
@@ -109,12 +105,13 @@ void	parse_dir(t_serv *s, int i)
 	else if (s->tok_ptr->type == LABEL_REF)
 	{
 		arg->label = s->tok_ptr->content;
-		new = ft_memguru(sizeof(*new), &s->memguru);
+		if (!(new = ft_memguru(sizeof(*new), &s->memguru)))
+			ft_error(ERR_MALLOC, s, ENOMEM);
 		new->content = s->last_instr;
 		ft_lstadd(&s->arg_labels, new);
 	}
 	else
-		ft_error(ERR_PARSE_ARG, s);
+		ft_error(ERR_PARSE_ARG, s, EINVAL);
 	arg->code.unum4 = swap_bytes_old(arg->value.unum4, arg->code_size);
 	s->tok_ptr = s->tok_ptr->next;
 }
@@ -129,7 +126,7 @@ void	parse_arg(t_serv *s, int i)
 			|| s->tok_ptr->type == STRING)
 		parse_ind(s, i);
 	else
-		ft_error(ERR_PARSE_ARG, s);
+		ft_error(ERR_PARSE_ARG, s, EINVAL);
 }
 
 void	parse_arguments(t_serv *s)
@@ -146,7 +143,7 @@ void	parse_arguments(t_serv *s)
 		else if (s->tok_ptr->type == NEW_LINE)
 			break ;
 		else
-			ft_error(ERR_PARSE_ARG, s);
+			ft_error(ERR_PARSE_ARG, s, EINVAL);
 	}
 	add_instr(s, s->last_instr);
 	s->last_instr = NULL;
