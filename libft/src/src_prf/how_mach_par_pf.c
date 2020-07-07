@@ -48,7 +48,7 @@ t_tab	*initialize_pf(t_tab *a)
 	a->parametr_f = 0;
 	a->parametr_d = 0;
 	a = array_of_param_pf(a);
-	if (!(a->obel_x = (int *)malloc(sizeof(int) * 11)))
+	if (!(a->obel_x = (int *)malloc(sizeof(int) * 12)))
 		return (memory_error_pf(a));
 	a = how_mach_par_pf(a);
 	if (a->error)
