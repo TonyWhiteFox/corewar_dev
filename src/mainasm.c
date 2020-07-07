@@ -28,6 +28,7 @@ static void		init_s(t_serv *s)
 	s->last_instr = NULL;
 	s->ptr_flag = 0;
 	s->memguru = NULL;
+	s->buff = ft_memguru(1, &s->memguru);
 	s->last_sentence = NULL;
 	s->header.magic = COREWAR_EXEC_MAGIC;
 	s->header.prog_size = 0;

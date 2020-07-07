@@ -94,14 +94,12 @@ void			lexer(t_serv *s)
 
 	size = 0;
 	ft_bzero(buf, READ_SIZE + 1);
-	s->buff = (char *)malloc(1);
-	s->buff[0] = '\0';
 	while ((size = read(s->fd, buf, READ_SIZE)))
 	{
-		tmp = s->buff;
-		if (!(s->buff = ft_strjoin(tmp, (const char *)buf)))
+		if (!(tmp = ft_strjoin(s->buff, (const char *)buf)))
 			ft_error(ERR_MALLOC, s, ENOMEM);
-		free(tmp);
+		ft_memguru_add(tmp, &s->memguru);
+		s->buff = tmp;
 		ft_bzero(buf, READ_SIZE + 1);
 	}
 	close(s->fd);

@@ -59,6 +59,8 @@ static void		open_file(t_serv *s)
 	size_t	len;
 	char	*tmp;
 
+	file = NULL;
+	tmp = NULL;
 	len = ft_strlen(s->filename);
 	if (!(tmp = ft_strndup(s->filename, len - 2)))
 		ft_error(ERR_MALLOC, s, ENOMEM);

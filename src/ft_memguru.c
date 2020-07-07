@@ -53,7 +53,7 @@ void	*ft_memguru(size_t size, t_list **list)
 
 	if (!(new = (t_list *)malloc(sizeof(*new))))
 		return (NULL);
-	if (!(new->content = (void *)malloc(size)))
+	if (!(new->content = (void *)ft_memalloc(size)))
 		return (NULL);
 	new->content_size = size;
 	new->next = NULL;
