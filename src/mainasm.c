@@ -84,6 +84,8 @@ int				main(int argc, char **argv)
 		lexer(s);
 		parser(s);
 		output(s);
+		ft_lstdel(&s->memguru, &ft_lstdel_content);
+		free(s->line);
 		free(s);
 	}
 	else

@@ -173,5 +173,6 @@ void						print_instr_code(t_instr *instr, int pass);
 unsigned int 				swap_bytes_old(unsigned int num, size_t len);
 void						parse_ref_label(t_serv *s);
 void						code_labels(t_serv *s);
+void						ft_lstdel_content(void *content, size_t size);
 
 #endif

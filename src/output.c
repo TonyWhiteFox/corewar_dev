@@ -67,6 +67,7 @@ static void		open_file(t_serv *s)
 	if ((s->fd_out = open(file, O_CREAT | O_TRUNC | O_WRONLY, 0644)) == -1)
 		ft_error(ERR_CREATE_FILE, s, EBADF);
 	ft_printf("Writing output program to %s\n", file);
+	free(tmp);
 	free(file);
 }
 

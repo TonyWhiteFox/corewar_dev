@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-static void		ft_lstdel_content(void *content, size_t size)
+void			ft_lstdel_content(void *content, size_t size)
 {
 	free(content);
 	*(&size) = 0;
