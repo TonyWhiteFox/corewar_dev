@@ -55,7 +55,7 @@ t_token			*init_token(t_serv *s, t_type type, char *str, size_t len)
 
 static void		skip_whitespace(t_serv *s)
 {
-	while (ft_strchr(WHITESPACE_CHARS, *s->ptr1))
+	while (s->ptr1 && *s->ptr1 && ft_strchr(WHITESPACE_CHARS, *s->ptr1))
 		s->ptr1++;
 }
 
@@ -65,6 +65,8 @@ static void		get_tokens(t_serv *s)
 	while (*s->ptr1)
 	{
 		skip_whitespace(s);
+		if (!*s->ptr1)
+			break ;
 		if (*s->ptr1 == COMMENT_CHAR || *s->ptr1 == ALT_COMMENT_CHAR)
 			parse_comment(s);
 		else if (*s->ptr1 == '\"' || ft_strchr(LABEL_CHARS, *s->ptr1))
