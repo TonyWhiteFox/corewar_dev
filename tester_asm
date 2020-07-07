@@ -7,7 +7,7 @@ BLUE='\033[0;34m'
 
 echo $1
 
-make
+make asm
 
 rm -rf $TEST_DIR
 files=$(find $SRC_DIR -name *.cor)
