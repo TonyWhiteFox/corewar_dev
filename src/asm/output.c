@@ -18,11 +18,11 @@ static void		write_header_code(t_serv *s)
 {
 	unsigned int	uint;
 
-	uint = swap_bytes_old(s->header.magic, 4);
+	uint = swap_bytes(s->header.magic, 4);
 	write(s->fd_out, &uint, 4);
 	write(s->fd_out, s->header.prog_name, PROG_NAME_LENGTH);
 	write(s->fd_out, "\0\0\0\0", 4);
-	uint = swap_bytes_old(s->header.prog_size, 4);
+	uint = swap_bytes(s->header.prog_size, 4);
 	write(s->fd_out, &uint, 4);
 	write(s->fd_out, s->header.comment, COMMENT_LENGTH);
 	write(s->fd_out, "\0\0\0\0", 4);

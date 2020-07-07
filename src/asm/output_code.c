@@ -41,7 +41,7 @@ unsigned char			arg_coding_byte(t_instr *ptr)
 	return (ret);
 }
 
-int				get_offset(t_serv *s, t_instr *instr, char *label)
+int						get_offset(t_serv *s, t_instr *instr, char *label)
 {
 	t_instr		*ptr;
 
@@ -55,7 +55,7 @@ int				get_offset(t_serv *s, t_instr *instr, char *label)
 	return (0);
 }
 
-unsigned int swap_bytes_old(unsigned int num, size_t len)
+unsigned int			swap_bytes(unsigned int num, size_t len)
 {
 	unsigned int	b0;
 	unsigned int	b1;
@@ -81,34 +81,30 @@ unsigned int swap_bytes_old(unsigned int num, size_t len)
 	return (res);
 }
 
-void			code_labels(t_serv *s)
+void					code_labels(t_serv *s)
 {
 	t_list		*list;
-	t_instr		*instr;
 	t_arg		*arg;
 	int			i;
 
 	list = s->arg_labels;
 	while (list)
 	{
-		instr = list->content;
 		i = -1;
 		while (++i < 3)
 		{
-			arg = &(instr->args[i]);
+			arg = &(((t_instr *)list->content)->args[i]);
 			if (arg->is_label)
 			{
-				arg->value.num = get_offset(s, instr, arg->token);
-				if (arg->type == T_IND)
+				arg->value.num = get_offset(s, list->content, arg->token);
+				if (arg->type == T_IND || (arg->type == T_DIR
+						&& ((t_instr *)list->content)->op->reduced_dir_size))
 					arg->code_size = IND_SIZE;
-				else if (arg->type == T_DIR && instr->op->reduced_dir_size)
-					arg->code_size = DIR_SIZE / 2;
 				else
 					arg->code_size = DIR_SIZE;
-				arg->code.unum4 = swap_bytes_old(arg->value.unum4,arg->code_size);
+				arg->code.unum4 = swap_bytes(arg->value.unum4, arg->code_size);
 			}
 		}
 		list = list->next;
 	}
-
 }

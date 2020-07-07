@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include "asm.h"
 #include "libft.h"
 
 void	*ft_memguru_add(void *ptr, t_list **list)
@@ -65,4 +67,37 @@ void	*ft_memguru(size_t size, t_list **list)
 		*list = new;
 	}
 	return (new->content);
+}
+
+int		ft_is_bin(char *nb)
+{
+	size_t		i;
+
+	i = ft_strlen(nb);
+	if (i > 2 && nb[0] == '0' && nb[1] == 'b' && ft_isnumber(&nb[2]))
+		return (1);
+	errno = EDOM;
+	return (0);
+}
+
+int		ft_is_hex(char *nb)
+{
+	size_t		i;
+
+	i = ft_strlen(nb);
+	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X'))
+	{
+		nb = &nb[1];
+		while (*(++nb))
+		{
+			if (!ft_strchr(HEX_CHARS, *nb))
+			{
+				errno = EDOM;
+				return (0);
+			}
+		}
+		return (1);
+	}
+	errno = EDOM;
+	return (0);
 }

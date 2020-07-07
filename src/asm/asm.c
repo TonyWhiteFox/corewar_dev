@@ -14,6 +14,20 @@
 #include "libft.h"
 #include <errno.h>
 
+t_op			*get_op(char *name)
+{
+	size_t		i;
+
+	i = 0;
+	while (i < (sizeof(g_op_tab) / sizeof(t_op)))
+	{
+		if (!ft_strcmp(g_op_tab[i].name, name))
+			return (&g_op_tab[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 static void		init_s(t_serv *s)
 {
 	errno = 0;
@@ -26,10 +40,8 @@ static void		init_s(t_serv *s)
 	s->line = NULL;
 	s->instr = NULL;
 	s->last_instr = NULL;
-	s->ptr_flag = 0;
 	s->memguru = NULL;
 	s->buff = ft_memguru(1, &s->memguru);
-	s->last_sentence = NULL;
 	s->header.magic = COREWAR_EXEC_MAGIC;
 	s->header.prog_size = 0;
 	ft_bzero(s->header.prog_name, PROG_NAME_LENGTH + 1);

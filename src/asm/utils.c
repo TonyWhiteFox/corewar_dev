@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <stdlib.h>
-#include <asm.h>
 #include <stdio.h>
 #include <errno.h>
+#include "libft.h"
+#include "asm.h"
 
 void			ft_lstdel_content(void *content, size_t size)
 {
@@ -62,7 +62,7 @@ void			print_tokens(t_serv *s)
 	}
 }
 
-t_bytes				ft_atoi_check(char *nb)
+t_bytes			ft_atoi_check(char *nb)
 {
 	size_t		i;
 	t_bytes		ret;

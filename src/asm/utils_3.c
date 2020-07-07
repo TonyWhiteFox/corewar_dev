@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <errno.h>
+#include "asm.h"
+#include "libft.h"
 
-static int				convert_and_check_nb(char c, int base)
+static int				convert_nb(char c, int base)
 {
 	int		result;
 
@@ -40,7 +41,7 @@ static ssize_t			length_number(char *str, int base)
 	length = 0;
 	while (str[length])
 	{
-		if (convert_and_check_nb(str[length], base) == -1)
+		if (convert_nb(str[length], base) == -1)
 			break ;
 		length++;
 	}
@@ -66,44 +67,39 @@ int						ft_atoi_base(char *nb, int base)
 	if (base == 10)
 		return ((int)ft_atoi(nb));
 	while (*nb == ' ' || *nb == '\t' || *nb == '\n'
-		   || *nb == '\v' || *nb == '\r' || *nb == '\f')
+			|| *nb == '\v' || *nb == '\r' || *nb == '\f')
 		nb++;
 	result = 0;
 	length = length_number(nb, base) - 1;
-	while (*nb && length >= 0 && convert_and_check_nb(*nb, base) != -1)
+	while (*nb && length >= 0 && convert_nb(*nb, base) != -1)
 	{
-		result += convert_and_check_nb(*nb, base) * ft_power(base, length);
+		result += convert_nb(*nb, base) * ft_power(base, length);
 		nb++;
 		length--;
 	}
 	return (result);
 }
 
-char					*ft_itoa_base_u(unsigned long n, int base)
+size_t					get_str_len(t_serv *s)
 {
-	char				*str;
-	char				*tab;
-	unsigned long		o;
-	size_t				size;
-	unsigned long		tmp;
+	size_t	len;
 
-	tab = "0123456789abcdef";
-	size = 0;
-	tmp = n;
-	while (tmp /= base)
-		size++;
-	if (base < 2 || base > 16)
-		return (0);
-	size++;
-	if (!(str = ft_strnew(size)))
-		return (NULL);
-	if (!n)
-		str[0] = '0';
-	while (n)
+	len = 0;
+	if (*s->ptr1 == '\"')
 	{
-		o = n % base;
-		str[--size] = tab[o];
-		n /= base;
+		s->ptr1++;
+		s->ptr2++;
+		len = len_to_end(s, '\"');
 	}
-	return (str);
+	else
+	{
+		while (*s->ptr2 && ft_strchr(LABEL_CHARS, *s->ptr2))
+		{
+			if (!*s->ptr2)
+				ft_error(ERR_STR_SPLIT, s, ERANGE);
+			len++;
+			s->ptr2++;
+		}
+	}
+	return (len);
 }

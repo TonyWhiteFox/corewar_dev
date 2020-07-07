@@ -24,7 +24,8 @@ void				print_arg_code(t_instr *ptr, int i, int pass)
 		ft_printf("%-18d", arg.code.num);
 	else if (pass == 2)
 		ft_printf("%-18d", arg.value.num);
-	else if (arg.type == T_IND || (arg.type == T_DIR && ptr->op->reduced_dir_size))
+	else if (arg.type == T_IND
+			|| (arg.type == T_DIR && ptr->op->reduced_dir_size))
 	{
 		ft_printf("%-4u", arg.code.bytes[0]);
 		ft_printf("%-4u", arg.code.bytes[1]);
@@ -38,7 +39,7 @@ void				print_arg_code(t_instr *ptr, int i, int pass)
 	}
 }
 
-void			print_arg(t_instr *ptr, int i)
+void				print_arg(t_instr *ptr, int i)
 {
 	if (ptr->args[i].type == T_DIR || ptr->args[i].type == T_REG)
 	{
@@ -57,7 +58,7 @@ void			print_arg(t_instr *ptr, int i)
 		ft_printf("%-18d", ptr->args[i].value);
 }
 
-void			print_instr(t_instr *ptr)
+void				print_instr(t_instr *ptr)
 {
 	int		j;
 
@@ -77,7 +78,7 @@ void			print_instr(t_instr *ptr)
 	}
 }
 
-void			print_instr_code(t_instr *instr, int pass)
+void				print_instr_code(t_instr *instr, int pass)
 {
 	int			j;
 
@@ -90,7 +91,7 @@ void			print_instr_code(t_instr *instr, int pass)
 	ft_printf("\n");
 }
 
-void			print_dump(t_serv *s)
+void				print_dump(t_serv *s)
 {
 	t_instr		*ptr;
 

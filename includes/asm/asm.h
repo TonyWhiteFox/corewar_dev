@@ -34,10 +34,6 @@
 # define ERR_REG			"ERROR: Incorrect REGISTER argument value"
 # define ERR_NO_LABEL		"ERROR: No such label"
 # define ERR_COMMAND		"ERROR: Undefined command"
-# define FLAG_LABEL			1
-# define FLAG_ARG			2
-# define FLAG_CHAMP_NAME	4
-# define FLAG_CHAMP_COMM	8
 # define READ_SIZE			4096
 # define FLAG_DUMP			1
 # define FLAG_DEBUG			2
@@ -46,27 +42,16 @@
 
 typedef enum				e_type
 {
-	IDENTIFER,
 	STRING,
 	COMMENT,
-	COMMAND,
 	DIRECT,
 	NUM,
-	REGISTER,
 	SEPARATOR,
 	NEW_LINE,
-	QUOTE,
 	PROG_NAME,
 	PROG_COMMENT,
 	LABEL,
 	LABEL_REF,
-
-	OPERATOR,
-	DIRECT_LABEL,
-	INDIRECT,
-	INDIRECT_LABEL,
-	END,
-	WHITESPACE,
 }							t_type;
 
 typedef struct				s_token
@@ -105,9 +90,7 @@ typedef struct				s_serv
 	struct s_header			header;
 	struct s_instr			*instr;
 	struct s_instr			*last_instr;
-	t_type					ptr_flag;
 	struct s_list			*memguru;
-	struct s_list			*last_sentence;
 	struct s_token			*tokens;
 
 }							t_serv;
@@ -119,7 +102,7 @@ typedef struct				s_arg
 	size_t					is_label;
 	char					*token;
 	size_t					code_size;
-	t_bytes 				code;
+	t_bytes					code;
 }							t_arg;
 
 typedef struct				s_instr
@@ -136,7 +119,7 @@ typedef struct				s_instr
 void						lexer(t_serv *s);
 void						parser(t_serv *s);
 void						output(t_serv *s);
-void ft_error(char *err, t_serv *s, int err_code);
+void						ft_error(char *err, t_serv *s, int err_code);
 void						*ft_memguru(size_t size, struct s_list **list);
 void						*ft_memguru_add_arr(void **arr, size_t arr_size,
 							struct s_list **list);
@@ -170,9 +153,12 @@ void						print_instr(t_instr *ptr);
 int							ft_atoi_base(char *nb, int base);
 t_bytes						ft_atoi_check(char *nb);
 void						print_instr_code(t_instr *instr, int pass);
-unsigned int 				swap_bytes_old(unsigned int num, size_t len);
+unsigned int				swap_bytes(unsigned int num, size_t len);
 void						parse_ref_label(t_serv *s);
 void						code_labels(t_serv *s);
 void						ft_lstdel_content(void *content, size_t size);
+int							ft_is_bin(char *nb);
+int							ft_is_hex(char *nb);
+size_t						get_str_len(t_serv *s);
 
 #endif

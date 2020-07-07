@@ -40,20 +40,6 @@ t_instr			*init_instr(t_serv *s)
 	return (new);
 }
 
-t_op			*get_op(char *name)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < (sizeof(g_op_tab) / sizeof(t_op)))
-	{
-		if (!ft_strcmp(g_op_tab[i].name, name))
-			return (&g_op_tab[i]);
-		i++;
-	}
-	return (NULL);
-}
-
 static void		set_size(t_serv *s, t_instr *ptr)
 {
 	int			i;
@@ -88,6 +74,26 @@ void			add_instr(t_serv *s, t_instr *new)
 	set_size(s, new);
 	if (s->flag & FLAG_INSTR)
 		print_instr(s->last_instr);
+}
+
+void			parse_arguments(t_serv *s)
+{
+	int			i;
+
+	i = 0;
+	s->tok_ptr = s->tok_ptr->next;
+	while (s->tok_ptr->type != NEW_LINE)
+	{
+		parse_arg(s, i++);
+		if (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type == COMMENT)
+			s->tok_ptr = s->tok_ptr->next;
+		else if (s->tok_ptr->type == NEW_LINE)
+			break ;
+		else
+			ft_error(ERR_PARSE_ARG, s, EINVAL);
+	}
+	add_instr(s, s->last_instr);
+	s->last_instr = NULL;
 }
 
 void			parser(t_serv *s)

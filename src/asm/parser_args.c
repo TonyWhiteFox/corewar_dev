@@ -55,56 +55,19 @@ void	parse_ind(t_serv *s, int i)
 	{
 		value = ft_atoi_check(s->tok_ptr->content);
 		s->last_instr->args[i].value = value;
-		s->last_instr->args[i].code.unum4 = swap_bytes_old(value.unum4, IND_SIZE);
+		s->last_instr->args[i].code.unum4 =
+				swap_bytes(value.unum4, IND_SIZE);
 	}
 	s->tok_ptr = s->tok_ptr->next;
 }
 
-int		ft_is_bin(char *nb)
-{
-	size_t		i;
-
-	i = ft_strlen(nb);
-	if (i > 2 && nb[0] == '0' && nb[1] == 'b' && ft_isnumber(&nb[2]))
-		return (1);
-	errno = EDOM;
-	return (0);
-}
-
-int		ft_is_hex(char *nb)
-{
-	size_t		i;
-
-	i = ft_strlen(nb);
-	if (i > 2 && nb[0] == '0' && (nb[1] == 'x' || nb[1] == 'X'))
-	{
-		nb = &nb[1];
-		while (*(++nb))
-		{
-			if (!ft_strchr(HEX_CHARS, *nb))
-			{
-				errno = EDOM;
-				return (0);
-			}
-		}
-		return (1);
-	}
-	errno = EDOM;
-	return (0);
-}
-
-void	parse_dir(t_serv *s, int i)
+void	parse_dir_value(t_serv *s, int i)
 {
 	t_list		*new;
 	t_arg		*arg;
 
-	if (!(s->last_instr->op->args_types[i] & T_DIR))
-		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
+	new = NULL;
 	arg = &s->last_instr->args[i];
-	arg->type = T_DIR;
-	arg->code_size = (s->last_instr->op->reduced_dir_size ?
-			DIR_SIZE / 2 : DIR_SIZE);
-	s->tok_ptr = s->tok_ptr->next;
 	if (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
 		s->tok_ptr->type == LABEL_REF)
 	{
@@ -125,7 +88,21 @@ void	parse_dir(t_serv *s, int i)
 	}
 	else
 		ft_error(ERR_PARSE_ARG, s, EINVAL);
-	arg->code.unum4 = swap_bytes_old(arg->value.unum4, arg->code_size);
+}
+
+void	parse_dir(t_serv *s, int i)
+{
+	t_arg		*arg;
+
+	if (!(s->last_instr->op->args_types[i] & T_DIR))
+		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
+	arg = &s->last_instr->args[i];
+	arg->type = T_DIR;
+	arg->code_size = (s->last_instr->op->reduced_dir_size ?
+			DIR_SIZE / 2 : DIR_SIZE);
+	s->tok_ptr = s->tok_ptr->next;
+	parse_dir_value(s, i);
+	arg->code.unum4 = swap_bytes(arg->value.unum4, arg->code_size);
 	s->tok_ptr = s->tok_ptr->next;
 }
 
@@ -140,24 +117,4 @@ void	parse_arg(t_serv *s, int i)
 		parse_ind(s, i);
 	else
 		ft_error(ERR_PARSE_ARG, s, EINVAL);
-}
-
-void	parse_arguments(t_serv *s)
-{
-	int			i;
-
-	i = 0;
-	s->tok_ptr = s->tok_ptr->next;
-	while (s->tok_ptr->type != NEW_LINE)
-	{
-		parse_arg(s, i++);
-		if (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type == COMMENT)
-			s->tok_ptr = s->tok_ptr->next;
-		else if (s->tok_ptr->type == NEW_LINE)
-			break ;
-		else
-			ft_error(ERR_PARSE_ARG, s, EINVAL);
-	}
-	add_instr(s, s->last_instr);
-	s->last_instr = NULL;
 }

@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <errno.h>
 #include "op.h"
 #include "asm.h"
 #include "libft.h"
-#include <errno.h>
 
 void		parse_num(t_serv *s)
 {
@@ -27,10 +27,10 @@ void		parse_num(t_serv *s)
 		len++;
 		s->ptr2++;
 	}
-	while (*s->ptr2 != SEPARATOR_CHAR && *s->ptr2 != '\n'
+	while (*s->ptr2 && *s->ptr2 != SEPARATOR_CHAR && *s->ptr2 != '\n'
 		&& !ft_strchr(WHITESPACE_CHARS, *s->ptr2))
 	{
-		if (!ft_isdigit(*s->ptr2))
+		if (!*s->ptr2 || !ft_isdigit(*s->ptr2))
 			ft_error(ERR_WRONG_VALUE, s, EINVAL);
 		len++;
 		s->ptr2++;
@@ -57,21 +57,7 @@ void		parse_str(t_serv *s)
 	size_t	len;
 
 	s->ptr2 = s->ptr1;
-	len = 0;
-	if (*s->ptr1 == '\"')
-	{
-		s->ptr1++;
-		s->ptr2++;
-		len = len_to_end(s, '\"');
-	}
-	else
-	{
-		while (ft_strchr(LABEL_CHARS, *s->ptr2))
-		{
-			len++;
-			s->ptr2++;
-		}
-	}
+	len = get_str_len(s);
 	if (*s->ptr2 == LABEL_CHAR)
 	{
 		add_token(s, init_token(s, LABEL, s->ptr1, len));
