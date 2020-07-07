@@ -1,0 +1,7 @@
+file=$1
+echo "ALL RESULTS:"
+grep 'ERROR SUMMARY' $file
+echo ""
+echo "ERRORS:"
+errors=$(grep 'ERROR SUMMARY' $file | grep -v '0 errors' | awk '{print $1}')
+echo $errors | xargs grep -f $file -e 
