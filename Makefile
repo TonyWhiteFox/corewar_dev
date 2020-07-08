@@ -20,7 +20,6 @@ SRC1		= new_main_vm.c\
 ASM_MAKE = asm.mk
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
-HEADERSUB	= $(INCDIR)asm.h $(INCDIR)op.h
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -55,10 +54,10 @@ OBJDIR	= ./obj/
 all: $(FT_LIB) $(MLX_LIB) $(NAME1) $(NAME2)
 
 $(OBJDIR)%.o:$(SRCDIR)%.c $(HEADERMAIN) $(HEADERSUB)
-	find . -type f -name "obj" -delete
-	mkdir -p obj/
-	echo "$(CHANGE)∰$(RESET)\c"
-	$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
+	@find . -type f -name "obj" -delete
+	@mkdir -p obj/
+	@echo "$(CHANGE)∰$(RESET)\c"
+	@$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
 
 FORCE: ;
 
@@ -69,29 +68,29 @@ $(MLX_LIB): FORCE
 	make -C $(MLX)
 
 $(NAME1): $(OBJ1)
-	echo "\n$(NAME1):$(TAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
-	$(CC) -framework OpenCL $(OBJ1) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME1)
-	echo "$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
+	@echo "\n$(NAME1):$(TAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
+	@$(CC) -framework OpenCL $(OBJ1) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME1)
+	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
 
 $(NAME2): FORCE
 	make -f $(ASM_MAKE)
 
 clean:
-	rm -rf $(OBJDIR)
-	find . -type f -name "obj" -delete
-	mkdir -p obj
-	rm -Rf obj
-	echo "$(NAME1):$(FTAB)$(YELLOW)object files$(TAB)$(RED)were deleted.$(RESET)\n"
-	make -C $(FT) clean
-	make -C $(MLX) clean
+	@rm -rf $(OBJDIR)
+	@find . -type f -name "obj" -delete
+	@mkdir -p obj
+	@rm -Rf obj
+	@echo "$(NAME1):$(FTAB)$(YELLOW)object files$(TAB)$(RED)were deleted.$(RESET)\n"
+	@make -C $(FT) clean
+	@make -C $(MLX) clean
 	make -f $(ASM_MAKE) clean
 
 fclean: clean
-	rm -rf $(NAME1)
-	echo "\n$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
-	echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
-	make -C $(FT) fclean
+	@rm -rf $(NAME1)
+	@echo "\n$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
 	make -f $(ASM_MAKE) fclean
+	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
+	@make -C $(FT) fclean
 
 re: fclean all
 
