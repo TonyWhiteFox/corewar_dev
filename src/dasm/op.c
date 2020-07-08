@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   op.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sselusa <sselusa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/10/04 11:43:01 by zaz               #+#    #+#             */
-/*   Updated: 2020/03/01 16:34:42 by ldonnor-         ###   ########.fr       */
+/*   Created: 2020/06/24 21:19:22 by sselusa           #+#    #+#             */
+/*   Updated: 2020/07/05 14:20:08 by sselusa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
+#include "dasm.h"
 
-t_op    op_tab[17] =
+t_op			g_op_tab[17] =
 {
 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
