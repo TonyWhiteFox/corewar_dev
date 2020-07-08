@@ -10,60 +10,72 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-NAME = asm
+# ------------  PROJECT  ----------------------------------------------------- #
+NAME	=		asm
 
-CFLAGS = -Wall -Werror -Wextra -g
+# ------------  DIRECTORIES  ------------------------------------------------- #
+SRC_DIR	=		src/$(NAME)
+HDR_DIR	=		includes/$(NAME)
+OBJ_DIR	=		obj
+OBJ_DIR_NAME =	obj/$(NAME)
 
-HEAD_INC = ./includes/asm
-HEADERS = $(HEAD_INC)/asm.h $(HEAD_INC)/op.h
+# ------------  LIBFT  ------------------------------------------------------- #
+LFT		=		libft.a
+LFT_DIR	=		libft
+LHS_DIR	=		$(LFT_DIR)/includes
 
-SRC_DIR = ./src/asm
-SRC_LIST = asm.c op.c \
-	lexer.c lexer_parse.c \
-	output.c output_code.c output_utils.c \
-	parser.c parser_args.c parser_tokens.c \
-	utils.c utils_2.c utils_3.c
-SRC = $(addprefix $(SRC_DIR)/, $(SRC_LIST))
+# ------------  SOURCE FILES  ------------------------------------------------ #
+SRC_FLS = 		asm.c op.c \
+				lexer.c lexer_parse.c \
+				output.c output_code.c output_utils.c \
+				parser.c parser_args.c parser_tokens.c \
+				utils.c utils_2.c utils_3.c
+HEADERS =		$(HDR_DIR)/asm.h $(HDR_DIR)/op.h
 
-OBJ_DIR = ./obj
-OBJ_DIR_ASM = ./obj/asm
-OBJ_LIST = $(SRC_LIST:%.c=%.o)
-OBJ = $(addprefix $(OBJ_DIR_ASM)/, $(OBJ_LIST))
+# ------------  FILEPATHS  --------------------------------------------------- #
+SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))
+OBJS	=		$(addprefix $(OBJ_DIR_NAME)/, $(SRC_FLS:%.c=%.o))
+DEPS	=		$(OBJS:.o=.d)
 
-LIB_DIR = ./libft
-LIB_HEAD = $(LIB_DIR)/includes
-LIBFT = $(LIB_DIR)/libft.a
+# ------------  FLAGS  ------------------------------------------------------- #
+CC		=		gcc
+RM		=		rm -rf
+CFLGS	=		-Wall -Werror -Wextra -g
+IFLGS	=		-I $(HDR_DIR) -I $(LHS_DIR)
+LFLGS	=		-L $(LFT_DIR) -lft
+DFLGS	=		-MMD -MP
+DEBUG	=		-g -pg -fsanitize=address
 
+# ------------  RULES  ------------------------------------------------------- #
 .PHONY: all clean fclean re FORCE
 
-all: $(OBJ_DIR) $(OBJ_DIR_ASM) $(NAME)
+all: $(OBJ_DIR) $(OBJ_DIR_NAME) $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) -I$(HEAD_INC) -I$(LIB_HEAD) -L$(LIB_DIR) -lft
+FORCE: ;
 
-$(OBJ): $(OBJ_DIR_ASM)/%.o: $(SRC_DIR)/%.c $(HEADERS)
-	$(CC) $(CFLAGS) -o $@ -c $< -I$(HEAD_INC) -I$(LIB_HEAD)
+$(LFT_DIR)/$(LFT): FORCE
+	$(MAKE) -C $(LFT_DIR)
+
+-include $(DEPS)
+
+$(OBJS): $(OBJ_DIR_NAME)/%.o: $(SRC_DIR)/%.c $(HEADERS)
+	$(CC) $(CFLGS) $(DFLGS) -c -o $@ $< $(IFLGS)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR_ASM): $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR_ASM)
+$(OBJ_DIR_NAME): $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR_NAME)
 
-FORCE: ;
-
-$(LIBFT): FORCE
-	make -C libft
+$(NAME): $(LFT_DIR)/$(LFT) $(OBJS)
+	$(CC) -o $(NAME) $(OBJS) $(LFLGS)
 
 clean:
-	-rm -f $(OBJ)
-	-rm -rf $(OBJ_DIR_ASM)
-	make -C $(LIB_DIR) clean
+	$(MAKE) -C $(LFT_DIR) clean
+	$(RM) $(OBJ_DIR_NAME)
 
 fclean: clean
-
-	-rm -f $(NAME)
-	make -C $(LIB_DIR) fclean
+	$(MAKE) -C $(LFT_DIR) fclean
+	$(RM) $(NAME)
 
 re: fclean all
