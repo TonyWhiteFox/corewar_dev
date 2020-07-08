@@ -41,10 +41,9 @@ SRC1		= new_main_vm.c\
 				
 
 
-SRC2		= mainasm.c\
+ASM_MAKE = asm.mk
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
-HEADERSUB	= $(INCDIR)$(PROGECTSUB).h
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -59,10 +58,8 @@ FTAB = "\	\	\	"
 
 OBJ1	= $(addprefix $(OBJDIR),$(SRC1:.c=.o))
 
-OBJ2	= $(addprefix $(OBJDIR),$(SRC2:.c=.o))
-
 CC		= gcc
-CFLAGS	= -Wall -Wextra -g -O3 #-Werror
+CFLAGS	= -Wall -Wextra -g #-Werror
 
 MLX		= ./miniLibX/
 MLX_LIB	= $(addprefix $(MLX),mlx.a)
@@ -86,21 +83,21 @@ $(OBJDIR)%.o:$(SRCDIR)%.c $(HEADERMAIN) $(HEADERSUB)
 	@echo "$(CHANGE)∰$(RESET)\c"
 	@$(CC) $(CFLAGS) $(MLX_INC) $(FT_INC) -I $(INCDIR) -o $@ -c $<
 
-$(FT_LIB):
-	@make -C $(FT)
+FORCE: ;
 
-$(MLX_LIB):
-	@make -C $(MLX)
+$(FT_LIB): FORCE
+	make -C $(FT)
+
+$(MLX_LIB): FORCE
+	make -C $(MLX)
 
 $(NAME1): $(OBJ1)
 	@echo "\n$(NAME1):$(TAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
 	@$(CC) -framework OpenCL $(OBJ1) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME1)
 	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
 
-$(NAME2): $(OBJ2)
-	@echo "\n$(NAME2):$(FTAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
-	@$(CC) -framework OpenCL $(OBJ2) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME2)
-	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(GREEN)was  created.$(RESET)"
+$(NAME2): FORCE
+	make -f $(ASM_MAKE)
 
 clean:
 	@rm -rf $(OBJDIR)
@@ -110,14 +107,15 @@ clean:
 	@echo "$(NAME1):$(FTAB)$(YELLOW)object files$(TAB)$(RED)were deleted.$(RESET)\n"
 	@make -C $(FT) clean
 	@make -C $(MLX) clean
+	make -f $(ASM_MAKE) clean
 
 fclean: clean
 	@rm -rf $(NAME1)
 	@echo "\n$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
-	@rm -rf $(NAME2)
+	make -f $(ASM_MAKE) fclean
 	@echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
 	@make -C $(FT) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(NAME1) $(NAME2)
+.PHONY: all clean fclean re FORCE $(NAME1) $(NAME2)
