@@ -13,9 +13,10 @@
 #ifndef _COREWAR_H
 # define _COREWAR_H
 # include "libft.h"
-# include <mlx.h>
+# include "mlx.h"
 # include "op.h"
 # ifdef __APPLE__
+# define CL_SILENCE_DEPRECATION
 #  include <OpenCL/opencl.h>
 # else
 #  include <CL/cl.h>
