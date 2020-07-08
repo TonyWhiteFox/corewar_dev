@@ -17,9 +17,7 @@ NAME2	= $(PROGECTSUB)
 
 SRC1		= new_main_vm.c\
 
-SRC2		= mainasm.c lexer.c parser.c output.c asm_utils.c \
-	ft_memguru.c lexer_parse.c output_utils.c parser_args.c parser_tokens.c \
-	ft_atoi_base.c code.c op.c
+ASM_MAKE = asm.mk
 
 HEADERMAIN	= $(INCDIR)$(PROGECTMAIN).h
 HEADERSUB	= $(INCDIR)asm.h $(INCDIR)op.h
@@ -36,8 +34,6 @@ TAB = "\	\	"
 FTAB = "\	\	\	"
 
 OBJ1	= $(addprefix $(OBJDIR),$(SRC1:.c=.o))
-
-OBJ2	= $(addprefix $(OBJDIR),$(SRC2:.c=.o))
 
 CC		= gcc
 CFLAGS	= -Wall -Wextra -g #-Werror
@@ -77,10 +73,8 @@ $(NAME1): $(OBJ1)
 	$(CC) -framework OpenCL $(OBJ1) $(MLX_LNK) $(FT_LNK) -lm -o $(NAME1)
 	echo "$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(GREEN)was  created.$(RESET)\n"
 
-$(NAME2): $(OBJ2)
-	echo "\n$(NAME2):$(FTAB)$(YELLOW)object files$(TAB)$(GREEN)were created.$(RESET)"
-	$(CC) $(OBJ2) $(FT_LNK) -o $(NAME2)
-	echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(GREEN)was  created.$(RESET)"
+$(NAME2): FORCE
+	make -f $(ASM_MAKE)
 
 clean:
 	rm -rf $(OBJDIR)
@@ -90,14 +84,15 @@ clean:
 	echo "$(NAME1):$(FTAB)$(YELLOW)object files$(TAB)$(RED)were deleted.$(RESET)\n"
 	make -C $(FT) clean
 	make -C $(MLX) clean
+	make -f $(ASM_MAKE) clean
 
 fclean: clean
 	rm -rf $(NAME1)
 	echo "\n$(NAME1):$(TAB)$(YELLOW)$(NAME1)$(FTAB)$(RED)was  deleted.$(RESET)"
-	rm -rf $(NAME2)
 	echo "$(NAME1):$(TAB)$(YELLOW)$(NAME2)$(FTAB)$(RED)was  deleted.$(RESET)\n"
 	make -C $(FT) fclean
+	make -f $(ASM_MAKE) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(NAME1) $(NAME2)
+.PHONY: all clean fclean re FORCE $(NAME1) $(NAME2)
