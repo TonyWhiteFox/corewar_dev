@@ -1129,36 +1129,81 @@ __kernel void print_numbers(__global int* picture, const int w_x,
 						const int total_cycle, int gid, int back_color,
 						int front_color, int start_x, int start_y, int start_pos,
 						int flows, int temp, int cycles_per_frame, int sleep_after_frame,
-						int cycles_to_die)
+						int cycles_to_die, const int player_last_say_live, const int s_pl1,
+						const int s_pl2, const int s_pl3, const int s_pl4)
 {
 	gid = gid - 285 - flows;
-	if (gid < 40)
+	if (gid < 80)
 	{
-		back_color = 0x303030;
+		back_color = 0x0;
 		switch (gid / 10)
 		{
 			case 0:
-				start_y = 30 + 20 * 15;
+				start_y = 30 + 24 * 15;
 				temp = total_cycle;
 				front_color = 0xFF00;
 				break;
 			case 1:
-				start_y = 30 + 21 * 15;
+				start_y = 30 + 26 * 15;
 				temp = cycles_to_die;
 				gid = gid - 10;
 				front_color = 0xFF00FF;
 				break;
 			case 2:
-				start_y = 30 + 22 * 15;
+				start_y = 30 + 28 * 15;
 				temp = cycles_per_frame;
 				gid = gid - 20;
 				front_color = 0xFFFF00;
 				break;
 			case 3:
-				start_y = 30 + 23 * 15;
+				start_y = 30 + 30 * 15;
 				temp = sleep_after_frame;
 				gid = gid - 30;
 				front_color = 0xFFFF;
+				break;
+			case 4:
+				front_color = 0xFF0000;
+				start_y = 30 + 38 * 15;
+				temp = s_pl1;
+				if (((gid / 10) - 4 + 1) == player_last_say_live)
+				{
+					back_color = front_color;
+					front_color = 0xFFFFFF;
+				}
+				gid = gid - 40;
+				break;
+			case 5:
+				front_color = 0xFF00;
+				start_y = 30 + 40 * 15;
+				temp = s_pl2;
+				if (((gid / 10) - 4 + 1) == player_last_say_live)
+				{
+					back_color = front_color;
+					front_color = 0xFFFFFF;
+				}
+				gid = gid - 50;
+				break;
+			case 6:
+				front_color = 0xFFFF;
+				start_y = 30 + 42 * 15;
+				temp = s_pl3;
+				if (((gid / 10) - 4 + 1) == player_last_say_live)
+				{
+					back_color = front_color;
+					front_color = 0xFFFFFF;
+				}
+				gid = gid - 60;
+				break;
+			case 7:
+				front_color = 0xFF00FF;
+				start_y = 30 + 44 * 15;
+				temp = s_pl4;
+				if (((gid / 10) - 4 + 1) == player_last_say_live)
+				{
+					back_color = front_color;
+					front_color = 0xFFFFFF;
+				}
+				gid = gid - 70;
 				break;
 		}
 		start_x = 30 + (164 - gid) * 9 + (164 / 2 - gid) * 3;
@@ -1179,29 +1224,29 @@ __kernel void print_comment(__global int* picture, const int w_x,
 						int flows)
 {
 	gid = gid - (flows + 285 + 80);
-	back_color = 0x303030;
+	back_color = 0x0;
 	if (gid < 12)
 	{
-		start_y = 30 + 20 * 15;
+		start_y = 30 + 24 * 15;
 		front_color = 0xFF00;
 		start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
 	}
 	else if (gid < 25)
 	{
-		start_y = 30 + 21 * 15;
+		start_y = 30 + 26 * 15;
 		front_color = 0xFF00FF;
 		start_x = 30 + (131 + gid - 12) * 9 + (130 / 2 + gid - 12) * 3;
 
 	}
 	else if (gid < 41)
 	{
-		start_y = 30 + 22 * 15;
+		start_y = 30 + 28 * 15;
 		front_color = 0xFFFF00;
 		start_x = 30 + (131 + gid - 25) * 9 + (130 / 2 + gid - 25) * 3;
 	}
 	else
 	{
-		start_y = 30 + 23 * 15;
+		start_y = 30 + 30 * 15;
 		front_color = 0xFFFF;
 		start_x = 30 + (131 + gid - 41) * 9 + (130 / 2 + gid - 41) * 3;
 	}
@@ -1239,7 +1284,7 @@ __kernel void print_comment(__global int* picture, const int w_x,
 		case 46:
 		case 52:
 			print_char(picture, start_pos, back_color, front_color, w_x, 37);
-				break;
+			break;
 		case 6:
 		case 8:
 		case 12:
@@ -1249,13 +1294,13 @@ __kernel void print_comment(__global int* picture, const int w_x,
 		case 53:
 		case 55:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'C' - 'A' + 10);
-				break;
+			break;
 		case 7:
 		case 13:
 		case 26:
 		case 54:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'Y' - 'A' + 10);
-				break;
+			break;
 		case 10:
 		case 16:
 		case 24:
@@ -1267,35 +1312,182 @@ __kernel void print_comment(__global int* picture, const int w_x,
 		case 50:
 		case 57:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'E' - 'A' + 10);
-				break;
+			break;
 		case 11:
 		case 17:
 		case 30:
 		case 41:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'S' - 'A' + 10);
-				break;
+			break;
 		case 22:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'D' - 'A' + 10);
-				break;
+			break;
 		case 23:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'I' - 'A' + 10);
-				break;
+			break;
 		case 32:
 		case 45:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
-				break;
+			break;
 		case 34:
 		case 37:
 		case 51:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'R' - 'A' + 10);
-				break;
+			break;
 		case 36:
 		case 48:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'F' - 'A' + 10);
-				break;
+			break;
 		case 39:
 			print_char(picture, start_pos, back_color, front_color, w_x, 'M' - 'A' + 10);
-				break;
+			break;
+	}
+}
+
+__kernel void print_players(__global int* picture, const int w_x,
+						int gid, int back_color, int front_color,
+						int start_x, int start_y, int start_pos,
+						int flows, const int player_last_say_live)
+{
+	gid = gid - (flows + 285 + 80 + 58);
+	back_color = 0x0;
+	if (gid < 20)
+	{
+		start_y = 30 + 38 * 15;
+		front_color = 0xFF0000;
+		start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
+	}
+	else if (gid < 40)
+	{
+		start_y = 30 + 40 * 15;
+		front_color = 0x00FF00;
+		start_x = 30 + (131 + gid - 20) * 9 + (130 / 2 + gid - 20) * 3;
+
+	}
+	else if (gid < 60)
+	{
+		start_y = 30 + 42 * 15;
+		front_color = 0xFFFF;
+		start_x = 30 + (131 + gid - 40) * 9 + (130 / 2 + gid - 40) * 3;
+	}
+	else
+	{
+		start_y = 30 + 44 * 15;
+		front_color = 0xFF00FF;
+		start_x = 30 + (131 + gid - 60) * 9 + (130 / 2 + gid - 60) * 3;
+	}
+	if (((gid / 20) + 1) == player_last_say_live)
+	{
+		back_color = front_color;
+		front_color = 0xFFFFFF;
+	}
+	start_pos = start_y * w_x + start_x;
+	switch (gid)
+	{
+		case 0:
+		case 20:
+		case 40:
+		case 60:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+			break;
+		case 1:
+		case 21:
+		case 41:
+		case 61:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'L' - 'A' + 10);
+			break;
+		case 2:
+		case 22:
+		case 42:
+		case 62:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'A' - 'A' + 10);
+			break;
+		case 3:
+		case 23:
+		case 43:
+		case 63:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'Y' - 'A' + 10);
+			break;
+		case 4:
+		case 24:
+		case 44:
+		case 64:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'E' - 'A' + 10);
+			break;
+		case 5:
+		case 25:
+		case 45:
+		case 65:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'R' - 'A' + 10);
+			break;
+		case 6:
+		case 26:
+		case 46:
+		case 66:
+			print_char(picture, start_pos, back_color, front_color, w_x, 37);
+			break;
+		case 8:
+		case 28:
+		case 48:
+		case 68:
+		case 9:
+		case 29:
+		case 49:
+		case 69:
+		case 10:
+		case 30:
+		case 50:
+		case 70:
+		case 11:
+		case 31:
+		case 51:
+		case 71:
+		case 12:
+		case 32:
+		case 52:
+		case 72:
+		case 13:
+		case 33:
+		case 53:
+		case 73:
+		case 14:
+		case 34:
+		case 54:
+		case 74:
+		case 15:
+		case 35:
+		case 55:
+		case 75:
+		case 16:
+		case 36:
+		case 56:
+		case 76:
+		case 17:
+		case 37:
+		case 57:
+		case 77:
+		case 18:
+		case 38:
+		case 58:
+		case 78:
+		case 19:
+		case 39:
+		case 59:
+		case 79:
+			print_char(picture, start_pos, back_color, front_color, w_x, 37);
+			break;
+		case 7:
+			print_char(picture, start_pos, back_color, front_color, w_x, 1);
+			break;
+		case 27:
+			print_char(picture, start_pos, back_color, front_color, w_x, 2);
+			break;
+		case 47:
+			print_char(picture, start_pos, back_color, front_color, w_x, 3);
+			break;
+		case 67:
+			print_char(picture, start_pos, back_color, front_color, w_x, 4);
+			break;
 	}
 }
 
@@ -1303,7 +1495,9 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 						__global int* changes, __global bool* cursor,
 						__global int* live, __global bool* decor, const int w_x,
 						const int total_cycle, const int flows, const int cycles_to_die,
-						const int cycles_per_frame, const int sleep_after_frame)
+						const int cycles_per_frame, const int sleep_after_frame,
+						const int player_last_say_live, const int s_pl1, const int s_pl2,
+						const int s_pl3, const int s_pl4)
 {
 	int gid = get_global_id(0);
 	int	back_color = 0x000000;
@@ -1330,11 +1524,17 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 	{
 		print_numbers(picture, w_x, total_cycle, gid, back_color,
 					 front_color, start_x, start_y, start_pos, flows,
-					 temp, cycles_per_frame, sleep_after_frame, cycles_to_die);
+					 temp, cycles_per_frame, sleep_after_frame, cycles_to_die,
+					 player_last_say_live, s_pl1, s_pl2, s_pl3, s_pl4);
 	}
 	if (gid >= flows + 285 + 80 && gid < flows + 285 + 80 + 58)
 	{
 		print_comment(picture, w_x, gid, back_color, front_color,
 					start_x, start_y, start_pos, flows);
+	}
+		if (gid >= flows + 285 + 80 + 58 && gid < flows + 285 + 80 + 58 + 80)
+	{
+		print_players(picture, w_x, gid, back_color, front_color,
+					start_x, start_y, start_pos, flows, player_last_say_live);
 	}
 }

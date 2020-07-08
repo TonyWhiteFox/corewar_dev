@@ -6,7 +6,7 @@
 #    By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/14 22:31:23 by ldonnor-          #+#    #+#              #
-#    Updated: 2020/06/21 17:05:19 by ldonnor-         ###   ########.fr        #
+#    Updated: 2020/07/04 14:51:47 by ldonnor-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,30 @@ NAME1	= $(PROGECTMAIN)
 NAME2	= $(PROGECTSUB)
 
 SRC1		= new_main_vm.c\
+				check_vm.c\
+				find_players_vm.c\
+				create_gamer_and_fill_him_vm.c\
+				create_gamer_and_fill_him_2_vm.c\
+				fill_decor_array_vm.c\
+				heat_visual_vm.c\
+				send_gamers_vm.c\
+				gamer_swap_vm.c\
+				init_start_params_vm.c\
+				calс_new_pos_vm.c\
+				g_dir_usage_vm.c\
+				g_arg_quantity_usage_vm.c\
+				extermination_serfs.c\
+				g_spell_time_usage.c\
+				hide_show_run_vm.c\
+				execute_cl_vm.c\
+				let_the_show_begin_vm.c\
+				winner_is_vm.c\
+				make_1_vm.c\
+				make_2_vm.c\
+				make_3_vm.c\
+				make_additional_vm.c\
+				
+
 
 SRC2		= mainasm.c\
 
