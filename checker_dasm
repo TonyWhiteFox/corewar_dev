@@ -1,0 +1,68 @@
+TEST_DIR_ASM='./test_asm'
+TEST_DIR_DASM='./test_dasm'
+SRC_DIR='./Original_exe'
+
+RED='\e[31m'
+BLUE='\e[34m'
+CYAN='\e[36m'
+EOC='\e[0m'
+
+echo $1
+
+make asm
+make dasm
+
+#clean up *.cor in Origin
+files=$(find $SRC_DIR -name *.cor)
+for i in $files; do
+  rm $i
+  done
+
+#set up ASM test dir
+rm -rf $TEST_DIR_ASM
+mkdir $TEST_DIR_ASM
+
+#set up DASM test dir
+rm -rf $TEST_DIR_DASM
+mkdir $TEST_DIR_DASM
+
+#make Origin *.cor
+files=$(find $SRC_DIR -name *.s)
+for i in $files; do
+  out_name=$(basename $i .s)
+  out_dir=$(dirname $i)
+  printf '\033[0;32m'
+  printf "===$out_name=== orig: $($SRC_DIR/asm $i 2>&1)\n"
+  md5_orig=$(md5 -q $out_dir/$out_name.cor)
+  printf $EOC
+
+  cp $i $TEST_DIR_ASM
+
+  printf $BLUE
+  printf "===$out_name=== asm : $(./asm $TEST_DIR_ASM/$out_name.s 2>&1)\n"
+  cp $TEST_DIR_ASM/$out_name.cor $TEST_DIR_DASM
+  md5_asm=$(md5 -q $TEST_DIR_ASM/$out_name.cor)
+
+  printf $CYAN
+  printf "===$out_name=== dasm: $(./dasm $TEST_DIR_DASM/$out_name.cor 2>&1)\n"
+  rm -f $TEST_DIR_DASM/$out_name.cor
+  ./asm $TEST_DIR_DASM/$out_name.s 2>&1
+  md5_dasm=$(md5 -q $TEST_DIR_DASM/$out_name.cor)
+
+  function ok {
+  if [ -z $1 ] || [ -z $2 ]
+     then printf $RED"ZERO "$EOC;
+  elif [ $1 = $2 ]
+    then printf $EOC"OK ";
+  else
+    printf $RED"KO "$EOC
+  fi
+
+  }
+
+  printf "===$out_name=== md5 orig: $md5_orig\n"
+  printf "===$out_name=== md5 asm : $md5_asm $(ok $md5_orig $md5_asm)\n"
+  printf "===$out_name=== md5 dasm: $md5_dasm $(ok $md5_orig $md5_dasm)\n"
+  echo "==============================="
+
+done
