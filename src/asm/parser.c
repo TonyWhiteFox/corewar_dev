@@ -85,9 +85,10 @@ void			parse_arguments(t_serv *s)
 	while (s->tok_ptr->type != NEW_LINE)
 	{
 		parse_arg(s, i++);
-		if (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type == COMMENT)
+		if (s->tok_ptr && (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type ==
+		COMMENT))
 			s->tok_ptr = s->tok_ptr->next;
-		else if (s->tok_ptr->type == NEW_LINE)
+		else if (!s->tok_ptr || s->tok_ptr->type == NEW_LINE)
 			break ;
 		else
 			ft_error(ERR_PARSE_ARG, s, EINVAL);
@@ -119,7 +120,7 @@ void			parser(t_serv *s)
 			s->tok_ptr = s->tok_ptr->next;
 			continue;
 		}
-		s->tok_ptr = s->tok_ptr->next;
+		s->tok_ptr = (s->tok_ptr ? s->tok_ptr->next : NULL);
 	}
 	code_labels(s);
 }
