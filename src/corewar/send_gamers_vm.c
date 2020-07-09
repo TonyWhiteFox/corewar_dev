@@ -67,7 +67,9 @@ void		send_gamers(t_virt *v)
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
-		ft_printf("3");
+		if (v->total_gamers == 1)
+			v->gamer->num = 1;
+		ft_printf("%d", v->gamer->num);
 		find_last_negative_player(v, v->gamer, NULL, FALSE);
 		gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	}

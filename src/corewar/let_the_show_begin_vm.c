@@ -12,7 +12,7 @@
 
 #include "corewar.h"
 
-int			start_fight_vis2(t_virt *v)
+void			start_fight_vis2(t_virt *v)
 {
 	ft_bzero(v->have_serf, MEM_SIZE * sizeof(bool));
 	ft_bzero(v->serfs_live, (MAX_PLAYERS + 1) * sizeof(cl_int));
