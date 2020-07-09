@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:16:08 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 16:35:08 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:55:25 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		send_argument_to_cl(t_virt *v, t_opencl *o)
 	o->ret = clSetKernelArg(o->kernel, 15, sizeof(cl_int), &tmp_int);
 	tmp_int = (cl_int)v->serfs_live[4];
 	o->ret = clSetKernelArg(o->kernel, 16, sizeof(cl_int), &tmp_int);
-	execute_cl(v, o, v->mlx);
+	execute_cl(o, v->mlx);
 }
 
 
@@ -85,7 +85,7 @@ void		send_memory_buffers_to_cl(t_virt *v, t_opencl *o)
 	send_memory_buffers_to_cl2(v, o);
 }
 
-void		execute_cl(t_virt *v, t_opencl *o, t_mlx *ml)
+void		execute_cl(t_opencl *o, t_mlx *ml)
 {
 	size_t	i;
 

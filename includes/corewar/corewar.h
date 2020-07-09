@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/07/04 16:28:33 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:56:09 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,9 +232,9 @@ void		hide_show_run(t_virt *v);
 void		send_argument_to_cl(t_virt *v, t_opencl *o);
 void		send_memory_buffers_to_cl2(t_virt *v, t_opencl *o);
 void		send_memory_buffers_to_cl(t_virt *v, t_opencl *o);
-void		execute_cl(t_virt *v, t_opencl *o, t_mlx *ml);
+void		execute_cl(t_opencl *o, t_mlx *ml);
 
-int			start_fight_vis2(t_virt *v);
+void		start_fight_vis2(t_virt *v);
 int			start_fight_vis(t_virt *v);
 void		let_the_show_begin(t_virt *v);
 

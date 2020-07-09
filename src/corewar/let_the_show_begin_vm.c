@@ -6,13 +6,13 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:19:41 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 16:21:17 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:55:57 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			start_fight_vis2(t_virt *v)
+void		start_fight_vis2(t_virt *v)
 {
 	ft_bzero(v->have_serf, MEM_SIZE * sizeof(bool));
 	ft_bzero(v->serfs_live, (MAX_PLAYERS + 1) * sizeof(cl_int));
