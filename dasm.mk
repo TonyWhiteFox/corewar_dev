@@ -1,17 +1,17 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    asm.mk                                             :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmanhack <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: sselusa <sselusa@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/07/08 14:08:10 by mmanhack          #+#    #+#              #
-#    Updated: 2020/07/08 14:08:15 by mmanhack         ###   ########.fr        #
+#    Created: 2020/06/17 09:39:40 by sselusa           #+#    #+#              #
+#    Updated: 2020/07/05 14:24:45 by sselusa          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # ------------  PROJECT  ----------------------------------------------------- #
-NAME	=		asm
+NAME	=		dasm
 
 # ------------  DIRECTORIES  ------------------------------------------------- #
 SRC_DIR	=		src/$(NAME)
@@ -25,12 +25,9 @@ LFT_DIR	=		libft
 LHS_DIR	=		$(LFT_DIR)/includes
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS = 		asm.c op.c \
-				lexer.c lexer_parse.c \
-				output.c output_code.c output_utils.c \
-				parser.c parser_args.c parser_tokens.c \
-				utils.c utils_2.c utils_3.c
-HEADERS =		$(HDR_DIR)/asm.h $(HDR_DIR)/op.h
+SRC_FLS	=       main.c op.c parse.c header.c commands.c \
+				arguments.c bitmaps.c output.c
+HEADERS =		$(HDR_DIR)/dasm.h $(HDR_DIR)/op.h
 
 # ------------  FILEPATHS  --------------------------------------------------- #
 SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))
