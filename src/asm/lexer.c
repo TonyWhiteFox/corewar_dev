@@ -93,10 +93,12 @@ void			lexer(t_serv *s)
 	char		buf[READ_SIZE + 1];
 	char		*tmp;
 	ssize_t		size;
+	int			pass;
 
+	pass = 1;
 	size = 0;
 	ft_bzero(buf, READ_SIZE + 1);
-	while ((size = read(s->fd, buf, READ_SIZE)))
+	while ((size = read(s->fd, buf, READ_SIZE) > 0))
 	{
 		if (!(tmp = ft_strjoin(s->buff, (const char *)buf)))
 			ft_error(ERR_MALLOC, s, ENOMEM);
@@ -105,6 +107,8 @@ void			lexer(t_serv *s)
 		ft_bzero(buf, READ_SIZE + 1);
 	}
 	close(s->fd);
+	if (!size && pass == 1)
+		ft_error(ERR_EMPTY_FILE, s, EFTYPE);
 	if (size < 0 || !s->buff)
 		ft_error(ERR_READ_FILE, s, errno);
 	get_tokens(s);
