@@ -80,11 +80,11 @@ void			parse_arguments(t_serv *s)
 {
 	int			i;
 
-	i = 0;
+	i = -1;
 	s->tok_ptr = s->tok_ptr->next;
-	while (s->tok_ptr->type != NEW_LINE)
+	while (s->tok_ptr && s->tok_ptr->type != NEW_LINE && ++i < 3)
 	{
-		parse_arg(s, i++);
+		parse_arg(s, i);
 		if (s->tok_ptr && (s->tok_ptr->type == SEPARATOR || s->tok_ptr->type ==
 		COMMENT))
 			s->tok_ptr = s->tok_ptr->next;

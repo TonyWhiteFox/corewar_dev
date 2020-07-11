@@ -68,8 +68,8 @@ void	parse_dir_value(t_serv *s, int i)
 
 	new = NULL;
 	arg = &s->last_instr->args[i];
-	if (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
-		s->tok_ptr->type == LABEL_REF)
+	if (s->tok_ptr && (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
+		s->tok_ptr->type == LABEL_REF))
 	{
 		arg->token = s->tok_ptr->content;
 		if (s->tok_ptr->type == NUM)

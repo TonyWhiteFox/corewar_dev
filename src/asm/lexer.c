@@ -100,6 +100,7 @@ void			lexer(t_serv *s)
 	ft_bzero(buf, READ_SIZE + 1);
 	while ((size = read(s->fd, buf, READ_SIZE) > 0))
 	{
+		pass = 0;
 		if (!(tmp = ft_strjoin(s->buff, (const char *)buf)))
 			ft_error(ERR_MALLOC, s, ENOMEM);
 		ft_memguru_add(tmp, &s->memguru);
