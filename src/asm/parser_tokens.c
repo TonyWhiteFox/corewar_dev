@@ -36,7 +36,8 @@ void	parse_prog_name(t_serv *s)
 	size_t		len;
 
 	s->tok_ptr = s->tok_ptr->next;
-	if (s->tok_ptr->type == STRING)
+	if (s->tok_ptr->type == STRING && s->tok_ptr->content &&
+	*s->tok_ptr->content)
 	{
 		len = ft_strlen(s->tok_ptr->content);
 		if (!len || len > PROG_NAME_LENGTH)

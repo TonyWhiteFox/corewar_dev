@@ -75,6 +75,8 @@ static void		open_file(t_serv *s)
 
 void			output(t_serv *s)
 {
+	if (*s->header.prog_name)
+		ft_error(ERR_NAME_LEN, s, EINVAL);
 	if (s->flag & FLAG_DUMP)
 		print_dump(s);
 	else

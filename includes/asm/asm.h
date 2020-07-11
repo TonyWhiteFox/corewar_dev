@@ -19,6 +19,7 @@
 # define ERR_OPEN_FILE		"ERROR: Can\'t open file"
 # define ERR_MALLOC			"ERROR: Can\'t allocate memory"
 # define ERR_READ_FILE		"ERROR: Incorrect input file"
+# define ERR_EMPTY_FILE		"ERROR: Empty input file"
 # define ERR_DOUBLE_LABEL	"ERROR: Excessive label delimiter, expected 1"
 # define ERR_WRONG_LABEL	"ERROR: Incorrect label name"
 # define ERR_WRONG_VALUE	"ERROR: Incorrect value, numerical value expected"
