@@ -89,8 +89,8 @@ void			parse_arguments(t_serv *s)
 		if (++i > s->last_instr->op->args_num - 1)
 			ft_error(ERR_ARG_OVFL, s, EINVAL);
 		parse_arg(s, i);
-		if (s->tok_ptr && s->tok_ptr->type == SEPARATOR && s->tok_ptr->next
-		&& s->tok_ptr->next->type != NEW_LINE && s->tok_ptr->next->type != COMMENT)
+		if (s->tok_ptr && s->tok_ptr->type == SEPARATOR && s->tok_ptr->next &&
+		s->tok_ptr->next->type != NEW_LINE && s->tok_ptr->next->type != COMMENT)
 			s->tok_ptr = s->tok_ptr->next;
 		else if (s->tok_ptr && s->tok_ptr->type == COMMENT)
 			s->tok_ptr = s->tok_ptr->next;

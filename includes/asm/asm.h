@@ -164,5 +164,6 @@ void						ft_lstdel_content(void *content, size_t size);
 int							ft_is_bin(char *nb);
 int							ft_is_hex(char *nb);
 size_t						get_str_len(t_serv *s);
+void						skip_whitespace(t_serv *s);
 
 #endif

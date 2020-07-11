@@ -53,10 +53,14 @@ t_token			*init_token(t_serv *s, t_type type, char *str, size_t len)
 	return (new);
 }
 
-static void		skip_whitespace(t_serv *s)
+void			get_dir_tokens(t_serv *s)
 {
-	while (s->ptr1 && *s->ptr1 && ft_strchr(WHITESPACE_CHARS, *s->ptr1))
-		s->ptr1++;
+	if (s->ptr1[1] != LABEL_CHAR
+			&& s->ptr1[1] != '-'
+			&& s->ptr1[1] != '+'
+			&& !ft_strchr(LABEL_CHARS, s->ptr1[1]))
+		ft_error(ERR_WRONG_VALUE, s, EINVAL);
+	add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
 }
 
 static void		get_tokens(t_serv *s)
@@ -78,12 +82,7 @@ static void		get_tokens(t_serv *s)
 		else if (*s->ptr1 == '.')
 			parse_command(s);
 		else if (*s->ptr1 == DIRECT_CHAR)
-		{
-			if (s->ptr1[1] != LABEL_CHAR && s->ptr1[1] != '-' && s->ptr1[1]
-			!= '+' && !ft_strchr(LABEL_CHARS,s->ptr1[1]))
-				ft_error(ERR_WRONG_VALUE, s, EINVAL);
-			add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
-		}
+			get_dir_tokens(s);
 		else if (*s->ptr1 == LABEL_CHAR)
 			parse_ref_label(s);
 		else if (*s->ptr1 == '-' || *s->ptr1 == '+')
@@ -101,7 +100,6 @@ void			lexer(t_serv *s)
 	int			pass;
 
 	pass = 1;
-	size = 0;
 	ft_bzero(buf, READ_SIZE + 1);
 	while ((size = read(s->fd, buf, READ_SIZE) > 0))
 	{
