@@ -12,6 +12,7 @@
 
 #include "asm.h"
 #include "libft.h"
+#include <errno.h>
 
 static unsigned char	type_code(int8_t type)
 {
@@ -52,6 +53,7 @@ int						get_offset(t_serv *s, t_instr *instr, char *label)
 			return (ptr->byte - instr->byte);
 		ptr = ptr->next;
 	}
+	ft_error(ERR_WRONG_LABEL, s, EINVAL);
 	return (0);
 }
 

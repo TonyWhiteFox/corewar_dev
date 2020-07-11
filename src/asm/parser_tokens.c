@@ -25,7 +25,10 @@ void	parse_prog_comment(t_serv *s)
 		len = ft_strlen(s->tok_ptr->content);
 		if (len > COMMENT_LENGTH)
 			ft_error(ERR_COMMENT_LEN, s, ERANGE);
-		ft_strcpy(s->header.comment, s->tok_ptr->content);
+		if (!*s->header.comment)
+			ft_strcpy(s->header.comment, s->tok_ptr->content);
+		else
+			ft_error(ERR_COMMENT_DBL, s, EINVAL);
 	}
 	else
 		ft_error(ERR_COMMENT_LEN, s, EINVAL);
@@ -42,7 +45,10 @@ void	parse_prog_name(t_serv *s)
 		len = ft_strlen(s->tok_ptr->content);
 		if (!len || len > PROG_NAME_LENGTH)
 			ft_error(ERR_NAME_LEN, s, ERANGE);
-		ft_strcpy(s->header.prog_name, s->tok_ptr->content);
+		if (!*s->header.prog_name)
+			ft_strcpy(s->header.prog_name, s->tok_ptr->content);
+		else
+			ft_error(ERR_NAME_DOUBLE, s, EINVAL);
 	}
 	else
 		ft_error(ERR_NAME_LEN, s, EINVAL);

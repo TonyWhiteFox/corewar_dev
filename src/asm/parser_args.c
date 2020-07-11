@@ -22,8 +22,8 @@ void	parse_reg(t_serv *s, int i)
 	if (!(s->last_instr->op->args_types[i] & T_REG))
 		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
 	value = ft_atoi_check(&s->tok_ptr->content[1]);
-	if (value.unum1 > REG_NUMBER)
-		ft_error(ERR_REG, s, EDOM);
+//	if (value.unum1 > REG_NUMBER)
+//		ft_error(ERR_REG, s, EDOM);
 	s->last_instr->args[i].token = s->tok_ptr->content;
 	s->last_instr->args[i].type = T_REG;
 	s->last_instr->args[i].value = value;

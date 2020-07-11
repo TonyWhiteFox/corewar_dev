@@ -75,6 +75,7 @@ static t_serv	*read_file(char *file)
 			ft_error(ERR_OPEN_FILE, s, errno);
 		return (s);
 	}
+	write(2, "ERROR: Incorrect file name\n", 27);
 	return (NULL);
 }
 

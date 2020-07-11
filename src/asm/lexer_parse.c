@@ -95,6 +95,8 @@ void		parse_ref_label(t_serv *s)
 	len = 0;
 	while (ft_strchr(LABEL_CHARS, *s->ptr2++))
 		len++;
+	if (!len)
+		ft_error(ERR_WRONG_LABEL, s, EINVAL);
 	add_token(s, init_token(s, LABEL_REF, s->ptr1, len));
 	s->ptr1 += len;
 }

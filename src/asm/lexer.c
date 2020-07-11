@@ -78,7 +78,12 @@ static void		get_tokens(t_serv *s)
 		else if (*s->ptr1 == '.')
 			parse_command(s);
 		else if (*s->ptr1 == DIRECT_CHAR)
+		{
+			if (s->ptr1[1] != LABEL_CHAR && s->ptr1[1] != '-' && s->ptr1[1]
+			!= '+' && !ft_strchr(LABEL_CHARS,s->ptr1[1]))
+				ft_error(ERR_WRONG_VALUE, s, EINVAL);
 			add_token(s, init_token(s, DIRECT, s->ptr1++, 1));
+		}
 		else if (*s->ptr1 == LABEL_CHAR)
 			parse_ref_label(s);
 		else if (*s->ptr1 == '-' || *s->ptr1 == '+')
