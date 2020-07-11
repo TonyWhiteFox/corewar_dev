@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:35:39 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:44:34 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:01:19 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		check_format(char *av, int i)
 	if (i > 4)
 		if (ft_strequ(&(av[i - 4]), ".cor"))
 			return ;
-	exit(ft_printf("Invalid file format\n")); 
+	exit(ft_printf("Invalid file format\n"));
 }
 
 int			find_player(int ac, char **av, t_virt *v, int i)
@@ -44,10 +44,10 @@ int			find_player(int ac, char **av, t_virt *v, int i)
 			return (0);
 		check_format(av[i + 2], ft_strlen(av[i + 2]));
 		read_gamers(av[i + 2], v);
-		return(3);
+		return (3);
 	}
 	v->number = 0;
 	check_format(av[i], ft_strlen(av[i]));
 	read_gamers(av[i], v);
-	return(1);
+	return (1);
 }

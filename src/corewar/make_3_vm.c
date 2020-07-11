@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:30:01 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:30:30 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:58:03 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void			make_live(t_virt *v, t_serf *serf, int i, int t_dir)
 	t_dir = *((int *)dir);
 	v->life_in_die_cycle++;
 	serf->last_live_cycle = v->total_cycles;
-	if (t_dir < 0 && (ft_abs(t_dir) <= v->total_gamers)) 
+	if (t_dir < 0 && (ft_abs(t_dir) <= v->total_gamers))
 	{
 		v->player_num_last_say_life = ft_abs(t_dir);
-		v->live_log[serf->pos] = v->total_cycles * 10 + v->player_num_last_say_life;
+		v->live_log[serf->pos] = v->total_cycles * 10 +
+								v->player_num_last_say_life;
 	}
 	serf->spell = 0;
 	serf->pos = calс_new_pos(serf->pos + 4 + 1);

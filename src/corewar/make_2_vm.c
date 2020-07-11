@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:26:45 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:27:10 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:57:27 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void		make_ld(t_serf *serf, t_option *option)
 {
-	//ft_printf("ld\n");
-	if ((option->var_type[0] == DIR || option->var_type[0] == IND)
-		&& option->var_type[1] == REG)
+	if (((option->var_type[0] == DIR) || (option->var_type[0] == IND))
+			&& (option->var_type[1] == REG))
 	{
 		serf->reg[option->variable[1]] = option->variable[0];
 		set_jump(serf, serf->reg[option->variable[1]]);
@@ -25,12 +24,10 @@ void		make_ld(t_serf *serf, t_option *option)
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
-
 void		make_add_sub(t_serf *serf, t_option *option)
 {
-	//ft_printf("add_sub\n");
-	if (option->var_type[0] == REG && option->var_type[1] == REG &&
-		option->var_type[2] == REG)
+	if ((option->var_type[0] == REG) && (option->var_type[1] == REG) &&
+			(option->var_type[2] == REG))
 	{
 		if (serf->spell == ADD)
 			serf->reg[option->variable[2]] = serf->reg[option->variable[1]]
@@ -46,7 +43,6 @@ void		make_add_sub(t_serf *serf, t_option *option)
 
 void		make_and_or_xor(t_serf *serf, t_option *option, int save_var)
 {
-	//ft_printf("and_or_xor\n");
 	save_var = option->variable[2];
 	write_reg(serf, option, 0);
 	if (option->var_type[2] == REG)

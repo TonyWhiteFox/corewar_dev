@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:25:11 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:36:18 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:51:30 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		make_st(t_virt *v, t_serf *serf, t_option *option)
 		change_map(v, serf, serf->reg[option->variable[0]],
 				serf->pos + option->variable[1] % IDX_MOD);
 	serf->spell = 0;
-	
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
@@ -60,7 +59,6 @@ void		make_ldi(t_virt *v, t_serf *serf, t_option *option, int save_var)
 				(option->variable[0] + option->variable[1]) % IDX_MOD, 4);
 		else if (serf->spell == LLDI)
 		{
-
 			serf->reg[save_var] = find_num(v, serf,
 				option->variable[0] + option->variable[1], 4);
 			set_jump(serf, serf->reg[save_var]);

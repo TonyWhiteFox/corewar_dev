@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:16:08 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 09:15:42 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:29:02 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ void		send_argument_to_cl(t_virt *v, t_opencl *o, cl_int tmp_int)
 	execute_cl(o, v->mlx);
 }
 
-
-
 void		send_memory_buffers_to_cl2(t_virt *v, t_opencl *o)
 {
 	cl_int	tmp_int;
-	
+
 	o->ret = clSetKernelArg(o->kernel, 0, sizeof(cl_mem),
 							(void *)&o->mem_picture);
 	o->ret = clSetKernelArg(o->kernel, 1, sizeof(cl_mem),
@@ -80,24 +78,21 @@ void		send_memory_buffers_to_cl2(t_virt *v, t_opencl *o)
 
 void		send_memory_buffers_to_cl(t_virt *v, t_opencl *o)
 {
+	cl_int	tmp_int;
+
+	tmp_int = MEM_SIZE;
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_picture, CL_TRUE, 0,
-								o->win_size * sizeof(cl_int),
-								o->ret_pic, 0, NULL, NULL);
+			o->win_size * sizeof(cl_int), o->ret_pic, 0, NULL, NULL);
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_map, CL_TRUE, 0,
-								MEM_SIZE * sizeof(cl_uchar), v->map,
-								0, NULL, NULL);
+			tmp_int * sizeof(cl_uchar), v->map, 0, NULL, NULL);
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_log, CL_TRUE,
-								0, MEM_SIZE * sizeof(cl_uint),
-								v->log, 0, NULL, NULL);
+			0, tmp_int * sizeof(cl_uint), v->log, 0, NULL, NULL);
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_serf, CL_TRUE,
-								0, MEM_SIZE * sizeof(bool),
-								v->have_serf, 0, NULL, NULL);
+			0, tmp_int * sizeof(bool), v->have_serf, 0, NULL, NULL);
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_live, CL_TRUE,
-								0, MEM_SIZE * sizeof(cl_int),
-								v->live_log, 0, NULL, NULL);
+			0, tmp_int * sizeof(cl_int), v->live_log, 0, NULL, NULL);
 	o->ret = clEnqueueWriteBuffer(o->command_queue, o->mem_decor, CL_TRUE,
-								0, 285 * sizeof(bool),
-								o->decor, 0, NULL, NULL);
+			0, 285 * sizeof(bool), o->decor, 0, NULL, NULL);
 	send_memory_buffers_to_cl2(v, o);
 }
 

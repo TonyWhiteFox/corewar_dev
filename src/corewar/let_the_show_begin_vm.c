@@ -6,21 +6,23 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:19:41 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:12:47 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:32:58 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		start_fight_vis2(t_virt *v)
+void		start_fight_vis2(t_virt *v, int size_mem, int player_max)
 {
 	if (v->mlx->stop)
 	{
 		send_argument_to_cl(v, v->opencl, 0);
 		return ;
 	}
-	ft_bzero(v->have_serf, MEM_SIZE * sizeof(bool));
-	ft_bzero(v->serfs_live, (MAX_PLAYERS + 1) * sizeof(cl_int));
+	size_mem = MEM_SIZE;
+	player_max = MAX_PLAYERS;
+	ft_bzero(v->have_serf, size_mem * sizeof(bool));
+	ft_bzero(v->serfs_live, (player_max + 1) * sizeof(cl_int));
 	v->total_cycles++;
 	v->cycles++;
 	make_a_move(v, v->serf);
@@ -37,7 +39,7 @@ int			start_fight_vis(t_virt *v)
 {
 	if (v->serf)
 	{
-		start_fight_vis2(v);
+		start_fight_vis2(v, 0, 0);
 		usleep(v->mlx->sleep_after_frame);
 	}
 	else
@@ -49,7 +51,7 @@ int			start_fight_vis(t_virt *v)
 		}
 		send_argument_to_cl(v, v->opencl, 0);
 	}
-	return(0);
+	return (0);
 }
 
 void		let_the_show_begin(t_virt *v)

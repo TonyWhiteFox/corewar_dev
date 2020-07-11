@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:02:07 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:02:38 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:58:33 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ bool		check_var_types(t_serf *serf, t_option *option)
 {
 	if (g_arg_quantity[serf->spell] == 1 && !option->var_type[0])
 		return (false);
-	if (g_arg_quantity[serf->spell] == 2 && (!option->var_type[0] || !option->var_type[1]))
+	if (g_arg_quantity[serf->spell] == 2 && (!option->var_type[0]
+											|| !option->var_type[1]))
 		return (false);
-	if (g_arg_quantity[serf->spell] == 3 && (!option->var_type[0] || !option->var_type[1]
+	if (g_arg_quantity[serf->spell] == 3 && (!option->var_type[0]
+											|| !option->var_type[1]
 			|| !option->var_type[2]))
 		return (false);
 	return (true);

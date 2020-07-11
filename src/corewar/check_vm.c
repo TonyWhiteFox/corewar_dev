@@ -6,12 +6,11 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:33:06 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/10 19:39:25 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:45:56 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
 
 int			find_vis_or_dumps(int ac, char **av, t_virt *v, int i)
 {
@@ -30,9 +29,9 @@ int			find_vis_or_dumps(int ac, char **av, t_virt *v, int i)
 		else
 			v->d = ft_atoi(av[i + 1]);
 		if (v->d + v->dump > -2)
-			return(2);
+			return (2);
 	}
-	return(0);
+	return (0);
 }
 
 void		check_program_args(int ac, char **av, t_virt *v, int i)

@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:23:12 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:09:28 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:36:07 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void		winner_is(t_virt *v, t_gamer *gamer)
 	v->is_end = TRUE;
 }
 
-int		say_good_buy(t_virt *v)
+int			say_good_buy(t_virt *v)
 {
 	exit(0);
 	v += 0;
 	return (0);
 }
 
-int		key_press(int key, t_virt *v)
+int			key_press(int key, t_virt *v)
 {
 	if (key == 53)
 		say_good_buy(v);

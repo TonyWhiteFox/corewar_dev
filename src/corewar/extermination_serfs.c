@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:11:36 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:35:02 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:01:45 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
 		v->serf = temp1->next;
 		free(temp1->reg);
 		free(temp1);
-		return(v->serf);
+		return (v->serf);
 	}
 	else
 	{
 		temp2->next = temp1->next;
 		free(temp1->reg);
 		free(temp1);
-		return(temp2->next);
+		return (temp2->next);
 	}
-	return(NULL);
+	return (NULL);
 }
 
 void		kill_serf(t_virt *v, t_serf *temp1, t_serf *temp2)
@@ -45,7 +45,7 @@ void		kill_serf(t_virt *v, t_serf *temp1, t_serf *temp2)
 	}
 }
 
-void			extermination_serfs(t_virt *v)
+void		extermination_serfs(t_virt *v)
 {
 	v->without_abbreviations++;
 	kill_serf(v, v->serf, v->serf);

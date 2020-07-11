@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
+
 /*                                                        :::      ::::::::   */
 /*   send_gamers_vm.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:52:39 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/11 11:34:07 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:37:10 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		memory_error()
+void		memory_error(void)
 {
 	ft_putendl("Memory not availeble!");
 	exit(0);
@@ -69,13 +70,13 @@ void		send_gamers(t_virt *v)
 	if (v->total_gamers == 0)
 		exit(ft_printf("No gamers!\nRun ./corewar for help\n"));
 	if (v->gamer->num > v->total_gamers)
-				exit(ft_printf("Maximal player num = sum players!\n"));
+		exit(ft_printf("Maximal player num = sum players!\n"));
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
 		if (v->total_gamers == 1)
 			v->gamer->num = 1;
-		find_last_negative_player(v, v->gamer, NULL, FALSE);
+		find_last_negative_player(v, v->gamer, NULL);
 		gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	}
 	gamer_on_show(v->gamer);

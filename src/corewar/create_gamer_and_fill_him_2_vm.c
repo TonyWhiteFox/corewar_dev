@@ -6,13 +6,14 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:38:37 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:45:34 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:01:59 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		read_body(t_virt *v, t_gamer *new_gamer, int readed_byte, char test_for_read)
+void		read_body(t_virt *v, t_gamer *new_gamer, int readed_byte,
+						char test_for_read)
 {
 	new_gamer->code = (char *)malloc(new_gamer->size + 1);
 	ft_bzero(new_gamer->code, new_gamer->size + 1);

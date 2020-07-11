@@ -6,14 +6,14 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:55:14 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:55:55 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:37:52 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_gamer		*gamer_swap(t_gamer *swap_now, t_gamer *swap_next, t_gamer *swap_prew,
-						t_virt *v)
+t_gamer		*gamer_swap(t_gamer *swap_now, t_gamer *swap_next,
+					t_gamer *swap_prew, t_virt *v)
 {
 	if (swap_now == v->gamer)
 		v->gamer = swap_next;
@@ -21,7 +21,7 @@ t_gamer		*gamer_swap(t_gamer *swap_now, t_gamer *swap_next, t_gamer *swap_prew,
 		swap_prew->next = swap_next;
 	swap_now->next = swap_next->next;
 	swap_next->next = swap_now;
-	return(swap_next);
+	return (swap_next);
 }
 
 void		gamer_buble_sorting(t_virt *v, t_gamer *first_cycle,
@@ -66,7 +66,7 @@ int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
 		while (gamer)
 		{
 			if (numb < gamer->num)
-				return(numb);
+				return (numb);
 			if (numb == gamer->num)
 			{
 				numb++;
@@ -74,7 +74,7 @@ int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
 				gamer = gamer->next;
 			}
 			if (!gamer && numb <= v->total_gamers)
-				return(numb);
+				return (numb);
 		}
 		if (numb < temp)
 			return (numb);
@@ -85,16 +85,19 @@ int			find_empty_num(t_virt *v, t_gamer *gamer, int numb, int temp)
 }
 
 void		find_last_negative_player(t_virt *v, t_gamer *gamer,
-								t_gamer *temp, bool isFind)
+								t_gamer *temp)
 {
-	while (gamer->next && !isFind)
+	bool	is_find;
+
+	is_find = FALSE;
+	while (gamer->next && !is_find)
 	{
 		if (gamer->next->num > 0)
-			isFind = TRUE;
+			is_find = TRUE;
 		else
 			gamer = gamer->next;
 	}
-	if (!isFind)
+	if (!is_find)
 		get_all_number_for_gamers(v->gamer);
 	else
 	{
