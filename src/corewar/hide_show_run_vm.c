@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:13:32 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:14:33 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:33:47 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		spell_book_with_vars(t_virt *v, t_serf *serf, t_option *option)
 
 void		spell_book(t_virt *v, t_serf *serf)
 {
-	//ft_printf("___SPELL___%i\n", serf->id);
 	if (serf->spell == LIVE)
 		make_live(v, serf, 0, 0);
 	else if (serf->spell == ZJMP)
@@ -42,8 +41,6 @@ void		spell_book(t_virt *v, t_serf *serf)
 	else if (clean_fill_check_option(v, serf, 0))
 		spell_book_with_vars(v, serf, v->option);
 }
-
-
 
 void		multi_cust(t_virt *v, t_serf *serf)
 {
@@ -55,9 +52,9 @@ void		multi_cust(t_virt *v, t_serf *serf)
 	}
 	else
 	{
-	serf->left_to_cust--;
-	if (serf->left_to_cust == 0)
-		spell_book(v, serf);
+		serf->left_to_cust--;
+		if (serf->left_to_cust == 0)
+			spell_book(v, serf);
 	}
 }
 
@@ -77,7 +74,7 @@ void		dump_map(t_virt *v, int i, int dump)
 	}
 	ft_printf("\n");
 	if (!v->vis)
-		exit (0);
+		exit(0);
 }
 
 void		hide_show_run(t_virt *v)

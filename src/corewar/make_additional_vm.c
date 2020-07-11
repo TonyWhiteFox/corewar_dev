@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:28:03 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:28:28 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:49:42 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void		write_reg(t_serf *serf, t_option *option, int i)
 			option->variable[i] = serf->reg[option->variable[i]];
 		i++;
 	}
-	//ft_printf("Reg: %i %i %i \n", option->variable[0], option->variable[1], option->variable[2]);
 }
-
 
 void		fill_vars(t_virt *v, t_serf *serf, t_option *o, int i)
 {
@@ -31,13 +29,15 @@ void		fill_vars(t_virt *v, t_serf *serf, t_option *o, int i)
 	if (o->var_type[1])
 		o->variable[1] = find_num(v, serf, 2 + o->var_len[0], o->var_len[1]);
 	if (o->var_type[2])
-		o->variable[2] = find_num(v, serf, 2 + o->var_len[0] + o->var_len[1], o->var_len[2]);
+		o->variable[2] = find_num(v, serf, 2 + o->var_len[0] + o->var_len[1],
+			o->var_len[2]);
 	while (serf->spell != ST && i < 3)
 	{
 		if (o->var_type[i] == IND)
 		{
 			if (serf->spell == LLD)
-				o->variable[i] = find_num(v, serf, o->variable[i], LLD_READ_SIZE);
+				o->variable[i] = find_num(v, serf, o->variable[i],
+											LLD_READ_SIZE);
 			else
 				o->variable[i] = find_num(v, serf, o->variable[i] % IDX_MOD, 4);
 		}
@@ -45,9 +45,8 @@ void		fill_vars(t_virt *v, t_serf *serf, t_option *o, int i)
 	}
 }
 
-
-
-bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
+bool		clean_fill_check_option(t_virt *v, t_serf *serf,
+									unsigned char temp_ch)
 {
 	ft_bzero(v->option->var_type, sizeof(int) * 3);
 	ft_bzero(v->option->var_len, sizeof(int) * 3);
@@ -57,14 +56,11 @@ bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
 	v->option->var_type[0] = (temp_ch / 128) + ((temp_ch % 128) / 64) * 2;
 	v->option->var_type[1] = (temp_ch % 64) / 32 + ((temp_ch % 32) / 16) * 2;
 	v->option->var_type[2] = (temp_ch % 16) / 8 + ((temp_ch % 8) / 4) * 2;
-	//ft_printf("__%i %i %i %i\n", v->map[calс_new_pos(serf->pos + 1)], v->option->var_type[0], v->option->var_type[1], v->option->var_type[2]);
 	calc_option_len(serf, v->option, 0);
-	//ft_printf("2__%i %i %i %i\n", v->option->total_len, v->option->var_len[0], v->option->var_len[1], v->option->var_len[2]);
 	fill_vars(v, serf, v->option, 0);
-	//ft_printf("3__%i %i %i\n", v->option->variable[0], v->option->variable[1], v->option->variable[2]);
-	if (!(check_valid_reg(serf, v->option, 0) && check_var_types(serf, v->option)))
+	if (!(check_valid_reg(serf, v->option, 0) &&
+			check_var_types(serf, v->option)))
 	{
-		//ft_printf("exit_check");
 		serf->pos = calс_new_pos(serf->pos + v->option->total_len);
 		return (false);
 	}
@@ -77,13 +73,12 @@ void		change_map(t_virt *v, t_serf *serf, int reg, int copy_in_pos)
 	char	*temp_ch;
 
 	temp_ch = (char *)(&reg);
-	//ft_printf("Reg__%i Char__%i %i %i %i\n", reg, temp_ch[0], temp_ch[1], temp_ch[2], temp_ch[3]);
 	i = 0;
-
 	while (i < 4)
 	{
 		v->map[calс_new_pos(copy_in_pos + i)] = temp_ch[3 - i];
-		v->log[calс_new_pos(copy_in_pos + i)] = serf->creater_no + v->total_cycles * 10;
+		v->log[calс_new_pos(copy_in_pos + i)] = serf->creater_no
+							+ v->total_cycles * 10;
 		i++;
 	}
 }

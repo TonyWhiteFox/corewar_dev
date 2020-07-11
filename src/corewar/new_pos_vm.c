@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calс_new_pos_vm.c                                  :+:      :+:    :+:   */
+/*   new_pos_vm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:59:22 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:59:33 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:03:53 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int			calс_new_pos(int pos)
 {
 	if (pos >= MEM_SIZE)
-		return(pos % MEM_SIZE);
+		return (pos % MEM_SIZE);
 	while (pos < 0)
 		pos += MEM_SIZE;
-	return(pos); 
+	return (pos);
 }
 
 void		set_jump(t_serf *serf, int reg)

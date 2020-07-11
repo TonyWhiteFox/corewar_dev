@@ -617,9 +617,9 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 			break;
 		case 10:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
-				0, 	1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
+				0, 0, 1, 1, 1, 0, 0,
+				0, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 0, 1, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
@@ -659,17 +659,17 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 			break;
 		case 13:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
+				1, 1, 1, 1, 0, 0, 0,
 				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 0, 0, 1, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 0);
+				1, 1, 0, 0, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 0,
+				1, 1, 1, 1, 0, 0, 0);
 			break;
 		case 14:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
@@ -785,17 +785,17 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 			break;
 		case 22:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
-				0, 1, 1, 0, 1, 1, 0,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1);
+				0, 1, 0, 0, 0, 1, 0,
+				1, 1, 1, 0, 1, 1, 1,
+				1, 0, 1, 0, 1, 0, 1,
+				1, 0, 1, 1, 1, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1);
 			break;
 		case 23:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
@@ -859,10 +859,10 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 				1, 1, 1, 1, 1, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
 				1, 1, 1, 1, 1, 1, 0,
-				1, 1, 0, 0, 1, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
+				1, 1, 1, 1, 1, 0, 0,
+				1, 1, 0, 1, 1, 1, 0,
+				1, 1, 0, 0, 1, 1, 0,
 				1, 1, 0, 0, 0, 1, 1,
 				1, 1, 0, 0, 0, 1, 1,
 				0, 1, 0, 0, 0, 1, 1);
@@ -925,17 +925,17 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 			break;
 		case 32:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 0, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 0, 1, 0, 1, 1,
-				1, 1, 1, 1, 1, 1, 1,
-				0, 1, 1, 0, 1, 1, 0);
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 0, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				1, 0, 0, 1, 0, 0, 1,
+				0, 1, 0, 1, 0, 1, 0,
+				0, 1, 1, 0, 1, 1, 0,
+				0, 1, 0, 0, 0, 1, 0);
 			break;
 		case 33:
 			alfavit(picture, start_pos, back_color, front_color, w_x,
@@ -1002,6 +1002,34 @@ __kernel void print_char(__global int* picture, int start_pos, int back_color,
 				0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0);
+			break;
+		case 38:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0,
+				0, 0, 0, 1, 0, 0, 0);
+			break;
+		case 39:
+			alfavit(picture, start_pos, back_color, front_color, w_x,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, 0, 0,
+				1, 1, 1, 1, 1, 1, 1,
+				1, 1, 1, 1, 1, 1, 1,
 				0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, 0, 0,
@@ -1097,10 +1125,10 @@ __kernel void print_map(__global int* picture, __global uchar* field,
 }
 
 __kernel void print_logo(__global int* picture, __global bool* decor, const int w_x,
-						const int total_cycle, int gid, int back_color,
+						const int cycle, int gid, int back_color,
 						int front_color, int num_x, int num_y,
 						int start_x, int start_y, int start_pos, int flows,
-						int temp, int cycles_per_frame, int sleep_after_frame)
+						int temp, const int is_end)
 {
 	gid = gid - flows;
 	if (gid < 285)
@@ -1111,15 +1139,18 @@ __kernel void print_logo(__global int* picture, __global bool* decor, const int 
 		start_y = 30 + num_y * 15;
 		start_pos = start_y * w_x + start_x;
 		if (decor[gid] == true)
+		{
 			back_color = 0xFF0000;
+			if (is_end)
+				back_color = 0xFFd700;
+		}
 		else
 			back_color = 0x333333;
-		temp = 1000000384 - (total_cycle / cycles_per_frame);
-		if (sleep_after_frame == 0)
-			if ((num_y*2.5 == (total_cycle / cycles_per_frame) % 128)
-				|| (num_x*3 == (total_cycle / cycles_per_frame) % 128)
-				|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
-				back_color += 0x009900;
+		temp = 1000000384 - cycle;
+		if ((num_y*2.5 == cycle % 128)
+			|| (num_x*3 == cycle % 128)
+			|| (num_y*2.5 == temp % 200) || (num_x*3 == temp % 200))
+			back_color += 0x009900;
 		print_char(picture, start_pos, back_color, front_color, w_x, 37);
 		print_char(picture, start_pos + 12, back_color, front_color, w_x, 37);
 	}
@@ -1162,45 +1193,45 @@ __kernel void print_numbers(__global int* picture, const int w_x,
 				front_color = 0xFFFF;
 				break;
 			case 4:
-				front_color = 0xFF0000;
-				start_y = 30 + 38 * 15;
+				front_color = 0xff0000;
+				start_y = 30 + 40 * 15;
 				temp = s_pl1;
 				if (((gid / 10) - 4 + 1) == player_last_say_live)
 				{
-					back_color = front_color;
+					back_color = 0x660000;
 					front_color = 0xFFFFFF;
 				}
 				gid = gid - 40;
 				break;
 			case 5:
-				front_color = 0xFF00;
-				start_y = 30 + 40 * 15;
+				front_color = 0xff00;
+				start_y = 30 + 42 * 15;
 				temp = s_pl2;
 				if (((gid / 10) - 4 + 1) == player_last_say_live)
 				{
-					back_color = front_color;
+					back_color = 0x6600;
 					front_color = 0xFFFFFF;
 				}
 				gid = gid - 50;
 				break;
 			case 6:
-				front_color = 0xFFFF;
-				start_y = 30 + 42 * 15;
+				front_color = 0xffff;
+				start_y = 30 + 44 * 15;
 				temp = s_pl3;
 				if (((gid / 10) - 4 + 1) == player_last_say_live)
 				{
-					back_color = front_color;
+					back_color = 0x6666;
 					front_color = 0xFFFFFF;
 				}
 				gid = gid - 60;
 				break;
 			case 7:
-				front_color = 0xFF00FF;
-				start_y = 30 + 44 * 15;
+				front_color = 0xff00ff;
+				start_y = 30 + 46 * 15;
 				temp = s_pl4;
 				if (((gid / 10) - 4 + 1) == player_last_say_live)
 				{
-					back_color = front_color;
+					back_color = 0x660066;
 					front_color = 0xFFFFFF;
 				}
 				gid = gid - 70;
@@ -1353,34 +1384,39 @@ __kernel void print_players(__global int* picture, const int w_x,
 	back_color = 0x0;
 	if (gid < 20)
 	{
-		start_y = 30 + 38 * 15;
+		start_y = 30 + 40 * 15;
 		front_color = 0xFF0000;
 		start_x = 30 + (131 + gid) * 9 + (130 / 2 + gid) * 3;
+		if (((gid / 20) + 1) == player_last_say_live)
+			back_color = 0x660000;
 	}
 	else if (gid < 40)
 	{
-		start_y = 30 + 40 * 15;
+		start_y = 30 + 42 * 15;
 		front_color = 0x00FF00;
 		start_x = 30 + (131 + gid - 20) * 9 + (130 / 2 + gid - 20) * 3;
+		if (((gid / 20) + 1) == player_last_say_live)
+			back_color = 0x006600;
 
 	}
 	else if (gid < 60)
 	{
-		start_y = 30 + 42 * 15;
+		start_y = 30 + 44 * 15;
 		front_color = 0xFFFF;
 		start_x = 30 + (131 + gid - 40) * 9 + (130 / 2 + gid - 40) * 3;
+		if (((gid / 20) + 1) == player_last_say_live)
+			back_color = 0x6666;
 	}
 	else
 	{
-		start_y = 30 + 44 * 15;
+		start_y = 30 + 46 * 15;
 		front_color = 0xFF00FF;
 		start_x = 30 + (131 + gid - 60) * 9 + (130 / 2 + gid - 60) * 3;
+		if (((gid / 20) + 1) == player_last_say_live)
+			back_color = 0x660066;
 	}
 	if (((gid / 20) + 1) == player_last_say_live)
-	{
-		back_color = front_color;
 		front_color = 0xFFFFFF;
-	}
 	start_pos = start_y * w_x + start_x;
 	switch (gid)
 	{
@@ -1491,13 +1527,171 @@ __kernel void print_players(__global int* picture, const int w_x,
 	}
 }
 
+__kernel void print_rules(__global int* picture, const int w_x,
+						int gid, int back_color, int front_color,
+						int start_x, int start_y, int start_pos,
+						int flows, const int is_pause)
+{
+	gid = gid - (flows + 285 + 80 + 58 + 80);
+	back_color = 0x0;
+	switch (gid / 20)
+	{
+		case 0:
+			start_y = 30 + 57 * 15;
+			break;
+		case 1:
+			start_y = 30 + 59 * 15;
+			break;
+		case 2:
+			start_y = 30 + 61 * 15;
+			break;
+		case 3:
+			start_y = 30 + 63 * 15;
+			break;
+	}
+	if (gid % 20 > 10)
+		start_x = 30 + (131 + (gid % 20) + 14) * 9 + (130 / 2 + (gid % 20)) * 3 + 4;
+	else
+		start_x = 30 + (131 + (gid % 20)) * 9 + (130 / 2 + (gid % 20)) * 3;
+	start_pos = start_y * w_x + start_x;
+	switch (gid)
+	{
+		case 0:
+		case 20:
+		case 40:
+		case 60:
+		case 27:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+			break;
+		case 1:
+		case 21:
+		case 41:
+		case 61:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'R' - 'A' + 10);
+			break;
+		case 2:
+		case 22:
+		case 42:
+		case 62:
+		case 7:
+		case 15:
+		case 30:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'E' - 'A' + 10);
+			break;
+		case 3:
+		case 23:
+		case 43:
+		case 63:
+		case 4:
+		case 24:
+		case 44:
+		case 64:
+		case 8:
+		case 26:
+		case 57:
+		case 75:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'S' - 'A' + 10);
+			break;
+		case 9:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'K' - 'A' + 10);
+			break;
+		case 12:
+		case 32:
+		case 52:
+		case 72:
+		case 18:
+		case 58:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'T' - 'A' + 10);
+			break;
+		case 13:
+		case 33:
+		case 53:
+		case 73:
+		case 77:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'O' - 'A' + 10);
+			break;
+		case 16:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'X' - 'A' + 10);
+			break;
+		case 17:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'I' - 'A' + 10);
+			break;
+		case 28:
+		case 56:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'A' - 'A' + 10);
+			break;
+		case 29:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'C' - 'A' + 10);
+			break;
+		case 76:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'L' - 'A' + 10);
+			break;
+		case 78:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'W' - 'A' + 10);
+			break;
+		case 48:
+			print_char(picture, start_pos, back_color, front_color, w_x, 38);
+			break;
+		case 68:
+			print_char(picture, start_pos, back_color, front_color, w_x, 39);
+			break;
+		case 55:
+			print_char(picture, start_pos, back_color, front_color, w_x, 'F' - 'A' + 10);
+			break;
+	}
+	if (gid >= 35 && gid < 40)
+	{
+		print_char(picture, start_pos, back_color, front_color, w_x, 'Z' - 'A' + 10 + 2);
+		if (is_pause > 0)
+		{
+			front_color = 0x00FF00;
+			switch (gid)
+			{
+				case 35:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+					break;
+				case 36:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'L' - 'A' + 10);
+					break;
+				case 37:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'A' - 'A' + 10);
+					break;
+				case 38:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'Y' - 'A' + 10);
+					break;
+			}
+		}
+		else
+		{
+			front_color = 0xFF0000;
+			switch (gid)
+			{
+				case 35:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'S' - 'A' + 10);
+					break;
+				case 36:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'T' - 'A' + 10);
+					break;
+				case 37:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'O' - 'A' + 10);
+					break;
+				case 38:
+					print_char(picture, start_pos, back_color, front_color, w_x, 'P' - 'A' + 10);
+					break;
+			}
+		}
+	}
+}
+
+
 __kernel void kercorewar(__global int* picture, __global uchar* field,
 						__global int* changes, __global bool* cursor,
 						__global int* live, __global bool* decor, const int w_x,
 						const int total_cycle, const int flows, const int cycles_to_die,
 						const int cycles_per_frame, const int sleep_after_frame,
 						const int player_last_say_live, const int s_pl1, const int s_pl2,
-						const int s_pl3, const int s_pl4)
+						const int s_pl3, const int s_pl4, const int cycle,
+						const int is_pause, const int is_end)
 {
 	int gid = get_global_id(0);
 	int	back_color = 0x000000;
@@ -1516,9 +1710,9 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 	}
 	if (gid >= flows && gid < flows + 285)
 	{
-		print_logo(picture, decor, w_x, total_cycle, gid, back_color,
+		print_logo(picture, decor, w_x, cycle, gid, back_color,
 					front_color, num_x, num_y, start_x, start_y, start_pos, 
-					flows, temp, cycles_per_frame, sleep_after_frame);
+					flows, temp, is_end);
 	}
 	if (gid >= flows + 285 && gid < flows + 285 + 80)
 	{
@@ -1532,9 +1726,14 @@ __kernel void kercorewar(__global int* picture, __global uchar* field,
 		print_comment(picture, w_x, gid, back_color, front_color,
 					start_x, start_y, start_pos, flows);
 	}
-		if (gid >= flows + 285 + 80 + 58 && gid < flows + 285 + 80 + 58 + 80)
+	if (gid >= flows + 285 + 80 + 58 && gid < flows + 285 + 80 + 58 + 80)
 	{
 		print_players(picture, w_x, gid, back_color, front_color,
 					start_x, start_y, start_pos, flows, player_last_say_live);
+	}
+	if (gid >= flows + 285 + 80 + 58 + 80  && gid < flows + 285 + 80 + 58 + 80 + 80)
+	{
+		print_rules(picture, w_x, gid, back_color, front_color,
+					start_x, start_y, start_pos, flows, is_pause);
 	}
 }

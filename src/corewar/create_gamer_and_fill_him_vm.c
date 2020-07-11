@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:37:04 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:45:36 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:44:53 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		create_gamer_and_fill_him(t_virt *v, t_gamer *new_gamer,
 	if (!(v->gamer))
 		v->gamer = new_gamer;
 	else
-	{	
+	{
 		while (temp_gamer->next)
 			temp_gamer = temp_gamer->next;
 		temp_gamer->next = new_gamer;

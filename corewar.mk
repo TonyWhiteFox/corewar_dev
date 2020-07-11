@@ -18,7 +18,7 @@ LFT_DIR	=		libft
 LHS_DIR	=		$(LFT_DIR)/includes
 
 # ------------  SOURCE FILES  ------------------------------------------------ #
-SRC_FLS	=       calс_new_pos_vm.c \
+SRC_FLS	=       new_pos_vm.c \
                 check_vm.c \
                 create_gamer_and_fill_him_2_vm.c \
                 create_gamer_and_fill_him_vm.c \
@@ -42,7 +42,7 @@ SRC_FLS	=       calс_new_pos_vm.c \
                 send_gamers_vm.c \
                 winner_is_vm.c \
 
-HEADERS =		$(HDR_DIR)/corewar.h $(HDR_DIR)/op.h
+HEADERS =		$(HDR_DIR)/corewar.h
 
 # ------------  FILEPATHS  --------------------------------------------------- #
 SRCS	=		$(addprefix $(SRC_DIR)/, $(SRC_FLS))

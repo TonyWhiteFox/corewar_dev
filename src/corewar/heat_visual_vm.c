@@ -6,27 +6,28 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:50:37 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:51:07 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 12:40:01 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		heat_cl_bufers(t_opencl *o)
+void		heat_cl_bufers(t_opencl *o, int temp)
 {
+	temp = MEM_SIZE;
 	o->ret_pic = (cl_int *)malloc(sizeof(cl_int) * o->win_size);
 	o->mem_picture = clCreateBuffer(o->context, CL_MEM_READ_WRITE, o->win_size *
 				sizeof(cl_int), NULL, &o->ret);
-	o->mem_map = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+	o->mem_map = clCreateBuffer(o->context, CL_MEM_READ_ONLY, temp *
 				sizeof(cl_uchar), NULL, &o->ret);
-	o->mem_log = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+	o->mem_log = clCreateBuffer(o->context, CL_MEM_READ_ONLY, temp *
 				sizeof(cl_uint), NULL, &o->ret);
-	o->mem_serf = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+	o->mem_serf = clCreateBuffer(o->context, CL_MEM_READ_ONLY, temp *
 				sizeof(bool), NULL, &o->ret);
-	o->mem_live = clCreateBuffer(o->context, CL_MEM_READ_ONLY, MEM_SIZE *
+	o->mem_live = clCreateBuffer(o->context, CL_MEM_READ_ONLY, temp *
 				sizeof(cl_uint), NULL, &o->ret);
 	o->mem_decor = clCreateBuffer(o->context, CL_MEM_READ_ONLY, 285 *
-				sizeof(bool) , NULL, &o->ret);
+				sizeof(bool), NULL, &o->ret);
 }
 
 void		heat_cl_kernel(t_opencl *o)
@@ -35,7 +36,7 @@ void		heat_cl_kernel(t_opencl *o)
 	char	*temp1;
 	char	*temp2;
 	int		j;
-	
+
 	fd = open("src/opencl/paint_map.cl", O_RDONLY);
 	o->file = ft_strnew(1);
 	while ((j = get_next_line(fd, &temp1)))
@@ -55,7 +56,7 @@ void		heat_opencl(t_opencl *o, t_virt *v)
 				&o->device_id, &o->ret_num_devices);
 	o->context = clCreateContext(NULL, 1, &o->device_id, NULL, NULL, &o->ret);
 	o->command_queue = clCreateCommandQueue(o->context,
-				o->device_id, 0, &o->ret);		
+				o->device_id, 0, &o->ret);
 	heat_cl_kernel(o);
 	o->kernel_size = ft_strlen(o->file);
 	o->program = clCreateProgramWithSource(o->context, 1,
@@ -63,7 +64,7 @@ void		heat_opencl(t_opencl *o, t_virt *v)
 	o->ret = clBuildProgram(o->program, 1, &o->device_id, NULL, NULL, NULL);
 	o->kernel = clCreateKernel(o->program, "kercorewar", &o->ret);
 	o->win_size = v->w_x * v->w_y;
-	heat_cl_bufers(o);
+	heat_cl_bufers(o, 0);
 }
 
 void		heat_mlx(t_mlx *mlx, t_virt *v)
@@ -73,6 +74,7 @@ void		heat_mlx(t_mlx *mlx, t_virt *v)
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, v->w_x, v->w_y);
 	mlx->img_adr = mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
 					&mlx->stride, &mlx->endian);
+	mlx->stop = false;
 	mlx->bpp /= 8;
 	mlx->cycle_per_frame = 1;
 	mlx->sleep_after_frame = 0;
@@ -83,8 +85,8 @@ void		heat_visual(t_virt *v)
 {
 	v->mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	v->opencl = (t_opencl *)malloc(sizeof(t_opencl));
-	v->w_x = 1792; //64*28
-	v->w_y = 1024; //64*16
+	v->w_x = 1792;
+	v->w_y = 1024;
 	v->opencl->decor = (bool *)malloc(sizeof(bool) * 285);
 	ft_bzero(v->opencl->decor, sizeof(bool) * 285);
 	fill_decor_array(v->opencl);

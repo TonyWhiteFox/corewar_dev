@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/15 23:13:51 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/06/15 23:20:11 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 13:03:33 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ int			ft_is_positive_number(char *c)
 {
 	if (*c == '+')
 		c++;
-	while(*c)
+	while (*c)
 	{
 		if (*c < '0' || *c > '9')
 			return (0);
 		c++;
 	}
-	return(1);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dasm.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sselusa <sselusa@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 09:51:52 by sselusa           #+#    #+#             */
-/*   Updated: 2020/07/05 14:24:28 by sselusa          ###   ########.fr       */
+/*   Updated: 2020/07/11 13:17:24 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct			s_parser
 	int					fd_output;
 	char				*output_filename;
 	mode_t				openmode;
-	header_t			header;
+	t_header			header;
 }						t_parser;
 
 void					error(char *msg, int code);
