@@ -6,16 +6,31 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:16:08 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/09 18:55:25 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 09:15:42 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		send_argument_to_cl(t_virt *v, t_opencl *o)
+void		send_argument_to_cl_add(t_virt *v, t_opencl *o, cl_int tmp_int)
 {
-	cl_int	tmp_int;
+	v->alter_total_cycles++;
+	o->ret = clSetKernelArg(o->kernel, 17, sizeof(cl_int),
+							&v->alter_total_cycles);
+	if (v->mlx->stop)
+		tmp_int = 1;
+	else
+		tmp_int = 0;
+	o->ret = clSetKernelArg(o->kernel, 18, sizeof(cl_int), &tmp_int);
+	if (v->is_end)
+		tmp_int = 1;
+	else
+		tmp_int = 0;
+	o->ret = clSetKernelArg(o->kernel, 19, sizeof(cl_int), &tmp_int);
+}
 
+void		send_argument_to_cl(t_virt *v, t_opencl *o, cl_int tmp_int)
+{
 	send_memory_buffers_to_cl(v, o);
 	tmp_int = (cl_int)o->flows;
 	o->ret = clSetKernelArg(o->kernel, 8, sizeof(cl_int), &tmp_int);
@@ -35,6 +50,7 @@ void		send_argument_to_cl(t_virt *v, t_opencl *o)
 	o->ret = clSetKernelArg(o->kernel, 15, sizeof(cl_int), &tmp_int);
 	tmp_int = (cl_int)v->serfs_live[4];
 	o->ret = clSetKernelArg(o->kernel, 16, sizeof(cl_int), &tmp_int);
+	send_argument_to_cl_add(v, o, tmp_int);
 	execute_cl(o, v->mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:51:18 by lshellie          #+#    #+#             */
-/*   Updated: 2020/07/09 18:56:09 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:37:52 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define T_DIR_SIZE 5
 # define PRICE 6
 
-typedef struct			s_opencl //new
+typedef struct			s_opencl
 {
 	cl_program			program;
 	cl_kernel			kernel;
@@ -76,12 +76,12 @@ typedef struct			s_opencl //new
 	size_t				kernel_size;
 }						t_opencl;
 
-typedef struct			s_mlx //new
+typedef struct			s_mlx
 {
 	void				*mlx_ptr;
 	void				*win_ptr;
 	void				*img_ptr;
-	void				*img_adr; //send to cl 0
+	void				*img_adr;
 	int					bpp;
 	int					stride;
 	int					endian;
@@ -124,34 +124,31 @@ typedef struct			s_option
 
 typedef struct			s_virt
 {
-//lists
 	t_gamer				*gamer;
 	t_serf				*serf;
-//struct
 	t_mlx				*mlx;
 	t_opencl			*opencl;
 	t_option			*option;
-//arrays
 	cl_uchar			*map;
 	cl_uint				*log;
 	bool				*have_serf;
 	cl_int				*live_log;
 	cl_int				*serfs_live;
-//used in general cycle
 	long unsigned int	last_serf_id;
 	int					total_gamers;
 	short				w_x;
 	short				w_y;
 	int					total_cycles;
+	cl_int				alter_total_cycles;
 	int					cycles;
 	int					life_in_die_cycle;
 	int					cycles_before_die;
 	short				without_abbreviations;
 	int					player_num_last_say_life;
-//free after read players
+	bool				is_end;
+	bool				show_winner;
 	cl_int				temp;
 	int					fd;
-//flags
 	int					d;
 	int					dump;
 	int					number;
@@ -190,7 +187,8 @@ void		heat_cl_bufers(t_opencl *o);
 void		send_gamers(t_virt *v);
 void		get_start_pos_and_first_serf(t_virt *v, t_gamer *gamer,
 										int start_pos, int i);
-void		create_serf(t_virt *v, t_serf *surf);
+void		create_serf(t_virt *v, t_serf *surf, int i);
+void		memory_error();
 
 void		find_last_negative_player(t_virt *v, t_gamer *gamer,
 								t_gamer *temp, bool isFind);
@@ -228,12 +226,13 @@ void		multi_cust(t_virt *v, t_serf *serf);
 void		dump_map(t_virt *v, int i, int dump);
 void		hide_show_run(t_virt *v);
 
-
-void		send_argument_to_cl(t_virt *v, t_opencl *o);
+void		send_argument_to_cl_add(t_virt *v, t_opencl *o, cl_int tmp_int);
+void		send_argument_to_cl(t_virt *v, t_opencl *o, cl_int tmp_int);
 void		send_memory_buffers_to_cl2(t_virt *v, t_opencl *o);
 void		send_memory_buffers_to_cl(t_virt *v, t_opencl *o);
 void		execute_cl(t_opencl *o, t_mlx *ml);
 
+void		hardcore_mode(t_virt *v, int i);
 void		start_fight_vis2(t_virt *v);
 int			start_fight_vis(t_virt *v);
 void		let_the_show_begin(t_virt *v);

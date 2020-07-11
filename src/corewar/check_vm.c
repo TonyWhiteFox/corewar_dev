@@ -6,11 +6,12 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:33:06 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:43:03 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/10 19:39:25 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
+
 
 int			find_vis_or_dumps(int ac, char **av, t_virt *v, int i)
 {

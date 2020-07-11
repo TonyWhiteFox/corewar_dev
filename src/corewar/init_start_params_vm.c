@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:57:11 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 15:54:02 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:12:58 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ void		init_start_params2(t_virt *v)
 	v->live_log  = (cl_int *)malloc(sizeof(cl_int) * MEM_SIZE);
 	ft_bzero(v->live_log, sizeof(cl_int) * MEM_SIZE);
 	v->serfs_live = (cl_int *)malloc(sizeof(cl_int) * (MAX_PLAYERS + 1));
+	v->alter_total_cycles = 0;
+	v->is_end = false;
+	v->show_winner = true;
 }
 
 void		init_start_params(t_virt *v)

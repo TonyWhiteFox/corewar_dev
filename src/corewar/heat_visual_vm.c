@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:50:37 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:51:07 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:35:40 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void		heat_mlx(t_mlx *mlx, t_virt *v)
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, v->w_x, v->w_y);
 	mlx->img_adr = mlx_get_data_addr(mlx->img_ptr, &mlx->bpp,
 					&mlx->stride, &mlx->endian);
+	mlx->stop = false;
 	mlx->bpp /= 8;
 	mlx->cycle_per_frame = 1;
 	mlx->sleep_after_frame = 0;
@@ -83,8 +84,8 @@ void		heat_visual(t_virt *v)
 {
 	v->mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	v->opencl = (t_opencl *)malloc(sizeof(t_opencl));
-	v->w_x = 1792; //64*28
-	v->w_y = 1024; //64*16
+	v->w_x = 1792;
+	v->w_y = 1024;
 	v->opencl->decor = (bool *)malloc(sizeof(bool) * 285);
 	ft_bzero(v->opencl->decor, sizeof(bool) * 285);
 	fill_decor_array(v->opencl);

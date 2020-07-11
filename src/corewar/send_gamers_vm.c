@@ -6,21 +6,27 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:52:39 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 12:54:05 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:34:07 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		create_serf(t_virt *v, t_serf *surf)
+void		memory_error()
 {
-	int		i;
+	ft_putendl("Memory not availeble!");
+	exit(0);
+}
 
-	i = 0;
-	surf = (t_serf *)malloc(sizeof(t_serf));
+void		create_serf(t_virt *v, t_serf *surf, int i)
+{
+	if (!(surf = (t_serf *)malloc(sizeof(t_serf))))
+		memory_error();
 	ft_bzero(surf, sizeof(t_serf));
 	surf->next = NULL;
-	surf->reg = (int *)malloc(sizeof(int) * REG_NUMBER);
+	surf->last_live_cycle = 0;
+	if (!(surf->reg = (int *)malloc(sizeof(int) * REG_NUMBER)))
+		memory_error();
 	while (i < 16)
 	{
 		surf->reg[i] = 0;
@@ -40,7 +46,7 @@ void		get_start_pos_and_first_serf(t_virt *v, t_gamer *gamer,
 {
 	while (gamer)
 	{
-		create_serf(v, NULL);
+		create_serf(v, NULL, 0);
 		i = 0;
 		while (i < gamer->size)
 		{
@@ -67,7 +73,8 @@ void		send_gamers(t_virt *v)
 	gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	while (v->gamer->num < 0)
 	{
-		ft_printf("3");
+		if (v->total_gamers == 1)
+			v->gamer->num = 1;
 		find_last_negative_player(v, v->gamer, NULL, FALSE);
 		gamer_buble_sorting(v, v->gamer, v->gamer, v->gamer);
 	}

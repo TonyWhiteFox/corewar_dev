@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:11:36 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:11:49 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:35:02 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
 	{
 		v->serf = temp1->next;
 		free(temp1->reg);
-		//ft_printf("kill %i\n", temp1->id);
 		free(temp1);
 		return(v->serf);
 	}
@@ -26,7 +25,6 @@ t_serf		*find_heir(t_virt *v, t_serf *temp1, t_serf *temp2)
 	{
 		temp2->next = temp1->next;
 		free(temp1->reg);
-		//ft_printf("kill %i\n", temp1->id);
 		free(temp1);
 		return(temp2->next);
 	}
@@ -51,17 +49,16 @@ void			extermination_serfs(t_virt *v)
 {
 	v->without_abbreviations++;
 	kill_serf(v, v->serf, v->serf);
-	if (v->life_in_die_cycle >= NBR_LIVE)
+	if (v->hardcore)
+		v->cycles_before_die = 1200;
+	else if (v->life_in_die_cycle >= NBR_LIVE)
 	{
 		v->cycles_before_die -= CYCLE_DELTA;
 		v->without_abbreviations = 0;
 	}
-	if (v->without_abbreviations >= MAX_CHECKS)
+	else if (v->without_abbreviations >= MAX_CHECKS)
 	{
-		if (v->hardcore)
-			v->cycles_before_die = 1200;
-		else
-			v->cycles_before_die -= CYCLE_DELTA;
+		v->cycles_before_die -= CYCLE_DELTA;
 		v->without_abbreviations = 0;
 	}
 	v->life_in_die_cycle = 0;

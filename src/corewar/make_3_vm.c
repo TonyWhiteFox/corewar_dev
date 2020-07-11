@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:30:01 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 14:51:51 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:30:30 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void			make_live(t_virt *v, t_serf *serf, int i, int t_dir)
 {
-	//ft_printf("live\n");
 	char		dir[4];
 
 	while (i < 4)
@@ -36,7 +35,6 @@ void			make_live(t_virt *v, t_serf *serf, int i, int t_dir)
 
 void			make_zjmp(t_virt *v, t_serf *serf, int t_dir)
 {
-	//ft_printf("zjmp\n");
 	t_dir = find_num(v, serf, 1, 2);
 	if (serf->jump)
 		serf->pos = calс_new_pos(serf->pos + t_dir % IDX_MOD);
@@ -47,11 +45,10 @@ void			make_zjmp(t_virt *v, t_serf *serf, int t_dir)
 
 void			make_fork(t_virt *v, t_serf *serf, int i, int dir)
 {
-	//ft_printf("fork\n");
 	dir = find_num(v, serf, 1, 2);
 	if (serf->spell == FORK)
 		dir %= IDX_MOD;
-	create_serf(v, NULL);
+	create_serf(v, NULL, 0);
 	v->serf->pos = calс_new_pos(serf->pos + dir);
 	v->serf->last_live_cycle = serf->last_live_cycle;
 	while (i < 16)

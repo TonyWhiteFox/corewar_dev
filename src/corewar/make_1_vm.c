@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:25:11 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:25:21 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:36:18 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		make_sti(t_virt *v, t_serf *serf, t_option *option, int save_var)
 {
-	//ft_printf("sti\n");
 	save_var = option->variable[0];
 	write_reg(serf, option, 0);
 	if ((option->var_type[2] == REG || option->var_type[2] == DIR)
@@ -22,13 +21,11 @@ void		make_sti(t_virt *v, t_serf *serf, t_option *option, int save_var)
 		change_map(v, serf, serf->reg[save_var], serf->pos
 				+ (option->variable[1] + option->variable[2]) % IDX_MOD);
 	serf->spell = 0;
-	//ft_printf("%i %i\n", serf->pos + option->total_len, option->total_len);
 	serf->pos = calс_new_pos(serf->pos + option->total_len);
 }
 
 void		make_st(t_virt *v, t_serf *serf, t_option *option)
 {
-	//ft_printf("st\n");
 	if (option->var_type[0] == REG && option->var_type[1] == REG)
 		serf->reg[option->variable[1]] = serf->reg[option->variable[0]];
 	if (option->var_type[0] == REG && option->var_type[1] == IND)
@@ -41,7 +38,6 @@ void		make_st(t_virt *v, t_serf *serf, t_option *option)
 
 void		make_aff(t_serf *serf, t_option *option)
 {
-	//ft_printf("aff\n");
 	if (option->var_type[0] == REG)
 	{
 		write_reg(serf, option, 0);
@@ -54,7 +50,6 @@ void		make_aff(t_serf *serf, t_option *option)
 
 void		make_ldi(t_virt *v, t_serf *serf, t_option *option, int save_var)
 {
-	//ft_printf("ldi\n");
 	save_var = option->variable[2];
 	write_reg(serf, option, 0);
 	if ((option->var_type[1] == REG || option->var_type[1] == DIR)

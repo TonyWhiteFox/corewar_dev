@@ -6,7 +6,7 @@
 /*   By: ldonnor- <ldonnor-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 13:28:03 by ldonnor-          #+#    #+#             */
-/*   Updated: 2020/07/04 13:28:28 by ldonnor-         ###   ########.fr       */
+/*   Updated: 2020/07/11 11:37:13 by ldonnor-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		write_reg(t_serf *serf, t_option *option, int i)
 			option->variable[i] = serf->reg[option->variable[i]];
 		i++;
 	}
-	//ft_printf("Reg: %i %i %i \n", option->variable[0], option->variable[1], option->variable[2]);
 }
 
 
@@ -57,14 +56,10 @@ bool		clean_fill_check_option(t_virt *v, t_serf *serf, unsigned char temp_ch)
 	v->option->var_type[0] = (temp_ch / 128) + ((temp_ch % 128) / 64) * 2;
 	v->option->var_type[1] = (temp_ch % 64) / 32 + ((temp_ch % 32) / 16) * 2;
 	v->option->var_type[2] = (temp_ch % 16) / 8 + ((temp_ch % 8) / 4) * 2;
-	//ft_printf("__%i %i %i %i\n", v->map[calс_new_pos(serf->pos + 1)], v->option->var_type[0], v->option->var_type[1], v->option->var_type[2]);
 	calc_option_len(serf, v->option, 0);
-	//ft_printf("2__%i %i %i %i\n", v->option->total_len, v->option->var_len[0], v->option->var_len[1], v->option->var_len[2]);
 	fill_vars(v, serf, v->option, 0);
-	//ft_printf("3__%i %i %i\n", v->option->variable[0], v->option->variable[1], v->option->variable[2]);
 	if (!(check_valid_reg(serf, v->option, 0) && check_var_types(serf, v->option)))
 	{
-		//ft_printf("exit_check");
 		serf->pos = calс_new_pos(serf->pos + v->option->total_len);
 		return (false);
 	}
@@ -77,9 +72,7 @@ void		change_map(t_virt *v, t_serf *serf, int reg, int copy_in_pos)
 	char	*temp_ch;
 
 	temp_ch = (char *)(&reg);
-	//ft_printf("Reg__%i Char__%i %i %i %i\n", reg, temp_ch[0], temp_ch[1], temp_ch[2], temp_ch[3]);
 	i = 0;
-
 	while (i < 4)
 	{
 		v->map[calс_new_pos(copy_in_pos + i)] = temp_ch[3 - i];
