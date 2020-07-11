@@ -22,8 +22,6 @@ void	parse_reg(t_serv *s, int i)
 	if (!(s->last_instr->op->args_types[i] & T_REG))
 		ft_error(ERR_PARSE_ARG_TYPE, s, EINVAL);
 	value = ft_atoi_check(&s->tok_ptr->content[1]);
-	if (value.unum1 > REG_NUMBER)
-		ft_error(ERR_REG, s, EDOM);
 	s->last_instr->args[i].token = s->tok_ptr->content;
 	s->last_instr->args[i].type = T_REG;
 	s->last_instr->args[i].value = value;
@@ -68,8 +66,8 @@ void	parse_dir_value(t_serv *s, int i)
 
 	new = NULL;
 	arg = &s->last_instr->args[i];
-	if (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
-		s->tok_ptr->type == LABEL_REF)
+	if (s->tok_ptr && (s->tok_ptr->type == NUM || s->tok_ptr->type == STRING ||
+		s->tok_ptr->type == LABEL_REF))
 	{
 		arg->token = s->tok_ptr->content;
 		if (s->tok_ptr->type == NUM)

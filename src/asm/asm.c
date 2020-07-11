@@ -68,12 +68,14 @@ static t_serv	*read_file(char *file)
 		if (!(s = malloc(sizeof(*s))))
 			ft_error(ERR_MALLOC, s, ENOMEM);
 		init_s(s);
-		s->filename = ft_strdup(file);
+		if (!(s->filename = ft_strdup(file)))
+			ft_error(ERR_MALLOC, s, ENOMEM);
 		ft_memguru_add(s->filename, &s->memguru);
 		if ((s->fd = open(file, O_RDONLY)) == -1)
 			ft_error(ERR_OPEN_FILE, s, errno);
 		return (s);
 	}
+	write(2, "ERROR: Incorrect file name\n", 27);
 	return (NULL);
 }
 

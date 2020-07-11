@@ -50,16 +50,10 @@ size_t			len_to_end(t_serv *s, char end)
 	return (len);
 }
 
-void			print_tokens(t_serv *s)
+void			skip_whitespace(t_serv *s)
 {
-	t_token		*ptr;
-
-	ptr = s->tokens;
-	while (ptr)
-	{
-		ft_printf("%s :: ", ptr->content);
-		ptr = ptr->next;
-	}
+	while (s->ptr1 && *s->ptr1 && ft_strchr(WHITESPACE_CHARS, *s->ptr1))
+		s->ptr1++;
 }
 
 t_bytes			ft_atoi_check(char *nb)
